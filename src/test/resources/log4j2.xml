@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="off">
+    <appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%-5p]%m%n"/>
+        </Console>
+        <RollingFile name="debugAppender" fileName="log/debug.log" filePattern="log/%d{ddMMyyyy}_daily.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%-5p]%m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="infoAppender" fileName="log/info.log" filePattern="log/%d{ddMMyyyy}_daily.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%-5p]%m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="warnAppender" fileName="log/warn.log" filePattern="log/%d{ddMMyyyy}_daily.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%-5p]%m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="errorAppender" fileName="log/error.log" filePattern="log/%d{ddMMyyyy}_daily.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%-5p]%m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="systemAppender" fileName="log/system.log" filePattern="log/%d{ddMMyyyy}_daily.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%-5p]%m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+            </Policies>
+        </RollingFile>
+    </appenders>
+    <Loggers>
+        <Root level="debug" additivity="true">
+            <AppenderRef ref="Console"/>
+        </Root>
+        <Logger name="debugLogger" level="debug" additivity="true">
+            <AppenderRef ref="debugAppender"/>
+        </Logger>
+        <Logger name="infoLogger" level="info" additivity="true">
+            <AppenderRef ref="infoAppender"/>
+        </Logger>
+        <Logger name="warnLogger" level="warn" additivity="true">
+            <AppenderRef ref="warnAppender"/>
+        </Logger>
+        <Logger name="errorLogger" level="error" additivity="true">
+            <AppenderRef ref="errorAppender"/>
+        </Logger>
+        <Logger name="systemLogger" level="info" additivity="true">
+            <AppenderRef ref="systemAppender"/>
+        </Logger>
+        <!--忽略的文件 -->
+        <logger name="org.apache" level="warn" additivity="false"/>
+        <logger name="org.quartz" level="warn" additivity="false"/>
+        <logger name="io.netty" level="warn" additivity="false"/>
+        <logger name="com.alibaba.dubbo" level="warn" additivity="false"/>
+        <logger name="org.springframework" level="warn" additivity="false"/>
+        <logger name="org.I0Itec.zkclient" level="warn" additivity="false"/>
+        <logger name="org.slf4jzkclient" level="warn" additivity="false"/>
+        <logger name="org.eclipse" level="warn" additivity="false"/>
+        <logger name="/" level="warn" additivity="false"/>
+    </Loggers>
+</configuration>
