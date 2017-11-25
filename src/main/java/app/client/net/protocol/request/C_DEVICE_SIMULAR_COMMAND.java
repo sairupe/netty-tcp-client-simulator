@@ -6,7 +6,6 @@ import app.client.net.protocol.RequestProtocol;
 import com.gowild.protocol.Device2SdkTcpProtocol;
 import com.gowild.protocol.SdkMsgType;
 import com.gowild.sdktcp.metadata.pb.BaseBothMsgProto;
-import com.gowild.sdktcp.metadata.pb.SdkDeviceBothMsg;
 
 
 @Protocol(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Device2SdkTcpProtocol.SDK_SIMULAR_SEMANTIC_COMMAND_C, type = ProtocolType.REQUSET)

@@ -10,8 +10,8 @@ import app.client.user.session.UserSession;
 import com.gowild.core.util.LogUtil;
 import com.gowild.protocol.SdkMsgType;
 import com.gowild.protocol.SdkTcp2DeviceProtocol;
-import com.gowild.sdktcp.metadata.pb.DeviceS2SdkMsgProto;
-import com.gowild.sdktcp.metadata.pb.SdkDeviceBothMsg;
+import com.gowild.sdktcp.metadata.pb.SdkBothMsgProto;
+import com.gowild.sdktcp.metadata.pb.SdkS2SdkMsgProto;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -69,16 +69,16 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
     @Override
     @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_SEND_COMMON_COMMAND_S)
     public void receiveCommonCommand(S_DEVICE_COMMON_COMMAND response) {
-        DeviceS2SdkMsgProto.PushCommonCommandMsg pushCommonCommandMsg = response.getPushCommonCommandMsg();
+        SdkS2SdkMsgProto.PushCommonCommandMsg pushCommonCommandMsg = response.getPushCommonCommandMsg();
         String versionCode = pushCommonCommandMsg.getVersionCode();
         String voiceText = pushCommonCommandMsg.getVoiceText();
         String des = "=======>>>> 收到公共控制指令，version_code:{" + versionCode + "} | voice_text:{" + voiceText + "} | \n";
         StringBuilder sb = new StringBuilder(des);
-        List<DeviceS2SdkMsgProto.SdkCommondCommandWrapperMsg> sdkCommondCommandWrapperMsgList
+        List<SdkS2SdkMsgProto.SdkCommondCommandWrapperMsg> sdkCommondCommandWrapperMsgList
                 = pushCommonCommandMsg.getCmdListList();
-        for(DeviceS2SdkMsgProto.SdkCommondCommandWrapperMsg sdkCommondCommandWrapperMsg : sdkCommondCommandWrapperMsgList){
+        for(SdkS2SdkMsgProto.SdkCommondCommandWrapperMsg sdkCommondCommandWrapperMsg : sdkCommondCommandWrapperMsgList){
             sb.append("deviceSN:{" + sdkCommondCommandWrapperMsg.getDeviceSn() + "} | \n");
-            SdkDeviceBothMsg.SdkBaseCommandMsg baseCommandMsg = sdkCommondCommandWrapperMsg.getCommand();
+            SdkBothMsgProto.SdkBaseCommandMsg baseCommandMsg = sdkCommondCommandWrapperMsg.getCommand();
             sb.append("command: state:{" + baseCommandMsg.getState() + "} " +
                     "| action:{" + baseCommandMsg.getAction() + "} " +
                     "| type:{" + baseCommandMsg.getType() + "} " +

@@ -3,9 +3,7 @@ package app.client.net.protocol.request;
 import app.client.net.annotation.Protocol;
 import app.client.net.protocol.ProtocolType;
 import app.client.net.protocol.RequestProtocol;
-import com.gowild.protocol.Device2SdkTcpProtocol;
 import com.gowild.protocol.SdkMsgType;
-import com.gowild.sdktcp.metadata.pb.SdkDeviceBothMsg;
 import com.gowild.xbtcp.metadata.pb.MachineBothMsgProto;
 import com.gowild.xbtcp.metadata.pb.MiscXC2SMsgProto;
 

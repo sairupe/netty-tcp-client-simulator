@@ -5,7 +5,7 @@ import app.client.net.protocol.ProtocolType;
 import app.client.net.protocol.RequestProtocol;
 import com.gowild.protocol.Device2SdkTcpProtocol;
 import com.gowild.protocol.SdkMsgType;
-import com.gowild.sdktcp.metadata.pb.SdkDeviceBothMsg;
+import com.gowild.sdktcp.metadata.pb.SdkBothMsgProto;
 
 
 @Protocol(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Device2SdkTcpProtocol.SDK_DEVICE_LOGIN_C, type = ProtocolType.REQUSET)
@@ -39,7 +39,7 @@ public class C_DEVICE_LOGIN extends RequestProtocol{
 
     @Override
     public void writeBinaryData(){
-        SdkDeviceBothMsg.SdkDeviceLoginMsg.Builder build = SdkDeviceBothMsg.SdkDeviceLoginMsg.newBuilder();
+        SdkBothMsgProto.SdkDeviceLoginMsg.Builder build = SdkBothMsgProto.SdkDeviceLoginMsg.newBuilder();
         build.setUniqueCode(uniqueCode);
         build.setDeviceType(deviceType);
         build.setDeviceMac(deviceMac);

@@ -4,7 +4,7 @@ import app.client.net.annotation.Protocol;
 import app.client.net.protocol.ProtocolType;
 import app.client.net.protocol.RequestProtocol;
 import com.gowild.protocol.SdkMsgType;
-import com.gowild.sdktcp.metadata.pb.MiscAC2SMsgProto;
+import com.gowild.xbtcp.metadata.pb.MiscAC2SMsgProto;
 
 import java.util.Arrays;
 

@@ -17,14 +17,10 @@ import app.client.net.task.XbHeartBeatTask;
 import app.client.service.AbstractServiceImpl;
 import app.client.service.device.DeviceServiceImpl;
 import app.client.user.session.UserSession;
-import com.google.gson.JsonObject;
 import com.gowild.core.util.HttpUtil;
 import com.gowild.protocol.SdkMsgType;
 import com.gowild.protocol.SdkTcp2DeviceProtocol;
-import com.gowild.sdktcp.metadata.pb.MiscAC2SMsgProto;
-import com.gowild.sdktcp.metadata.pb.MiscXC2SMsgProto;
-import com.gowild.sdktcp.metadata.pb.SdkDeviceBothMsg;
-import org.json.JSONArray;
+import com.gowild.sdktcp.metadata.pb.SdkBothMsgProto;
 import org.json.JSONObject;
 
 import javax.annotation.Resource;
@@ -69,7 +65,7 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
     @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_DEVICE_LOGIN_RESULT_S)
     public void receivedUserLoginResponse(S_DEVICE_LOGIN_RESULT response) {
         // 打印登录结果
-        SdkDeviceBothMsg.SdkCommonResponseMsg commonResponseMsg = response.getCommonResponseMsg();
+        SdkBothMsgProto.SdkCommonResponseMsg commonResponseMsg = response.getCommonResponseMsg();
         System.out.println("====== >>> SDK设备登录返回码是 : " + commonResponseMsg.getCode());
 
         deviceServiceImpl.sendSimularCmd(response.getUserSession());
@@ -78,7 +74,7 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
     @Override
     @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_DEVICE_HEART_BEAT_S)
     public void receivedHeartBeatResponse(S_DEVICE_HEART_BEAT response) {
-        SdkDeviceBothMsg.SdkDeviceHeartBeatMsg msg = response.getHeartBeatMsg();
+        SdkBothMsgProto.SdkDeviceHeartBeatMsg msg = response.getHeartBeatMsg();
         System.out.println("====== >>> SDK设备返回时间是 : " + msg.getServerTime() + " | "
                 + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(msg.getServerTime())));
     }
