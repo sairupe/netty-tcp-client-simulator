@@ -30,8 +30,11 @@ public class Netty4XbClient implements Closeable{
 
     private static final int DEFAULT_MSG_SIZE_LIMIT = 1200;
 
+//    private final int port = 6100;
+//    private final String host = "tcp01.xb.test01.gowild.top";
+
     private final int port = 6030;
-    private final String host = "127.0.0.1";
+    private final String host = "localhost";
 
 
     public void start() throws Exception{

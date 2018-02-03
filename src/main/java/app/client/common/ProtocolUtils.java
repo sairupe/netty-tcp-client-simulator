@@ -71,8 +71,12 @@ public class ProtocolUtils {
 		//============================================
 		
     public static void writeBytes(ChannelBuffer base, ChannelBuffer dataBuffer){
-			base.writeBytes(dataBuffer);
+		base.writeBytes(dataBuffer);
     }
+
+	public static void writeBytes(ChannelBuffer base, byte[] bytes){
+		base.writeBytes(bytes);
+	}
 		
     public static void writeByte(ChannelBuffer buffer, byte byteValue){
 		buffer.writeByte(byteValue);

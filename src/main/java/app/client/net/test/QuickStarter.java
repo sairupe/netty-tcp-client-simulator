@@ -8,21 +8,21 @@ import com.gowild.core.util.LogUtil;
 public class QuickStarter {
 
     public static void main(String[] args) throws Exception {
-        if(true){
+        if(false){
             Thread appStarter = new Thread(new AppStartTask());
             appStarter.start();
             LogUtil.debug("启动APP");
         }
 
-        if(true){
+        if(false){
             Thread xbStarter = new Thread(new XbStartTask());
             xbStarter.start();
-            LogUtil.debug("启动XB");
+            LogUtil.debug("启动XB完毕");
         }
 
         if(true){
             LogUtil.debug("暂停...");
-            Thread.sleep(3000);
+            //Thread.sleep(3000);
 
             LogUtil.debug("启动 SDK ...");
             Thread sdkStarter = new Thread(new SdkStartTask());

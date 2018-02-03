@@ -6,26 +6,24 @@ import app.client.net.protocol.ResponseProtocol;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.gowild.protocol.SdkMsgType;
 import com.gowild.protocol.SdkTcp2DeviceProtocol;
-import com.gowild.sdktcp.metadata.pb.SdkBothMsgProto;
 import com.gowild.sdktcp.metadata.pb.SdkDownloadMsgProto;
-import com.gowild.sdktcp.metadata.pb.SdkUploadMsgProto;
 
-@Protocol(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_DEVICE_HEART_BEAT_S, type = ProtocolType.RESPONSE)
-public class S_DEVICE_HEART_BEAT extends ResponseProtocol{
+@Protocol(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_PUSH_ATTR_COMMAND_S, type = ProtocolType.RESPONSE)
+public class S_DEVICE_ATTR_COMMAND extends ResponseProtocol{
 
-    SdkDownloadMsgProto.SdkDeviceHeartBeatMsg heartBeatMsg;
+    SdkDownloadMsgProto.PushCommonCommandMsg pushCommonCommandMsg;
 
     @Override
     public boolean readBinaryData(){
         try {
-            heartBeatMsg = SdkDownloadMsgProto.SdkDeviceHeartBeatMsg.parseFrom(buffer.array());
+            pushCommonCommandMsg = SdkDownloadMsgProto.PushCommonCommandMsg.parseFrom(buffer.array());
         } catch (InvalidProtocolBufferException e) {
             e.printStackTrace();
         }
         return true;
     }
 
-    public SdkDownloadMsgProto.SdkDeviceHeartBeatMsg getHeartBeatMsg() {
-        return heartBeatMsg;
+    public SdkDownloadMsgProto.PushCommonCommandMsg getPushCommonCommandMsg() {
+        return pushCommonCommandMsg;
     }
 }

@@ -6,6 +6,7 @@ import app.client.net.protocol.RequestProtocol;
 import com.gowild.protocol.Device2SdkTcpProtocol;
 import com.gowild.protocol.SdkMsgType;
 import com.gowild.sdktcp.metadata.pb.SdkBothMsgProto;
+import com.gowild.sdktcp.metadata.pb.SdkUploadMsgProto;
 
 
 @Protocol(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Device2SdkTcpProtocol.SDK_DEVICE_LOGIN_C, type = ProtocolType.REQUSET)
@@ -20,17 +21,17 @@ public class C_DEVICE_LOGIN extends RequestProtocol{
      */
     private int deviceType;
     /**
-     * 设备MAC
+     * 设备第三方ID
      */
-    private String deviceMac;
-    /**
-     * 品牌信息
-     */
-    private String brand;
+    private String deviceId;
     /**
      * 登录时间
      */
     private long loginTime;
+    /**
+     * 设备唯一识别码
+     */
+    private String deviceSn;
     /**
      * 加密码
      */
@@ -39,13 +40,13 @@ public class C_DEVICE_LOGIN extends RequestProtocol{
 
     @Override
     public void writeBinaryData(){
-        SdkBothMsgProto.SdkDeviceLoginMsg.Builder build = SdkBothMsgProto.SdkDeviceLoginMsg.newBuilder();
+        SdkUploadMsgProto.SdkDeviceLoginMsg.Builder build = SdkUploadMsgProto.SdkDeviceLoginMsg.newBuilder();
         build.setUniqueCode(uniqueCode);
         build.setDeviceType(deviceType);
-        build.setDeviceMac(deviceMac);
-        build.setBrand(brand);
+        build.setDeviceId(deviceId);
         build.setLoginTime(loginTime);
-        build.setEncrypCode(encrypCode);
+        build.setDeviceSn(deviceSn);
+        build.setEncryptCode(encrypCode);
         byte[] bytes = build.build().toByteArray();
         for(byte b : bytes){
             writeByte(b);
@@ -68,20 +69,12 @@ public class C_DEVICE_LOGIN extends RequestProtocol{
         this.deviceType = deviceType;
     }
 
-    public String getDeviceMac() {
-        return deviceMac;
+    public String getDeviceId() {
+        return deviceId;
     }
 
-    public void setDeviceMac(String deviceMac) {
-        this.deviceMac = deviceMac;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
     }
 
     public long getLoginTime() {
@@ -90,6 +83,14 @@ public class C_DEVICE_LOGIN extends RequestProtocol{
 
     public void setLoginTime(long loginTime) {
         this.loginTime = loginTime;
+    }
+
+    public String getDeviceSn() {
+        return deviceSn;
+    }
+
+    public void setDeviceSn(String deviceSn) {
+        this.deviceSn = deviceSn;
     }
 
     public String getEncrypCode() {

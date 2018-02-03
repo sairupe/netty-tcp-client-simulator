@@ -44,7 +44,7 @@ public class DecodeUtils {
 		byte[] strData = new byte[length];
 		buffer.readBytes(strData);
 		try {
-			return new String(strData, "uft-8");
+			return new String(strData, "utf8");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}

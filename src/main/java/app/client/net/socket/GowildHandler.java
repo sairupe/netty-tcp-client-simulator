@@ -58,6 +58,7 @@ public final class GowildHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        LogUtil.error("============建立连接=============");
         long channelId = System.currentTimeMillis();
         UserSession userSession = new UserSession(ctx);
         userSession.setConnectStatus(ConnectStatus.CONNECTING);

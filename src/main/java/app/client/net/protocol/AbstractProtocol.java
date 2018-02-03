@@ -82,6 +82,11 @@ public abstract class AbstractProtocol{
         ProtocolUtils.writeBytes(buffer, byteBuf);
 	}
 
+	protected void writeBytes(byte[] bytes){
+		ProtocolUtils.writeBytes(buffer, bytes);
+	}
+
+
 	protected void writeByte(byte byteValue){
         ProtocolUtils.writeByte(buffer, byteValue);
 	}

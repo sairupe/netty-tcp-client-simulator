@@ -4,14 +4,14 @@ import app.client.net.annotation.Handler;
 import app.client.net.annotation.Receiver;
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.request.C_DEVICE_SIMULAR_COMMAND;
-import app.client.net.protocol.response.S_DEVICE_COMMON_COMMAND;
+import app.client.net.protocol.response.S_DEVICE_STATE_COMMAND;
 import app.client.service.AbstractServiceImpl;
 import app.client.user.session.UserSession;
 import com.gowild.core.util.LogUtil;
 import com.gowild.protocol.SdkMsgType;
 import com.gowild.protocol.SdkTcp2DeviceProtocol;
 import com.gowild.sdktcp.metadata.pb.SdkBothMsgProto;
-import com.gowild.sdktcp.metadata.pb.SdkS2SdkMsgProto;
+import com.gowild.sdktcp.metadata.pb.SdkDownloadMsgProto;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -67,25 +67,9 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
     }
 
     @Override
-    @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_SEND_COMMON_COMMAND_S)
-    public void receiveCommonCommand(S_DEVICE_COMMON_COMMAND response) {
-        SdkS2SdkMsgProto.PushCommonCommandMsg pushCommonCommandMsg = response.getPushCommonCommandMsg();
-        String versionCode = pushCommonCommandMsg.getVersionCode();
-        String voiceText = pushCommonCommandMsg.getVoiceText();
-        String des = "=======>>>> 收到公共控制指令，version_code:{" + versionCode + "} | voice_text:{" + voiceText + "} | \n";
-        StringBuilder sb = new StringBuilder(des);
-        List<SdkS2SdkMsgProto.SdkCommondCommandWrapperMsg> sdkCommondCommandWrapperMsgList
-                = pushCommonCommandMsg.getCmdListList();
-        for(SdkS2SdkMsgProto.SdkCommondCommandWrapperMsg sdkCommondCommandWrapperMsg : sdkCommondCommandWrapperMsgList){
-            sb.append("deviceSN:{" + sdkCommondCommandWrapperMsg.getDeviceSn() + "} | \n");
-            SdkBothMsgProto.SdkBaseCommandMsg baseCommandMsg = sdkCommondCommandWrapperMsg.getCommand();
-            sb.append("command: state:{" + baseCommandMsg.getState() + "} " +
-                    "| action:{" + baseCommandMsg.getAction() + "} " +
-                    "| type:{" + baseCommandMsg.getType() + "} " +
-                    "| value:{" + baseCommandMsg.getValue() + "} " +
-                    "| execTime:{" + baseCommandMsg.getExecTime() + "}");
-        }
-        LogUtil.debug(sb.toString());
+    @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_PUSH_STATE_COMMAND_S)
+    public void receiveStateCommand(S_DEVICE_STATE_COMMAND response) {
+        SdkDownloadMsgProto.PushCommonCommandMsg pushCommonCommandMsg = response.getPushCommonCommandMsg();
     }
 
 //    @Override

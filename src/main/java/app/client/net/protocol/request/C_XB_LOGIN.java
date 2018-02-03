@@ -24,6 +24,7 @@ public class C_XB_LOGIN extends RequestProtocol{
 
     private String bVersion;
     private String gifV1;
+    private String loginIp;
 
 
 
@@ -32,6 +33,7 @@ public class C_XB_LOGIN extends RequestProtocol{
         MiscXC2SMsgProto.LoginForXBCMsg.Builder loginForXBCMsg = MiscXC2SMsgProto.LoginForXBCMsg.newBuilder();
         loginForXBCMsg.setMac(mac);
         loginForXBCMsg.setSn(sn);
+        loginForXBCMsg.setIp(loginIp);
 
         MachineBothMsgProto.MachineInfoMsg.Builder builder = MachineBothMsgProto.MachineInfoMsg.newBuilder();
         builder.setVersionV2(versionV2);
@@ -39,6 +41,8 @@ public class C_XB_LOGIN extends RequestProtocol{
 
         builder.setBVersion(bVersion);
         builder.setGifV1(gifV1);
+        builder.setRobotPower(55);
+
 
         loginForXBCMsg.setMachineInfo(builder.build());
         byte[] array = loginForXBCMsg.build().toByteArray();
@@ -69,5 +73,9 @@ public class C_XB_LOGIN extends RequestProtocol{
 
     public void setGifV1(String gifV1) {
         this.gifV1 = gifV1;
+    }
+
+    public void setLoginIp(String loginIp) {
+        this.loginIp = loginIp;
     }
 }

@@ -6,24 +6,24 @@ import app.client.net.protocol.ResponseProtocol;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.gowild.protocol.SdkMsgType;
 import com.gowild.protocol.SdkTcp2DeviceProtocol;
-import com.gowild.sdktcp.metadata.pb.SdkS2SdkMsgProto;
+import com.gowild.sdktcp.metadata.pb.SdkDownloadMsgProto;
 
-@Protocol(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_SEND_COMMON_COMMAND_S, type = ProtocolType.RESPONSE)
-public class S_DEVICE_COMMON_COMMAND extends ResponseProtocol{
+@Protocol(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_PUSH_STATE_COMMAND_S, type = ProtocolType.RESPONSE)
+public class S_DEVICE_STATE_COMMAND extends ResponseProtocol{
 
-    SdkS2SdkMsgProto.PushCommonCommandMsg pushCommonCommandMsg;
+    SdkDownloadMsgProto.PushCommonCommandMsg pushCommonCommandMsg;
 
     @Override
     public boolean readBinaryData(){
         try {
-            pushCommonCommandMsg = SdkS2SdkMsgProto.PushCommonCommandMsg.parseFrom(buffer.array());
+            pushCommonCommandMsg = SdkDownloadMsgProto.PushCommonCommandMsg.parseFrom(buffer.array());
         } catch (InvalidProtocolBufferException e) {
             e.printStackTrace();
         }
         return true;
     }
 
-    public SdkS2SdkMsgProto.PushCommonCommandMsg getPushCommonCommandMsg() {
+    public SdkDownloadMsgProto.PushCommonCommandMsg getPushCommonCommandMsg() {
         return pushCommonCommandMsg;
     }
 }

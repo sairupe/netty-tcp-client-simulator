@@ -21,6 +21,7 @@ import com.gowild.core.util.HttpUtil;
 import com.gowild.protocol.SdkMsgType;
 import com.gowild.protocol.SdkTcp2DeviceProtocol;
 import com.gowild.sdktcp.metadata.pb.SdkBothMsgProto;
+import com.gowild.sdktcp.metadata.pb.SdkDownloadMsgProto;
 import org.json.JSONObject;
 
 import javax.annotation.Resource;
@@ -47,9 +48,9 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
                 userSession.getCtx());
         login.setUniqueCode("12315");
         login.setDeviceType(12315);
-        login.setDeviceMac("12315");
-        login.setBrand("12315");
+        login.setDeviceId("12315");
         login.setLoginTime(12315);
+        login.setDeviceSn("12315");
         login.setEncrypCode("12315");
 
         userSession.sendMsg(login);
@@ -74,7 +75,7 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
     @Override
     @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_DEVICE_HEART_BEAT_S)
     public void receivedHeartBeatResponse(S_DEVICE_HEART_BEAT response) {
-        SdkBothMsgProto.SdkDeviceHeartBeatMsg msg = response.getHeartBeatMsg();
+        SdkDownloadMsgProto.SdkDeviceHeartBeatMsg msg = response.getHeartBeatMsg();
         System.out.println("====== >>> SDK设备返回时间是 : " + msg.getServerTime() + " | "
                 + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(msg.getServerTime())));
     }
@@ -88,6 +89,9 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
     @Override
     @Handler(moduleId = SdkMsgType.XB_CLIENT_TYPE, sequenceId = 110)
     public void receivedXbHeartBeatResponse(S_XB_HEART_BEAT response) {
+        C_MACHINE_INFO_UPDATE info = ProtocolFactory.createRequestProtocol(C_MACHINE_INFO_UPDATE.class, response.getUserSession().getCtx());
+        info.setRobotPower((byte) 88);
+        response.getUserSession().sendMsg(info);
         System.out.println("====== >>> XB设备收到返回时间====");
     }
 
@@ -110,7 +114,8 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
     @Override
     public void xbLogin(UserSession userSession) {
         C_XB_LOGIN xbLogin = ProtocolFactory.createRequestProtocol(C_XB_LOGIN.class, userSession.getCtx());
-        xbLogin.setMac("94:a1:a2:f4:5d:d5");
+        //xbLogin.setMac("94:a1:a2:f3:ec:51");
+        xbLogin.setMac("94:a1:a2:f4:2f:fd");
         xbLogin.setSn("");
 
         xbLogin.setVersion("2.1.2");
@@ -118,6 +123,7 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
 
         xbLogin.setbVersion("119");
         xbLogin.setGifV1("157");
+        xbLogin.setLoginIp("116.24.65.206");
 
         userSession.sendMsg(xbLogin);
 

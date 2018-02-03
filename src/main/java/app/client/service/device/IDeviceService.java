@@ -23,5 +23,5 @@ public interface IDeviceService extends IService{
 //
 //    public void receiveAreaCmd(S_AREA_CMD response);
 
-      public void receiveCommonCommand(S_DEVICE_COMMON_COMMAND response);
+      public void receiveStateCommand(S_DEVICE_STATE_COMMAND response);
 }
