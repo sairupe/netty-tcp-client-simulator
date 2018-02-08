@@ -1,11 +1,12 @@
 package app.client.service.user;
 
 import app.client.net.annotation.Handler;
-import app.client.net.annotation.Protocol;
 import app.client.net.annotation.Receiver;
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.ResponseProtocol;
 import app.client.net.protocol.request.*;
+import app.client.net.protocol.request.sdk.C_DEVICE_HEART_BEAT;
+import app.client.net.protocol.request.sdk.C_DEVICE_LOGIN;
 import app.client.net.protocol.response.S_APP_HEART_BEAT;
 import app.client.net.protocol.response.S_DEVICE_HEART_BEAT;
 import app.client.net.protocol.response.S_DEVICE_LOGIN_RESULT;
@@ -69,7 +70,7 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
         SdkBothMsgProto.SdkCommonResponseMsg commonResponseMsg = response.getCommonResponseMsg();
         System.out.println("====== >>> SDK设备登录返回码是 : " + commonResponseMsg.getCode());
 
-        deviceServiceImpl.sendSimularCmd(response.getUserSession());
+        //deviceServiceImpl.sendSimularCmd(response.getUserSession());
     }
 
     @Override

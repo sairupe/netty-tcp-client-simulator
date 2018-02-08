@@ -1,7 +1,9 @@
 package app.client.service.device;
 
-import app.client.net.protocol.ResponseProtocol;
-import app.client.net.protocol.response.*;
+import app.client.net.protocol.response.sdk.S_ADD_DEVICE_RESULT;
+import app.client.net.protocol.response.sdk.S_DEVICE_ATTR_COMMAND;
+import app.client.net.protocol.response.sdk.S_DEVICE_MODE_COMMAND;
+import app.client.net.protocol.response.sdk.S_DEVICE_STATE_COMMAND;
 import app.client.service.IService;
 import app.client.user.session.UserSession;
 
@@ -23,5 +25,12 @@ public interface IDeviceService extends IService{
 //
 //    public void receiveAreaCmd(S_AREA_CMD response);
 
-      public void receiveStateCommand(S_DEVICE_STATE_COMMAND response);
+    public void receiveStateCommand(S_DEVICE_STATE_COMMAND response);
+
+    public void receiveAttrCommand(S_DEVICE_ATTR_COMMAND response);
+
+    public void receiveModeCommand(S_DEVICE_MODE_COMMAND response);
+
+    public void receiveAddMasterBindDeviceResult(S_ADD_DEVICE_RESULT response);
+
 }

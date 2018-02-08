@@ -1,4 +1,4 @@
-package app.client.net.protocol.request;
+package app.client.net.protocol.request.sdk;
 
 import app.client.net.annotation.Protocol;
 import app.client.net.protocol.ProtocolType;

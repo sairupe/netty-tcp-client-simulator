@@ -1,4 +1,4 @@
-package app.client.net.protocol.request;
+package app.client.net.protocol.request.sdk;
 
 import app.client.net.annotation.Protocol;
 import app.client.net.protocol.ProtocolType;
@@ -40,6 +40,9 @@ public class C_DEVICE_LOGIN extends RequestProtocol{
 
     @Override
     public void writeBinaryData(){
+
+
+
         SdkUploadMsgProto.SdkDeviceLoginMsg.Builder build = SdkUploadMsgProto.SdkDeviceLoginMsg.newBuilder();
         build.setUniqueCode(uniqueCode);
         build.setDeviceType(deviceType);

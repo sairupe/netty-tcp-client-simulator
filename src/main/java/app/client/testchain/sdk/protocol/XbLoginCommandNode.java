@@ -1,7 +1,6 @@
 package app.client.testchain.sdk.protocol;
 
 import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.request.C_DEVICE_LOGIN;
 import app.client.net.protocol.request.C_XB_LOGIN;
 import app.client.testchain.ProtocolListenNode;
 

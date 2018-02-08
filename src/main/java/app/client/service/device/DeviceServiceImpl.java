@@ -3,11 +3,15 @@ package app.client.service.device;
 import app.client.net.annotation.Handler;
 import app.client.net.annotation.Receiver;
 import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.request.C_DEVICE_SIMULAR_COMMAND;
-import app.client.net.protocol.response.S_DEVICE_STATE_COMMAND;
+import app.client.net.protocol.request.sdk.C_DEVICE_SIMULAR_COMMAND;
+import app.client.net.protocol.response.sdk.S_DEVICE_ATTR_COMMAND;
+import app.client.net.protocol.response.sdk.S_DEVICE_MODE_COMMAND;
+import app.client.net.protocol.response.sdk.S_DEVICE_STATE_COMMAND;
+import app.client.net.protocol.response.sdk.S_ADD_DEVICE_RESULT;
 import app.client.service.AbstractServiceImpl;
 import app.client.user.session.UserSession;
-import com.gowild.core.util.LogUtil;
+import com.google.protobuf.ProtocolStringList;
+import com.gowild.basic.constant.SdkConstant;
 import com.gowild.protocol.SdkMsgType;
 import com.gowild.protocol.SdkTcp2DeviceProtocol;
 import com.gowild.sdktcp.metadata.pb.SdkBothMsgProto;
@@ -69,7 +73,126 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
     @Override
     @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_PUSH_STATE_COMMAND_S)
     public void receiveStateCommand(S_DEVICE_STATE_COMMAND response) {
+        System.out.println("=============>> 收到状态控制指令");
         SdkDownloadMsgProto.PushCommonCommandMsg pushCommonCommandMsg = response.getPushCommonCommandMsg();
+        List<SdkBothMsgProto.SdkCommandWrapperMsg> sdkCommandWrapperMsgList =  pushCommonCommandMsg.getCmdWrappersList();
+        for(SdkBothMsgProto.SdkCommandWrapperMsg sdkCommandWrapperMsg : sdkCommandWrapperMsgList){
+            SdkBothMsgProto.SdkCommandDeviceMsg typeDevice = sdkCommandWrapperMsg.getTypeDevice();
+            StringBuilder sb = new StringBuilder();
+            int deviceType = typeDevice.getDeviceType();
+            sb.append("deviceType:" + deviceType + "|");
+            ProtocolStringList ids = typeDevice.getDeviceIdListList();
+            sb.append("deviceIds:" + deviceType + "|");
+            for(String id : ids){
+                sb.append(id + "|");
+            }
+            SdkBothMsgProto.SdkCommandParamMsg cmdParams = sdkCommandWrapperMsg.getCmdParams();
+            int attrValueType = cmdParams.getAttrValueType();
+            String attrValue = cmdParams.getAttrValue();
+            sb.append("attrValueType:" + attrValueType + " | attrValue:" + attrValue);
+            SdkBothMsgProto.SdkBaseCommandMsg baseCommand = sdkCommandWrapperMsg.getBaseCommand();
+            int mainType = baseCommand.getMainTypeId();
+            int subType = baseCommand.getSubTypeId();
+
+            String action = baseCommand.getAction();
+            String attr = baseCommand.getAttr();
+            String attrValueTypeStr = baseCommand.getAttrValueType();
+            attrValue = baseCommand.getAttrValue();
+            String mode = baseCommand.getMode();
+
+            long execTime = baseCommand.getExecTime();
+            sb.append("mainType :" + mainType + " | subType:" + subType + "|");
+            sb.append("action :" + action + " | attr:" + attr + "| attrValueTypeStr:" + attrValueTypeStr
+                    + " | attrValue:" + attrValue + " | mode:" + mode);
+            System.out.println(sb.toString());
+            System.out.println("====================华丽的分割线======================");
+        }
+    }
+
+    @Override
+    @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_PUSH_ATTR_COMMAND_S)
+    public void receiveAttrCommand(S_DEVICE_ATTR_COMMAND response) {
+        System.out.println("=============>> 收到属性制指令");
+        SdkDownloadMsgProto.PushCommonCommandMsg pushCommonCommandMsg = response.getPushCommonCommandMsg();
+        List<SdkBothMsgProto.SdkCommandWrapperMsg> sdkCommandWrapperMsgList =  pushCommonCommandMsg.getCmdWrappersList();
+        for(SdkBothMsgProto.SdkCommandWrapperMsg sdkCommandWrapperMsg : sdkCommandWrapperMsgList){
+            SdkBothMsgProto.SdkCommandDeviceMsg typeDevice = sdkCommandWrapperMsg.getTypeDevice();
+            StringBuilder sb = new StringBuilder();
+            int deviceType = typeDevice.getDeviceType();
+            sb.append("deviceType:" + deviceType + "|");
+            ProtocolStringList ids = typeDevice.getDeviceIdListList();
+            sb.append("deviceIds:" + deviceType + "|");
+            for(String id : ids){
+                sb.append(id + "|");
+            }
+            SdkBothMsgProto.SdkCommandParamMsg cmdParams = sdkCommandWrapperMsg.getCmdParams();
+            int attrValueType = cmdParams.getAttrValueType();
+            String attrValue = cmdParams.getAttrValue();
+            sb.append("attrValueType:" + attrValueType + " | attrValue:" + attrValue);
+            SdkBothMsgProto.SdkBaseCommandMsg baseCommand = sdkCommandWrapperMsg.getBaseCommand();
+            int mainType = baseCommand.getMainTypeId();
+            int subType = baseCommand.getSubTypeId();
+
+            String action = baseCommand.getAction();
+            String attr = baseCommand.getAttr();
+            String attrValueTypeStr = baseCommand.getAttrValueType();
+            attrValue = baseCommand.getAttrValue();
+            String mode = baseCommand.getMode();
+
+            long execTime = baseCommand.getExecTime();
+            sb.append("mainType :" + mainType + " | subType:" + subType + "|");
+            sb.append("action :" + action + " | attr:" + attr + "| attrValueTypeStr:" + attrValueTypeStr
+                    + " | attrValue:" + attrValue + " | mode:" + mode);
+            System.out.println(sb.toString());
+            System.out.println("====================华丽的分割线======================");
+        }
+    }
+
+    @Override
+    @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_PUSH_MODE_COMMAND_S)
+    public void receiveModeCommand(S_DEVICE_MODE_COMMAND response) {
+        System.out.println("=============>> 收到模式控制指令");
+        SdkDownloadMsgProto.PushCommonCommandMsg pushCommonCommandMsg = response.getPushCommonCommandMsg();
+        List<SdkBothMsgProto.SdkCommandWrapperMsg> sdkCommandWrapperMsgList =  pushCommonCommandMsg.getCmdWrappersList();
+        for(SdkBothMsgProto.SdkCommandWrapperMsg sdkCommandWrapperMsg : sdkCommandWrapperMsgList){
+            SdkBothMsgProto.SdkCommandDeviceMsg typeDevice = sdkCommandWrapperMsg.getTypeDevice();
+            StringBuilder sb = new StringBuilder();
+            int deviceType = typeDevice.getDeviceType();
+            sb.append("deviceType:" + deviceType + "|");
+            ProtocolStringList ids = typeDevice.getDeviceIdListList();
+            sb.append("deviceIds:" + deviceType + "|");
+            for(String id : ids){
+                sb.append(id + "|");
+            }
+            SdkBothMsgProto.SdkCommandParamMsg cmdParams = sdkCommandWrapperMsg.getCmdParams();
+            int attrValueType = cmdParams.getAttrValueType();
+            String attrValue = cmdParams.getAttrValue();
+            sb.append("attrValueType:" + attrValueType + " | attrValue:" + attrValue);
+            SdkBothMsgProto.SdkBaseCommandMsg baseCommand = sdkCommandWrapperMsg.getBaseCommand();
+            int mainType = baseCommand.getMainTypeId();
+            int subType = baseCommand.getSubTypeId();
+
+            String action = baseCommand.getAction();
+            String attr = baseCommand.getAttr();
+            String attrValueTypeStr = baseCommand.getAttrValueType();
+            attrValue = baseCommand.getAttrValue();
+            String mode = baseCommand.getMode();
+
+            long execTime = baseCommand.getExecTime();
+            sb.append("mainType :" + mainType + " | subType:" + subType + "|");
+            sb.append("action :" + action + " | attr:" + attr + "| attrValueTypeStr:" + attrValueTypeStr
+                    + " | attrValue:" + attrValue + " | mode:" + mode);
+            System.out.println(sb.toString());
+            System.out.println("====================华丽的分割线======================");
+        }
+
+    }
+
+    @Override
+    @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_MASTER_BIND_DEVICES_RESULT_S)
+    public void receiveAddMasterBindDeviceResult(S_ADD_DEVICE_RESULT response) {
+        SdkBothMsgProto.SdkCommonResponseMsg msg = response.getCommonResponseMsg();
+        System.out.println("====== >>> SDK增加主机绑定设备返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
     }
 
 //    @Override

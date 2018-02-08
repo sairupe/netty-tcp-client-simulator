@@ -1,11 +1,9 @@
 package app.client.testchain.sdk.protocol;
 
 import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.request.C_DEVICE_LOGIN;
-import app.client.net.protocol.request.C_DEVICE_SIMULAR_COMMAND;
+import app.client.net.protocol.request.sdk.C_DEVICE_LOGIN;
 import app.client.testchain.ProtocolListenNode;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import app.client.utils.CommonUtil;
 
 /**
  * Created by zh on 2017/11/21.
@@ -22,6 +20,8 @@ public class SdkLoginCommandNode extends ProtocolListenNode {
         login.setDeviceSn("12315");
         login.setEncrypCode("12315");
         userSession.sendMsg(login);
+        // 登录协议后面跟着的协议马上发送会报错，现在临时暂停线程500MS
+        CommonUtil.threadPause();
     }
 
     @Override

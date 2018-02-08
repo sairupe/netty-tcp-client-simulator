@@ -1,14 +1,15 @@
-package app.client.net.protocol.request;
+package app.client.net.protocol.request.sdk;
 
 import app.client.net.annotation.Protocol;
 import app.client.net.protocol.ProtocolType;
 import app.client.net.protocol.RequestProtocol;
 import com.gowild.protocol.Device2SdkTcpProtocol;
 import com.gowild.protocol.SdkMsgType;
+import com.gowild.protocol.XbTcp2SdkTcpProtocol;
 import com.gowild.sdktcp.metadata.pb.BaseBothMsgProto;
 
 
-@Protocol(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Device2SdkTcpProtocol.SDK_SIMULAR_SEMANTIC_COMMAND_C, type = ProtocolType.REQUSET)
+@Protocol(moduleId = SdkMsgType.XB_CLIENT_TYPE, sequenceId = XbTcp2SdkTcpProtocol.SDK_RECEIVED_DEVICE_VOICE_COMMAND, type = ProtocolType.REQUSET)
 public class C_DEVICE_SIMULAR_COMMAND extends RequestProtocol{
 
     /**

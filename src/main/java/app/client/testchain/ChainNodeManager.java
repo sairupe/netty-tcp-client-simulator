@@ -2,14 +2,15 @@ package app.client.testchain;
 
 import app.client.net.dispacher.DispacherManager;
 import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.request.C_DEVICE_HEART_BEAT;
+import app.client.net.protocol.request.sdk.C_DEVICE_HEART_BEAT;
 import app.client.net.protocol.response.S_DEVICE_LOGIN_RESULT;
+import app.client.net.protocol.response.sdk.S_ADD_DEVICE_RESULT;
 import app.client.net.task.SdkDeviceHeartBeatTask;
 import app.client.net.task.TaskManager;
 import app.client.testchain.sdk.db.BaseDbInfoInsertNode;
+import app.client.testchain.sdk.protocol.SdkAddDeviceCommandNode;
 import app.client.testchain.sdk.protocol.SdkLoginCommandNode;
 import app.client.testchain.sdk.protocol.SimularCommandNode;
-import app.client.testchain.sdk.protocol.XbLoginCommandNode;
 import app.client.user.session.UserSession;
 
 import java.sql.Connection;
@@ -75,10 +76,12 @@ public class ChainNodeManager {
         startingChainNode = new BaseDbInfoInsertNode();
         startingChainNode.setVar(userSession, con);
         startingChainNode.addLastNext(new SdkLoginCommandNode());
+        startingChainNode.addLastNext(new SdkAddDeviceCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
+        startingChainNode.addLastNext(new SimularCommandNode().registListenProtocol(S_ADD_DEVICE_RESULT.class));
         DispacherManager.getInstance().setChainNode(startingChainNode);
         startingChainNode.start(userSession, con);
-        C_DEVICE_HEART_BEAT heartBeat = ProtocolFactory.createRequestProtocol(C_DEVICE_HEART_BEAT.class,userSession.getCtx());
-        SdkDeviceHeartBeatTask task = new SdkDeviceHeartBeatTask(userSession.getCtx(), heartBeat);
-        TaskManager.getInstance().addTickTask(task, 2, 5, TimeUnit.SECONDS);
+//        C_DEVICE_HEART_BEAT heartBeat = ProtocolFactory.createRequestProtocol(C_DEVICE_HEART_BEAT.class,userSession.getCtx());
+//        SdkDeviceHeartBeatTask task = new SdkDeviceHeartBeatTask(userSession.getCtx(), heartBeat);
+//        TaskManager.getInstance().addTickTask(task, 2, 5, TimeUnit.SECONDS);
     }
 }

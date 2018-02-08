@@ -1,9 +1,10 @@
 package app.client.testchain.sdk.protocol;
 
 import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.request.C_DEVICE_SIMULAR_COMMAND;
-import app.client.testchain.AbstractChainNode;
+import app.client.net.protocol.request.sdk.C_DEVICE_SIMULAR_COMMAND;
 import app.client.testchain.ProtocolListenNode;
+import app.client.testchain.sdk.SdkTestConst;
+import com.gowild.basic.enums.DeviceTypeEnum;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -13,44 +14,99 @@ import org.json.JSONObject;
 public class SimularCommandNode extends ProtocolListenNode {
     @Override
     public void doExecute() {
+
+//        {
+//            "bindMasterId":1,
+//                "code":"deviceWithName",
+//                "params":{
+//            "deviceName":"苹果！"
+//        },
+//            "deviceGroupByType":[
+//            {
+//                "deviceType":1,
+//                    "deviceInfo":[
+//                {
+//                    "deviceId":123,
+//                        "deviceName":"设备名字"
+//                }
+//                  ],
+//                "cmdConstruct":{
+//                "a":"a"
+//            }
+//            }
+//             ]
+//        }
+
+        String testStr = "{\"bindMasterId\":1,\"code\":\"deviceWithName\",\"params\":{\"deviceName\":\"苹果！\"},\"deviceGroupByType\":[{\"deviceType\":1,\"deviceInfo\":[{\"deviceId\":123,\"deviceName\":\"设备名字\"}],\"cmdConstruct\":{\"a\":\"a\"}}]}";
+
+
         // 发送模拟指令
-        JSONObject object = new JSONObject();
-        String uid = "";
-        String text = "这是一个模拟测试指令";
-        String expression = "";
-        String mood = "";
+        JSONObject cmdJson = new JSONObject(testStr);
+        int bindMasterId = SdkTestConst.BIND_MASTER_ID;
+        int firstDeviceId = SdkTestConst.FIRST_DEVICE_ID;
+        int secondDeviceId = SdkTestConst.SENDCOND_DEVICE_ID;
 
-        JSONObject funcObj = new JSONObject();
-        JSONArray details = new JSONArray();
-        JSONObject detailObj = new JSONObject();
+        String firstDeviceName = SdkTestConst.FIRST_DEVICE_NAME;
+        String secondDeviceName = SdkTestConst.SENDCOND_DEVICE_NAME;
 
-        String state = "OFF";
-        String action = "";
-        String op_type = "STATE";
-        String value = "";
+        String operationType = "MODE";
+        String mainType = "ATTRIBUTE_BRIGHTNESS";
+        String subType = "ATTR_MAX";
+
+        String act = "ACTION_TO";
+        String mode = "";
+        String attr = "ATTRIBUTE_BRIGHTNESS";
+        String attrValueType = "SPECIEL";
+        String attrValue = "VALUE_MAX";
         int execTime = 0;
 
-        object.put("uid", uid);
-        object.put("text", text);
-        object.put("expression", expression);
-        object.put("mood", mood);
-        object.put("func", funcObj);
 
-        funcObj.put("type", op_type);
-        funcObj.put("details", details);
 
-        detailObj.put("code", "device");
-        detailObj.put("name", "雪梨");
-        detailObj.put("state", state);
-        detailObj.put("action", action);
-        detailObj.put("type", op_type);
-        detailObj.put("value", value);
-        detailObj.put("execTime", execTime);
+        cmdJson.put("bindMasterId", bindMasterId);
+        cmdJson.put("code","deviceWithName");
+        JSONObject params = new JSONObject();
+        params.put("deviceName", "苹果");
+        cmdJson.put("params", params);
 
-        details.put(detailObj);
+        JSONArray deviceGroupByType = new JSONArray();
+        JSONObject deviceNode = new JSONObject();
+        deviceNode.put("deviceType", DeviceTypeEnum.LIGHT.getDeviceType());
+        JSONArray deviceInfo = new JSONArray();
+        JSONObject deviceFirst = new JSONObject();
+        deviceFirst.put("deviceId", firstDeviceId);
+        deviceFirst.put("deviceName", firstDeviceName);
+        JSONObject deviceSecond = new JSONObject();
+        deviceSecond.put("deviceId", secondDeviceId);
+        deviceSecond.put("deviceName", secondDeviceName);
+        deviceInfo.put(deviceFirst);
+        deviceInfo.put(deviceSecond);
+        deviceNode.put("deviceInfo", deviceInfo);
+
+        JSONObject cmdConstruct = new JSONObject();
+        cmdConstruct.put("operationType", operationType);
+        cmdConstruct.put("mainType", mainType);
+        cmdConstruct.put("subType", subType);
+
+        cmdConstruct.put("act", act);
+        cmdConstruct.put("mode", mode);
+        cmdConstruct.put("attr", attr);
+        cmdConstruct.put("attrValueType", attrValueType);
+        cmdConstruct.put("attrValue", attrValue);
+        cmdConstruct.put("execTime", execTime);
+        deviceNode.put("cmdConstruct", cmdConstruct);
+
+        // 整体元素
+        deviceGroupByType.put(deviceNode);
+        cmdJson.put("deviceGroupByType", deviceGroupByType);
 
         C_DEVICE_SIMULAR_COMMAND command = ProtocolFactory.createRequestProtocol(C_DEVICE_SIMULAR_COMMAND.class, userSession.getCtx());
-        command.setSemanticCommand(object.toString());
+        String str = cmdJson.toString();
+        command.setSemanticCommand(str);
         userSession.sendMsg(command);
+    }
+
+    @Override
+    public boolean canExecuteImmediately() {
+        return true;
     }
 }

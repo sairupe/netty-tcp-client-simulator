@@ -3,9 +3,11 @@ package app.client.testchain;
 import app.client.net.annotation.Protocol;
 import app.client.net.protocol.ResponseProtocol;
 import app.client.user.session.UserSession;
+import app.client.utils.CommonUtil;
 import com.gowild.core.util.LogUtil;
 
 import java.sql.Connection;
+import java.util.Collections;
 
 /**
  * Created by zh on 2017/11/21.
@@ -51,6 +53,7 @@ public abstract class AbstractChainNode implements IChainNode {
         doExecute();
         nextNode = next();
         if(nextNode != null && nextNode.canExecuteImmediately()){
+            CommonUtil.threadPause();
             nextNode.execute();
         }
     }
