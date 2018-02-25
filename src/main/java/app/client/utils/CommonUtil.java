@@ -7,7 +7,7 @@ public class CommonUtil {
 
     public static void threadPause(){
         try {
-            Thread.sleep(2000);
+            Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

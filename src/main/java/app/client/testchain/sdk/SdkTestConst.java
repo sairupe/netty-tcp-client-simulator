@@ -5,10 +5,16 @@ package app.client.testchain.sdk;
  */
 public class SdkTestConst {
 
-    public static final int BIND_MASTER_ID = 1;
-    public static final int FIRST_DEVICE_ID = 80;
-    public static final int SENDCOND_DEVICE_ID = 81;
+    public static final int BIND_MASTER_ID = 6;
+    public static final int FIRST_DEVICE_ID = 7;
+    public static final int SECOND_DEVICE_ID = 8;
 
-    public static final String FIRST_DEVICE_NAME = "FIRST_DEVICE";
-    public static final String SENDCOND_DEVICE_NAME = "SECOND_DEVICE";
+    public static final String FIRST_DEVICE_UID = "12315-1";
+    public static final String SECOND_DEVICE_UID = "12315-2";
+
+    public static final String FIRST_DEVICE_NAME = FIRST_DEVICE_UID;
+    public static final String SECOND_DEVICE_NAME = SECOND_DEVICE_UID;
+
+    public static final String FIRST_DEVICE_SN = FIRST_DEVICE_UID;
+    public static final String SECOND_DEVICE_SN = SECOND_DEVICE_UID;
 }

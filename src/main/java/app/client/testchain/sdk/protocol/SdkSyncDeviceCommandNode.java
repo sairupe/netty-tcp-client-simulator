@@ -2,7 +2,7 @@ package app.client.testchain.sdk.protocol;
 
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.request.sdk.C_BIND_DEVICE_C;
-import app.client.net.protocol.request.sdk.C_DEVICE_LOGIN;
+import app.client.net.protocol.request.sdk.C_SYNC_DEVICE_C;
 import app.client.net.protocol.request.sdk.vo.AddDeviceInfoVo;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by zh on 2017/11/21.
  */
-public class SdkAddDeviceCommandNode extends ProtocolListenNode {
+public class SdkSyncDeviceCommandNode extends ProtocolListenNode {
     @Override
     public void doExecute() {
 
@@ -53,7 +53,7 @@ public class SdkAddDeviceCommandNode extends ProtocolListenNode {
         addDeviceInfoVoList.add(addDeviceInfoVo1);
         addDeviceInfoVoList.add(addDeviceInfoVo2);
 
-        C_BIND_DEVICE_C addDevices = ProtocolFactory.createRequestProtocol(C_BIND_DEVICE_C.class,
+        C_SYNC_DEVICE_C addDevices = ProtocolFactory.createRequestProtocol(C_SYNC_DEVICE_C.class,
                 userSession.getCtx());
         addDevices.setAddDeviceInfoVoList(addDeviceInfoVoList);
         userSession.sendMsg(addDevices);

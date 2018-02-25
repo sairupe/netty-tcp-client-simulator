@@ -4,10 +4,12 @@ import app.client.net.annotation.Handler;
 import app.client.net.annotation.Receiver;
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.request.sdk.C_DEVICE_SIMULAR_COMMAND;
+import app.client.net.protocol.response.sdk.S_DELETE_DEVICE_RESULT;
 import app.client.net.protocol.response.sdk.S_DEVICE_ATTR_COMMAND;
 import app.client.net.protocol.response.sdk.S_DEVICE_MODE_COMMAND;
 import app.client.net.protocol.response.sdk.S_DEVICE_STATE_COMMAND;
 import app.client.net.protocol.response.sdk.S_ADD_DEVICE_RESULT;
+import app.client.net.protocol.response.sdk.S_SYNC_DEVICE_RESULT;
 import app.client.service.AbstractServiceImpl;
 import app.client.user.session.UserSession;
 import com.google.protobuf.ProtocolStringList;
@@ -192,7 +194,21 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
     @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_MASTER_BIND_DEVICES_RESULT_S)
     public void receiveAddMasterBindDeviceResult(S_ADD_DEVICE_RESULT response) {
         SdkBothMsgProto.SdkCommonResponseMsg msg = response.getCommonResponseMsg();
-        System.out.println("====== >>> SDK增加主机绑定设备返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
+        System.out.println("====== >>> SDK【增加】主机绑定设备返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
+    }
+
+    @Override
+    @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_DELETE_MASTER_BIND_DEVICE_RESULT_S)
+    public void receiveDeleteMasterBindDeviceResult(S_DELETE_DEVICE_RESULT response) {
+        SdkBothMsgProto.SdkCommonResponseMsg msg = response.getCommonResponseMsg();
+        System.out.println("====== >>> SDK【删除】主机绑定设备返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
+    }
+
+    @Override
+    @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_SYNC_DEVICE_RESULT_S)
+    public void receiveSyncMasterBindDeviceResult(S_SYNC_DEVICE_RESULT response) {
+        SdkBothMsgProto.SdkCommonResponseMsg msg = response.getCommonResponseMsg();
+        System.out.println("====== >>> SDK【同步】主机绑定设备返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
     }
 
 //    @Override

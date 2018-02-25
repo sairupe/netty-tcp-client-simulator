@@ -44,10 +44,10 @@ public class SimularCommandNode extends ProtocolListenNode {
         JSONObject cmdJson = new JSONObject(testStr);
         int bindMasterId = SdkTestConst.BIND_MASTER_ID;
         int firstDeviceId = SdkTestConst.FIRST_DEVICE_ID;
-        int secondDeviceId = SdkTestConst.SENDCOND_DEVICE_ID;
+        int secondDeviceId = SdkTestConst.SECOND_DEVICE_ID;
 
         String firstDeviceName = SdkTestConst.FIRST_DEVICE_NAME;
-        String secondDeviceName = SdkTestConst.SENDCOND_DEVICE_NAME;
+        String secondDeviceName = SdkTestConst.SECOND_DEVICE_NAME;
 
         String operationType = "MODE";
         String mainType = "ATTRIBUTE_BRIGHTNESS";

@@ -7,7 +7,9 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import app.client.net.annotation.Handler;
+import app.client.net.annotation.Protocol;
 import app.client.net.annotation.Receiver;
+import app.client.net.protocol.RequestProtocol;
 import app.client.net.protocol.ResponseProtocol;
 import app.client.service.IService;
 import app.client.testchain.IChainNode;
@@ -41,16 +43,33 @@ public class DispacherManager {
 					ServiceManager.addIServiceInstance(receiverImpl);
 					Method[] methods = clz.getDeclaredMethods();
 					for (Method method : methods) {
-						Handler handler = method.getAnnotation(Handler.class);
-						if (handler != null) {
-							ProtocolHandlerHolder holder = new ProtocolHandlerHolder();
-                            int moduleId = handler.moduleId();
-                            int sequenceId = handler.sequenceId();
-                            int key = ClientUtil.buildProtocolKey(moduleId,
-                                    sequenceId);
-							holder.setMethod(method);
-							holder.setServiceImpl(receiverImpl);
-                            protocolId2Method.put(key, holder);
+//						Handler handler = method.getAnnotation(Handler.class);
+//						if (handler != null) {
+//							ProtocolHandlerHolder holder = new ProtocolHandlerHolder();
+//                            int moduleId = handler.moduleId();
+//                            int sequenceId = handler.sequenceId();
+//                            int key = ClientUtil.buildProtocolKey(moduleId,
+//                                    sequenceId);
+//							holder.setMethod(method);
+//							holder.setServiceImpl(receiverImpl);
+//                            protocolId2Method.put(key, holder);
+//						}
+						// 直接拿第一个参数协议判断
+						Class<?>[] params = method.getParameterTypes();
+						if(params != null && params.length > 0){
+							Class<?> firstParam = params[0];
+							if(ResponseProtocol.class.isAssignableFrom(firstParam)){
+								Protocol protocol = firstParam.getAnnotation(Protocol.class);
+								if(protocol != null){
+									int moduleId = protocol.moduleId();
+									int sequenceId = protocol.sequenceId();
+									int key = ClientUtil.buildProtocolKey(moduleId,sequenceId);
+									ProtocolHandlerHolder holder = new ProtocolHandlerHolder();
+									holder.setMethod(method);
+									holder.setServiceImpl(receiverImpl);
+									protocolId2Method.put(key, holder);
+								}
+							}
 						}
 					}
 				}

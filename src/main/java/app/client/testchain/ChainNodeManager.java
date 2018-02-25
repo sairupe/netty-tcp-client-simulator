@@ -9,7 +9,9 @@ import app.client.net.task.SdkDeviceHeartBeatTask;
 import app.client.net.task.TaskManager;
 import app.client.testchain.sdk.db.BaseDbInfoInsertNode;
 import app.client.testchain.sdk.protocol.SdkAddDeviceCommandNode;
+import app.client.testchain.sdk.protocol.SdkDeleteDeviceCommandNode;
 import app.client.testchain.sdk.protocol.SdkLoginCommandNode;
+import app.client.testchain.sdk.protocol.SdkSyncDeviceCommandNode;
 import app.client.testchain.sdk.protocol.SimularCommandNode;
 import app.client.user.session.UserSession;
 
@@ -75,9 +77,18 @@ public class ChainNodeManager {
         // SDK模拟登陆
         startingChainNode = new BaseDbInfoInsertNode();
         startingChainNode.setVar(userSession, con);
+        // 登录指令
         startingChainNode.addLastNext(new SdkLoginCommandNode());
-        startingChainNode.addLastNext(new SdkAddDeviceCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
-        startingChainNode.addLastNext(new SimularCommandNode().registListenProtocol(S_ADD_DEVICE_RESULT.class));
+        // 同步设备指令
+        startingChainNode.addLastNext(new SdkSyncDeviceCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
+        // 添加设备指令
+//        startingChainNode.addLastNext(new SdkAddDeviceCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
+        // 删除设备指令
+//        startingChainNode.addLastNext(new SdkDeleteDeviceCommandNode().registListenProtocol(S_ADD_DEVICE_RESULT.class));
+
+
+        // 模拟命令指令
+        //startingChainNode.addLastNext(new SimularCommandNode().registListenProtocol(S_ADD_DEVICE_RESULT.class));
         DispacherManager.getInstance().setChainNode(startingChainNode);
         startingChainNode.start(userSession, con);
 //        C_DEVICE_HEART_BEAT heartBeat = ProtocolFactory.createRequestProtocol(C_DEVICE_HEART_BEAT.class,userSession.getCtx());

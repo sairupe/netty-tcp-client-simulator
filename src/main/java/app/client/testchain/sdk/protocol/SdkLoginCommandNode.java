@@ -13,7 +13,7 @@ public class SdkLoginCommandNode extends ProtocolListenNode {
     public void doExecute() {
         C_DEVICE_LOGIN login = ProtocolFactory.createRequestProtocol(C_DEVICE_LOGIN.class,
                 userSession.getCtx());
-        login.setUniqueCode("12315");
+        login.setUniqueCode("12355");
         login.setDeviceType(12315);
         login.setDeviceId("12315");
         login.setLoginTime(12315);

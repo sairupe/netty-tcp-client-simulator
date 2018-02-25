@@ -4,9 +4,6 @@ import app.client.net.annotation.Protocol;
 import app.client.net.protocol.ProtocolType;
 import app.client.net.protocol.RequestProtocol;
 import app.client.net.protocol.request.sdk.vo.AddDeviceInfoVo;
-import app.client.utils.CommonUtil;
-import com.gowild.basic.constant.SdkConstant;
-import com.gowild.basic.enums.DeviceTypeEnum;
 import com.gowild.core.util.StringUtil;
 import com.gowild.protocol.Device2SdkTcpProtocol;
 import com.gowild.protocol.SdkMsgType;
@@ -15,8 +12,8 @@ import com.gowild.sdktcp.metadata.pb.SdkUploadMsgProto;
 import java.util.List;
 
 
-@Protocol(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Device2SdkTcpProtocol.SDK_BIND_DEVICE_C, type = ProtocolType.REQUSET)
-public class C_BIND_DEVICE_C extends RequestProtocol{
+@Protocol(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Device2SdkTcpProtocol.SDK_SYNC_DEVICE_C, type = ProtocolType.REQUSET)
+public class C_SYNC_DEVICE_C extends RequestProtocol{
 
     private List<AddDeviceInfoVo> addDeviceInfoVoList;
 
