@@ -1,24 +1,15 @@
 package app.client.testchain;
 
 import app.client.net.dispacher.DispacherManager;
-import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.request.sdk.C_DEVICE_HEART_BEAT;
 import app.client.net.protocol.response.S_DEVICE_LOGIN_RESULT;
-import app.client.net.protocol.response.sdk.S_ADD_DEVICE_RESULT;
-import app.client.net.task.SdkDeviceHeartBeatTask;
-import app.client.net.task.TaskManager;
 import app.client.testchain.sdk.db.BaseDbInfoInsertNode;
-import app.client.testchain.sdk.protocol.SdkAddDeviceCommandNode;
-import app.client.testchain.sdk.protocol.SdkDeleteDeviceCommandNode;
 import app.client.testchain.sdk.protocol.SdkLoginCommandNode;
 import app.client.testchain.sdk.protocol.SdkSyncDeviceCommandNode;
-import app.client.testchain.sdk.protocol.SimularCommandNode;
 import app.client.user.session.UserSession;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by zh on 2017/11/21.

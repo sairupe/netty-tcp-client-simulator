@@ -1,4 +1,4 @@
-package app.client.net.protocol.response.sdk;
+package app.client.net.protocol.response.sdk.device;
 
 import app.client.net.annotation.Protocol;
 import app.client.net.protocol.ProtocolType;

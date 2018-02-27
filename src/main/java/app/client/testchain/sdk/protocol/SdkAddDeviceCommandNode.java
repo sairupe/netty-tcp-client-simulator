@@ -1,8 +1,7 @@
 package app.client.testchain.sdk.protocol;
 
 import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.request.sdk.C_BIND_DEVICE_C;
-import app.client.net.protocol.request.sdk.C_DEVICE_LOGIN;
+import app.client.net.protocol.request.sdk.device.C_BIND_DEVICE_C;
 import app.client.net.protocol.request.sdk.vo.AddDeviceInfoVo;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;

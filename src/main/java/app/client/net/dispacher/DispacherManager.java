@@ -29,7 +29,7 @@ public class DispacherManager {
 	private static Map<Integer, ProtocolHandlerHolder> protocolId2Method = new ConcurrentHashMap<Integer, ProtocolHandlerHolder>();
 
 	private IChainNode chainNode;
-	                                                /**
+	/**
     * 初始化分发MAP。在GlobalServiceManager static静态块初始化完成后再初始化这个
     */
 	public void init() {
@@ -91,7 +91,8 @@ public class DispacherManager {
             int key = ClientUtil.buildProtocolKey(moduleId, sequenceId);
             ProtocolHandlerHolder holder = protocolId2Method.get(key);
 			if(holder != null){
-				holder.getMethod().invoke(holder.getServiceImpl(), response);
+				Method method = holder.getMethod();
+				method.invoke(holder.getServiceImpl(), response);
 			}
 			// 分发到链式调用
 			if(chainNode != null){

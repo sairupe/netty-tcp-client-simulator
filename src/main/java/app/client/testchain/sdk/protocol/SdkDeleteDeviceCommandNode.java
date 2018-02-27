@@ -1,13 +1,9 @@
 package app.client.testchain.sdk.protocol;
 
 import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.request.sdk.C_BIND_DEVICE_C;
-import app.client.net.protocol.request.sdk.C_DELETE_DEVICE_C;
-import app.client.net.protocol.request.sdk.vo.AddDeviceInfoVo;
+import app.client.net.protocol.request.sdk.device.C_DELETE_DEVICE_C;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
-import com.gowild.basic.constant.SdkConstant;
-import com.gowild.basic.enums.DeviceTypeEnum;
 
 import java.util.ArrayList;
 import java.util.List;

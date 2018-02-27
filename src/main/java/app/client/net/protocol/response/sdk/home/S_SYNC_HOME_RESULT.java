@@ -1,4 +1,4 @@
-package app.client.net.protocol.response.sdk;
+package app.client.net.protocol.response.sdk.home;
 
 import app.client.net.annotation.Protocol;
 import app.client.net.protocol.ProtocolType;
@@ -8,8 +8,8 @@ import com.gowild.protocol.SdkMsgType;
 import com.gowild.protocol.SdkTcp2DeviceProtocol;
 import com.gowild.sdktcp.metadata.pb.SdkBothMsgProto;
 
-@Protocol(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_MASTER_BIND_DEVICES_RESULT_S, type = ProtocolType.RESPONSE)
-public class S_ADD_DEVICE_RESULT extends ResponseProtocol{
+@Protocol(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_SYNC_HOME_RESULT_S, type = ProtocolType.RESPONSE)
+public class S_SYNC_HOME_RESULT extends ResponseProtocol{
 
     SdkBothMsgProto.SdkCommonResponseMsg commonResponseMsg;
 

@@ -1,4 +1,4 @@
-package app.client.net.protocol.response.sdk;
+package app.client.net.protocol.response.sdk.device;
 
 import app.client.net.annotation.Protocol;
 import app.client.net.protocol.ProtocolType;
@@ -8,8 +8,8 @@ import com.gowild.protocol.SdkMsgType;
 import com.gowild.protocol.SdkTcp2DeviceProtocol;
 import com.gowild.sdktcp.metadata.pb.SdkDownloadMsgProto;
 
-@Protocol(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_PUSH_STATE_COMMAND_S, type = ProtocolType.RESPONSE)
-public class S_DEVICE_STATE_COMMAND extends ResponseProtocol{
+@Protocol(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_PUSH_ATTR_COMMAND_S, type = ProtocolType.RESPONSE)
+public class S_DEVICE_ATTR_COMMAND extends ResponseProtocol{
 
     SdkDownloadMsgProto.PushCommonCommandMsg pushCommonCommandMsg;
 

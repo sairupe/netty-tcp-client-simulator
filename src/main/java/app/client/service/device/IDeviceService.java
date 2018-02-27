@@ -1,11 +1,11 @@
 package app.client.service.device;
 
-import app.client.net.protocol.response.sdk.S_ADD_DEVICE_RESULT;
-import app.client.net.protocol.response.sdk.S_DELETE_DEVICE_RESULT;
-import app.client.net.protocol.response.sdk.S_DEVICE_ATTR_COMMAND;
-import app.client.net.protocol.response.sdk.S_DEVICE_MODE_COMMAND;
-import app.client.net.protocol.response.sdk.S_DEVICE_STATE_COMMAND;
-import app.client.net.protocol.response.sdk.S_SYNC_DEVICE_RESULT;
+import app.client.net.protocol.response.sdk.device.S_ADD_DEVICE_RESULT;
+import app.client.net.protocol.response.sdk.device.S_DELETE_DEVICE_RESULT;
+import app.client.net.protocol.response.sdk.device.S_DEVICE_ATTR_COMMAND;
+import app.client.net.protocol.response.sdk.device.S_DEVICE_MODE_COMMAND;
+import app.client.net.protocol.response.sdk.device.S_DEVICE_STATE_COMMAND;
+import app.client.net.protocol.response.sdk.device.S_SYNC_DEVICE_RESULT;
 import app.client.service.IService;
 import app.client.user.session.UserSession;
 

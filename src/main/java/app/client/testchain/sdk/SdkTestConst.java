@@ -17,4 +17,11 @@ public class SdkTestConst {
 
     public static final String FIRST_DEVICE_SN = FIRST_DEVICE_UID;
     public static final String SECOND_DEVICE_SN = SECOND_DEVICE_UID;
+
+    public static final String FIRST_HOME_TID = "area1";
+    public static final String SECOND_HOME_TID = "area2";
+
+    public static final String FIRST_HOME_NAME = FIRST_HOME_TID;
+    public static final String SECOND_HOME_NAME = SECOND_HOME_TID;
+
 }
