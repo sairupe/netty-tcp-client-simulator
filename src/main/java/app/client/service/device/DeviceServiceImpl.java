@@ -10,6 +10,7 @@ import app.client.net.protocol.response.sdk.device.S_DEVICE_MODE_COMMAND;
 import app.client.net.protocol.response.sdk.device.S_DEVICE_STATE_COMMAND;
 import app.client.net.protocol.response.sdk.device.S_ADD_DEVICE_RESULT;
 import app.client.net.protocol.response.sdk.device.S_SYNC_DEVICE_RESULT;
+import app.client.net.protocol.response.sdk.device.S_UPDATE_DEVICE_RESULT;
 import app.client.service.AbstractServiceImpl;
 import app.client.user.session.UserSession;
 import com.google.protobuf.ProtocolStringList;
@@ -208,6 +209,12 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
     public void receiveSyncMasterBindDeviceResult(S_SYNC_DEVICE_RESULT response) {
         SdkBothMsgProto.SdkCommonResponseMsg msg = response.getCommonResponseMsg();
         System.out.println("====== >>> SDK【同步】主机绑定设备返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
+    }
+
+    @Override
+    public void receiveUpdateMasterBindDeviceResult(S_UPDATE_DEVICE_RESULT response) {
+        SdkBothMsgProto.SdkCommonResponseMsg msg = response.getCommonResponseMsg();
+        System.out.println("====== >>> SDK【更新】主机绑定设备返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
     }
 
 //    @Override

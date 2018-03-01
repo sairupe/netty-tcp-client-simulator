@@ -22,13 +22,13 @@ public class SyncHomeCommandNode extends ProtocolListenNode {
         String homeName1 = SdkTestConst.FIRST_HOME_NAME;
         AddHomeInfoVo addHomeInfoVo1 = new AddHomeInfoVo();
         addHomeInfoVo1.setHomeTid(homeTid1);
-        addHomeInfoVo1.setHomeName(homeName1);
+        addHomeInfoVo1.setHomeName("111");
 
         String homeTid2 = SdkTestConst.SECOND_HOME_TID;
         String homeName2 = SdkTestConst.SECOND_HOME_NAME;
         AddHomeInfoVo addHomeInfoVo2 = new AddHomeInfoVo();
         addHomeInfoVo2.setHomeTid(homeTid2);
-        addHomeInfoVo2.setHomeName(homeName2);
+        addHomeInfoVo2.setHomeName("2222");
 
         addHomeInfoVoList.add(addHomeInfoVo1);
         addHomeInfoVoList.add(addHomeInfoVo2);

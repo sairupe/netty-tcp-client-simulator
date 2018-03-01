@@ -18,10 +18,16 @@ public class SdkTestConst {
     public static final String FIRST_DEVICE_SN = FIRST_DEVICE_UID;
     public static final String SECOND_DEVICE_SN = SECOND_DEVICE_UID;
 
-    public static final String FIRST_HOME_TID = "area1";
-    public static final String SECOND_HOME_TID = "area2";
+    public static final String FIRST_HOME_TID = "home1";
+    public static final String SECOND_HOME_TID = "home2";
 
-    public static final String FIRST_HOME_NAME = FIRST_HOME_TID;
-    public static final String SECOND_HOME_NAME = SECOND_HOME_TID;
+    public static final String FIRST_HOME_NAME = FIRST_HOME_TID + "";
+    public static final String SECOND_HOME_NAME = SECOND_HOME_TID + "";
+
+    public static final String FIRST_FLOOR_TID = "floor1";
+    public static final String SECOND_FLOOR_TID = "floor2";
+
+    public static final String FIRST_FLOOR_NAME = FIRST_FLOOR_TID + "";
+    public static final String SECOND_FLOOR_NAME = SECOND_FLOOR_TID + "";
 
 }
