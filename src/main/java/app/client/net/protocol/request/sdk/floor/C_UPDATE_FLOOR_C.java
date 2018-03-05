@@ -20,16 +20,12 @@ public class C_UPDATE_FLOOR_C extends RequestProtocol{
     @Override
     public void writeBinaryData(){
 
-        SdkUploadMsgProto.SdkUpdateHomeMsg.Builder build = SdkUploadMsgProto.SdkUpdateHomeMsg.newBuilder();
+        SdkUploadMsgProto.SdkUpdateFloorMsg.Builder build = SdkUploadMsgProto.SdkUpdateFloorMsg.newBuilder();
         for(AddFloorInfoVo addFloorInfoVo : updateHomeInfoVoList){
-            SdkUploadMsgProto.SdkUpdateHomeInfo.Builder second = SdkUploadMsgProto.SdkUpdateHomeInfo.newBuilder();
-            second.setHomeId(addFloorInfoVo.getFloorId());
-            second.setHomeName(addFloorInfoVo.getFloorName());
-            String bindHomeId = addFloorInfoVo.getBindHomeId();
-            if(!StringUtil.isNullOrEmpty(bindHomeId)){
-                second.setHomeId(bindHomeId);
-            }
-            build.addHomeList(second.build());
+            SdkUploadMsgProto.SdkUpdateFloorInfo.Builder second = SdkUploadMsgProto.SdkUpdateFloorInfo.newBuilder();
+            second.setFloorId(addFloorInfoVo.getFloorId());
+            second.setFloorName(addFloorInfoVo.getFloorName());
+            build.addFloorList(second.build());
         }
         byte[] bytes = build.build().toByteArray();
         for(byte b : bytes){

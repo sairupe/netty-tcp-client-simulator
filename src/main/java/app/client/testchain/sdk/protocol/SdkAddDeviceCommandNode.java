@@ -32,6 +32,7 @@ public class SdkAddDeviceCommandNode extends ProtocolListenNode {
         addDeviceInfoVo1.setAreaId(device1AreaId);
         addDeviceInfoVo1.setSceneId(device1SceneId);
         addDeviceInfoVo1.setDeviceType(DeviceTypeEnum.LIGHT.getDeviceType());
+        addDeviceInfoVo1.setAreaId(SdkTestConst.FIRST_AREA_TID);
 
         String device2Id = SdkTestConst.SECOND_DEVICE_UID;
         String device2Name = SdkTestConst.SECOND_DEVICE_NAME;
@@ -47,6 +48,7 @@ public class SdkAddDeviceCommandNode extends ProtocolListenNode {
         addDeviceInfoVo2.setAreaId(device2AreaId);
         addDeviceInfoVo2.setSceneId(device2SceneId);
         addDeviceInfoVo2.setDeviceType(DeviceTypeEnum.LIGHT.getDeviceType());
+        addDeviceInfoVo2.setAreaId(SdkTestConst.SECOND_AREA_TID);
 
         List<AddDeviceInfoVo> addDeviceInfoVoList = new ArrayList<>();
         addDeviceInfoVoList.add(addDeviceInfoVo1);

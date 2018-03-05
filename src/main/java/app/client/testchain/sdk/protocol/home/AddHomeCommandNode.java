@@ -30,7 +30,7 @@ public class AddHomeCommandNode extends ProtocolListenNode {
         addHomeInfoVo2.setHomeName(homeName2);
 
         addHomeInfoVoList.add(addHomeInfoVo1);
-//        addHomeInfoVoList.add(addHomeInfoVo2);
+        addHomeInfoVoList.add(addHomeInfoVo2);
 
         C_ADD_HOME_C protocol = ProtocolFactory.createRequestProtocol(C_ADD_HOME_C.class,
                 userSession.getCtx());
