@@ -5,6 +5,7 @@ import app.client.net.protocol.response.sdk.device.S_DELETE_DEVICE_RESULT;
 import app.client.net.protocol.response.sdk.device.S_DEVICE_ATTR_COMMAND;
 import app.client.net.protocol.response.sdk.device.S_DEVICE_MODE_COMMAND;
 import app.client.net.protocol.response.sdk.device.S_DEVICE_STATE_COMMAND;
+import app.client.net.protocol.response.sdk.device.S_GET_ALL_XB_BIND_MASTER;
 import app.client.net.protocol.response.sdk.device.S_SYNC_DEVICE_RESULT;
 import app.client.net.protocol.response.sdk.device.S_UPDATE_DEVICE_RESULT;
 import app.client.service.IService;
@@ -41,5 +42,7 @@ public interface IDeviceService extends IService{
     public void receiveSyncMasterBindDeviceResult(S_SYNC_DEVICE_RESULT response);
 
     public void receiveUpdateMasterBindDeviceResult(S_UPDATE_DEVICE_RESULT response);
+
+    public void receiveGetXbBindAllMasterInfoResult(S_GET_ALL_XB_BIND_MASTER response);
 
 }

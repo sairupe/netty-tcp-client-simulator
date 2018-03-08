@@ -1,4 +1,4 @@
-package app.client.testchain.sdk.protocol;
+package app.client.testchain.sdk.protocol.device;
 
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.request.sdk.device.C_DELETE_DEVICE_C;

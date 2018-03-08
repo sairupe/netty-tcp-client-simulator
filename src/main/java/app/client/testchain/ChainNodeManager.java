@@ -3,32 +3,15 @@ package app.client.testchain;
 import app.client.net.dispacher.DispacherManager;
 import app.client.net.protocol.response.S_DEVICE_LOGIN_RESULT;
 import app.client.net.protocol.response.sdk.device.S_ADD_DEVICE_RESULT;
-import app.client.net.protocol.response.sdk.device.S_SYNC_DEVICE_RESULT;
-import app.client.net.protocol.response.sdk.floor.S_ADD_FLOOR_RESULT;
-import app.client.net.protocol.response.sdk.floor.S_SYNC_FLOOR_RESULT;
-import app.client.net.protocol.response.sdk.floor.S_UPDATE_FLOOR_RESULT;
-import app.client.net.protocol.response.sdk.home.S_ADD_HOME_RESULT;
-import app.client.net.protocol.response.sdk.home.S_SYNC_HOME_RESULT;
-import app.client.net.protocol.response.sdk.home.S_UPDATE_HOME_RESULT;
 import app.client.testchain.sdk.db.BaseDbInfoInsertNode;
-import app.client.testchain.sdk.protocol.SdkAddDeviceCommandNode;
-import app.client.testchain.sdk.protocol.SdkDeleteDeviceCommandNode;
-import app.client.testchain.sdk.protocol.SdkLoginCommandNode;
-import app.client.testchain.sdk.protocol.SdkSyncDeviceCommandNode;
-import app.client.testchain.sdk.protocol.SdkUpdateDeviceCommandNode;
-import app.client.testchain.sdk.protocol.SimularCommandNode;
 import app.client.testchain.sdk.protocol.area.AddAreaCommandNode;
-import app.client.testchain.sdk.protocol.area.DeleteAreaCommandNode;
-import app.client.testchain.sdk.protocol.area.SyncAreaCommandNode;
-import app.client.testchain.sdk.protocol.area.UpdateAreaCommandNode;
+import app.client.testchain.sdk.protocol.device.SdkAddDeviceCommandNode;
+import app.client.testchain.sdk.protocol.device.SdkGetXbBindAllMasterCommandNode;
+import app.client.testchain.sdk.protocol.device.SdkLoginCommandNode;
+import app.client.testchain.sdk.protocol.device.SdkSyncDeviceCommandNode;
+import app.client.testchain.sdk.protocol.device.SimularCommandNode;
 import app.client.testchain.sdk.protocol.floor.AddFloorCommandNode;
-import app.client.testchain.sdk.protocol.floor.DeleteFloorCommandNode;
-import app.client.testchain.sdk.protocol.floor.SyncFloorCommandNode;
-import app.client.testchain.sdk.protocol.floor.UpdateFloorCommandNode;
 import app.client.testchain.sdk.protocol.home.AddHomeCommandNode;
-import app.client.testchain.sdk.protocol.home.DeleteHomeCommandNode;
-import app.client.testchain.sdk.protocol.home.SyncHomeCommandNode;
-import app.client.testchain.sdk.protocol.home.UpdateHomeCommandNode;
 import app.client.user.session.UserSession;
 
 import java.sql.Connection;
@@ -98,7 +81,7 @@ public class ChainNodeManager {
         // 同步设备指令
 //        startingChainNode.addLastNext(new SdkSyncDeviceCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
         // 添加设备指令
-//        startingChainNode.addLastNext(new SdkAddDeviceCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
+        startingChainNode.addLastNext(new SdkAddDeviceCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
         // 更新设备指令
 //        startingChainNode.addLastNext(new SdkUpdateDeviceCommandNode().registListenProtocol(S_SYNC_DEVICE_RESULT.class));
         // 删除设备指令
@@ -106,7 +89,7 @@ public class ChainNodeManager {
 
 
         // 添加家庭指令
-//        startingChainNode.addLastNext(new AddHomeCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
+        startingChainNode.addLastNext(new AddHomeCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
         // 更新家庭指令
 //        startingChainNode.addLastNext(new UpdateHomeCommandNode().registListenProtocol(S_ADD_HOME_RESULT.class));
         // 同步家庭指令
@@ -115,7 +98,7 @@ public class ChainNodeManager {
 //        startingChainNode.addLastNext(new DeleteHomeCommandNode().registListenProtocol(S_SYNC_HOME_RESULT.class));
 
         // 添加楼层指令
-//        startingChainNode.addLastNext(new AddFloorCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
+        startingChainNode.addLastNext(new AddFloorCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
         // 更新楼层指令
 //        startingChainNode.addLastNext(new UpdateFloorCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
         // 同步楼层指令
@@ -124,16 +107,18 @@ public class ChainNodeManager {
 //        startingChainNode.addLastNext(new DeleteFloorCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
 
         // 添加区域指令
-//        startingChainNode.addLastNext(new AddAreaCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
+        startingChainNode.addLastNext(new AddAreaCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
 //        // 更新区域指令
 //        startingChainNode.addLastNext(new UpdateAreaCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
 //        // 同步区域指令
-        startingChainNode.addLastNext(new SyncAreaCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
+//        startingChainNode.addLastNext(new SyncAreaCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
 //        // 删除区域指令
 //        startingChainNode.addLastNext(new DeleteAreaCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
 
         // 模拟命令指令
-//        startingChainNode.addLastNext(new SimularCommandNode().registListenProtocol(S_ADD_DEVICE_RESULT.class));
+        startingChainNode.addLastNext(new SimularCommandNode().registListenProtocol(S_ADD_DEVICE_RESULT.class));
+        // 获取所有绑定设备指令
+        startingChainNode.addLastNext(new SdkGetXbBindAllMasterCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
 
 
 //        startingChainNode.addLastNext(new SdkAddDeviceCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));

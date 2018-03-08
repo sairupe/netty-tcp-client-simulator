@@ -1,7 +1,7 @@
-package app.client.testchain.sdk.protocol;
+package app.client.testchain.sdk.protocol.device;
 
 import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.request.sdk.device.C_SYNC_DEVICE_C;
+import app.client.net.protocol.request.sdk.device.C_BIND_DEVICE_C;
 import app.client.net.protocol.request.sdk.vo.AddDeviceInfoVo;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by zh on 2017/11/21.
  */
-public class SdkSyncDeviceCommandNode extends ProtocolListenNode {
+public class SdkAddDeviceCommandNode extends ProtocolListenNode {
     @Override
     public void doExecute() {
 
@@ -25,13 +25,14 @@ public class SdkSyncDeviceCommandNode extends ProtocolListenNode {
         String device1SceneId = "";
         AddDeviceInfoVo addDeviceInfoVo1 = new AddDeviceInfoVo();
         addDeviceInfoVo1.setDeviceId(device1);
-        addDeviceInfoVo1.setDeviceName(device1Name);
+        addDeviceInfoVo1.setDeviceName("萝卜灯");
         addDeviceInfoVo1.setOpenStatus(SdkConstant.DEFAULT_OPEN_STATUS_INTVALUE);
         addDeviceInfoVo1.setOnlineStatus(SdkConstant.DEFAULT_ONLINE_STATUS_INTVALUE);
         addDeviceInfoVo1.setDeviceSn(device1SN);
         addDeviceInfoVo1.setAreaId(device1AreaId);
         addDeviceInfoVo1.setSceneId(device1SceneId);
         addDeviceInfoVo1.setDeviceType(DeviceTypeEnum.LIGHT.getDeviceType());
+//        addDeviceInfoVo1.setAreaId(SdkTestConst.FIRST_AREA_TID);
 
         String device2Id = SdkTestConst.SECOND_DEVICE_UID;
         String device2Name = SdkTestConst.SECOND_DEVICE_NAME;
@@ -47,12 +48,13 @@ public class SdkSyncDeviceCommandNode extends ProtocolListenNode {
         addDeviceInfoVo2.setAreaId(device2AreaId);
         addDeviceInfoVo2.setSceneId(device2SceneId);
         addDeviceInfoVo2.setDeviceType(DeviceTypeEnum.LIGHT.getDeviceType());
+//        addDeviceInfoVo2.setAreaId(SdkTestConst.SECOND_AREA_TID);
 
         List<AddDeviceInfoVo> addDeviceInfoVoList = new ArrayList<>();
         addDeviceInfoVoList.add(addDeviceInfoVo1);
 //        addDeviceInfoVoList.add(addDeviceInfoVo2);
 
-        C_SYNC_DEVICE_C addDevices = ProtocolFactory.createRequestProtocol(C_SYNC_DEVICE_C.class,
+        C_BIND_DEVICE_C addDevices = ProtocolFactory.createRequestProtocol(C_BIND_DEVICE_C.class,
                 userSession.getCtx());
         addDevices.setAddDeviceInfoVoList(addDeviceInfoVoList);
         userSession.sendMsg(addDevices);

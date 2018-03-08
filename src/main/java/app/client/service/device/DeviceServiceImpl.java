@@ -9,6 +9,7 @@ import app.client.net.protocol.response.sdk.device.S_DEVICE_ATTR_COMMAND;
 import app.client.net.protocol.response.sdk.device.S_DEVICE_MODE_COMMAND;
 import app.client.net.protocol.response.sdk.device.S_DEVICE_STATE_COMMAND;
 import app.client.net.protocol.response.sdk.device.S_ADD_DEVICE_RESULT;
+import app.client.net.protocol.response.sdk.device.S_GET_ALL_XB_BIND_MASTER;
 import app.client.net.protocol.response.sdk.device.S_SYNC_DEVICE_RESULT;
 import app.client.net.protocol.response.sdk.device.S_UPDATE_DEVICE_RESULT;
 import app.client.service.AbstractServiceImpl;
@@ -16,6 +17,7 @@ import app.client.user.session.UserSession;
 import com.google.protobuf.ProtocolStringList;
 import com.gowild.protocol.SdkMsgType;
 import com.gowild.protocol.SdkTcp2DeviceProtocol;
+import com.gowild.sdktcp.metadata.pb.BaseBothMsgProto;
 import com.gowild.sdktcp.metadata.pb.SdkBothMsgProto;
 import com.gowild.sdktcp.metadata.pb.SdkDownloadMsgProto;
 import org.json.JSONArray;
@@ -215,6 +217,12 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
     public void receiveUpdateMasterBindDeviceResult(S_UPDATE_DEVICE_RESULT response) {
         SdkBothMsgProto.SdkCommonResponseMsg msg = response.getCommonResponseMsg();
         System.out.println("====== >>> SDK【更新】主机绑定设备返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
+    }
+
+    @Override
+    public void receiveGetXbBindAllMasterInfoResult(S_GET_ALL_XB_BIND_MASTER response) {
+        BaseBothMsgProto.StringMsg masterInfos = response.getMasterInfos();
+        System.out.println("====== >>> SDK【获取】XB下面所有主机数据为 : " + masterInfos.getValue());
     }
 
 //    @Override

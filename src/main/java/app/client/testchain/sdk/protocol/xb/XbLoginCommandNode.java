@@ -1,4 +1,4 @@
-package app.client.testchain.sdk.protocol;
+package app.client.testchain.sdk.protocol.xb;
 
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.request.C_XB_LOGIN;
