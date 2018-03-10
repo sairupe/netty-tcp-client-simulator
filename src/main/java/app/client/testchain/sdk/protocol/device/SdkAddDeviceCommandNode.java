@@ -25,7 +25,7 @@ public class SdkAddDeviceCommandNode extends ProtocolListenNode {
         String device1SceneId = "";
         AddDeviceInfoVo addDeviceInfoVo1 = new AddDeviceInfoVo();
         addDeviceInfoVo1.setDeviceId(device1);
-        addDeviceInfoVo1.setDeviceName("萝卜灯");
+        addDeviceInfoVo1.setDeviceName("萝卜灯2");
         addDeviceInfoVo1.setOpenStatus(SdkConstant.DEFAULT_OPEN_STATUS_INTVALUE);
         addDeviceInfoVo1.setOnlineStatus(SdkConstant.DEFAULT_ONLINE_STATUS_INTVALUE);
         addDeviceInfoVo1.setDeviceSn(device1SN);

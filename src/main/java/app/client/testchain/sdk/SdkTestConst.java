@@ -36,6 +36,12 @@ public class SdkTestConst {
     public static final String FIRST_AREA_NAME = FIRST_AREA_TID + "";
     public static final String SECOND_AREA_NAME = SECOND_AREA_TID + "";
 
+    public static final String FIRST_SCENE_TID = "scene1";
+    public static final String SECOND_SCENE_TID = "scene2";
+
+    public static final String FIRST_SCENE_NAME = FIRST_SCENE_TID + "";
+    public static final String SECOND_SCENE_NAME = SECOND_SCENE_TID + "";
+
     public static final String XB_MAC = "94:a1:a2:f4:5d:d5";
 
 }

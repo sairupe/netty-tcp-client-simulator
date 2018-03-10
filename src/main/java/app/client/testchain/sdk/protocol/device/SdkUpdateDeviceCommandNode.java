@@ -43,7 +43,7 @@ public class SdkUpdateDeviceCommandNode extends ProtocolListenNode {
 
         List<AddDeviceInfoVo> addDeviceInfoVoList = new ArrayList<>();
         addDeviceInfoVoList.add(addDeviceInfoVo1);
-        addDeviceInfoVoList.add(addDeviceInfoVo2);
+//        addDeviceInfoVoList.add(addDeviceInfoVo2);
 
         C_UPDATE_DEVICE_C addDevices = ProtocolFactory.createRequestProtocol(C_UPDATE_DEVICE_C.class,
                 userSession.getCtx());
