@@ -10,13 +10,16 @@ import app.client.net.protocol.response.sdk.device.S_DEVICE_MODE_COMMAND;
 import app.client.net.protocol.response.sdk.device.S_DEVICE_STATE_COMMAND;
 import app.client.net.protocol.response.sdk.device.S_ADD_DEVICE_RESULT;
 import app.client.net.protocol.response.sdk.device.S_GET_ALL_XB_BIND_MASTER;
+import app.client.net.protocol.response.sdk.device.S_SCENE_COMMAND;
 import app.client.net.protocol.response.sdk.device.S_SYNC_DEVICE_RESULT;
+import app.client.net.protocol.response.sdk.device.S_UPDATE_DEVICE_BIND_AREA;
+import app.client.net.protocol.response.sdk.device.S_UPDATE_DEVICE_BIND_SCENE;
 import app.client.net.protocol.response.sdk.device.S_UPDATE_DEVICE_RESULT;
 import app.client.service.AbstractServiceImpl;
 import app.client.user.session.UserSession;
 import com.google.protobuf.ProtocolStringList;
-import com.gowild.protocol.SdkMsgType;
-import com.gowild.protocol.SdkTcp2DeviceProtocol;
+import com.gowild.sdk.protocol.SdkMsgType;
+import com.gowild.sdk.protocol.SdkTcp2DeviceProtocol;
 import com.gowild.sdktcp.metadata.pb.BaseBothMsgProto;
 import com.gowild.sdktcp.metadata.pb.SdkBothMsgProto;
 import com.gowild.sdktcp.metadata.pb.SdkDownloadMsgProto;
@@ -105,7 +108,7 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
             String mode = baseCommand.getMode();
 
             long execTime = baseCommand.getExecTime();
-            sb.append("mainType :" + mainType + " | subType:" + subType + "|");
+            sb.append("| mainType :" + mainType + " | subType:" + subType + "|");
             sb.append("action :" + action + " | attr:" + attr + "| attrValueTypeStr:" + attrValueTypeStr
                     + " | attrValue:" + attrValue + " | mode:" + mode);
             System.out.println(sb.toString());
@@ -144,7 +147,7 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
             String mode = baseCommand.getMode();
 
             long execTime = baseCommand.getExecTime();
-            sb.append("mainType :" + mainType + " | subType:" + subType + "|");
+            sb.append("| mainType :" + mainType + " | subType:" + subType + "|");
             sb.append("action :" + action + " | attr:" + attr + "| attrValueTypeStr:" + attrValueTypeStr
                     + " | attrValue:" + attrValue + " | mode:" + mode);
             System.out.println(sb.toString());
@@ -153,7 +156,6 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
     }
 
     @Override
-    @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_PUSH_MODE_COMMAND_S)
     public void receiveModeCommand(S_DEVICE_MODE_COMMAND response) {
         System.out.println("=============>> 收到模式控制指令");
         SdkDownloadMsgProto.PushCommonCommandMsg pushCommonCommandMsg = response.getPushCommonCommandMsg();
@@ -183,12 +185,41 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
             String mode = baseCommand.getMode();
 
             long execTime = baseCommand.getExecTime();
-            sb.append("mainType :" + mainType + " | subType:" + subType + "|");
+            sb.append("| mainType :" + mainType + " | subType:" + subType + "|");
             sb.append("action :" + action + " | attr:" + attr + "| attrValueTypeStr:" + attrValueTypeStr
                     + " | attrValue:" + attrValue + " | mode:" + mode);
             System.out.println(sb.toString());
             System.out.println("====================华丽的分割线======================");
         }
+
+    }
+
+    @Override
+    public void receiveSceneCommand(S_SCENE_COMMAND response) {
+        System.out.println("=============>> 收到场景控制指令");
+        SdkDownloadMsgProto.SdkSceneCommandMsg pushCommonCommandMsg = response.getSdkSceneCommandMsg();
+        List<String> sceneIdList = pushCommonCommandMsg.getSceneIdList();
+        SdkBothMsgProto.SdkBaseCommandMsg baseCommand = pushCommonCommandMsg.getBaseCommand();
+
+        int mainType = baseCommand.getMainTypeId();
+        int subType = baseCommand.getSubTypeId();
+
+        String action = baseCommand.getAction();
+        String attr = baseCommand.getAttr();
+        String attrValueTypeStr = baseCommand.getAttrValueType();
+        String attrValue = baseCommand.getAttrValue();
+        String mode = baseCommand.getMode();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("sceneIdList :");
+        for(String sceneId : sceneIdList){
+            sb.append(sceneId + " | ");
+        }
+        sb.append("mainType :" + mainType + " | subType:" + subType + "|");
+        sb.append("action :" + action + " | attr:" + attr + "| attrValueTypeStr:" + attrValueTypeStr
+                + " | attrValue:" + attrValue + " | mode:" + mode);
+        System.out.println(sb.toString());
+        System.out.println("====================华丽的分割线======================");
 
     }
 
@@ -223,6 +254,18 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
     public void receiveGetXbBindAllMasterInfoResult(S_GET_ALL_XB_BIND_MASTER response) {
         BaseBothMsgProto.StringMsg masterInfos = response.getMasterInfos();
         System.out.println("====== >>> SDK【获取】XB下面所有主机数据为 : " + masterInfos.getValue());
+    }
+
+    @Override
+    public void receiveUpdateDeviceBindAreaResult(S_UPDATE_DEVICE_BIND_AREA response) {
+        SdkBothMsgProto.SdkCommonResponseMsg msg = response.getCommonResponseMsg();
+        System.out.println("====== >>> SDK【更新】设备绑定区域返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
+    }
+
+    @Override
+    public void receiveUpdateDeviceBindSceneResult(S_UPDATE_DEVICE_BIND_SCENE response) {
+        SdkBothMsgProto.SdkCommonResponseMsg msg = response.getCommonResponseMsg();
+        System.out.println("====== >>> SDK【更新】设备绑定场景返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
     }
 
 //    @Override

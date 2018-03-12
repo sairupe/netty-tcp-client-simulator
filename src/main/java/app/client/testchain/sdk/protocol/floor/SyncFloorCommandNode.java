@@ -2,11 +2,9 @@ package app.client.testchain.sdk.protocol.floor;
 
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.request.sdk.floor.C_SYNC_FLOOR_C;
-import app.client.net.protocol.request.sdk.home.C_SYNC_HOME_C;
 import app.client.net.protocol.request.sdk.vo.AddFloorInfoVo;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
-import com.gowild.vo.db.AddHomeInfoVo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +24,7 @@ public class SyncFloorCommandNode extends ProtocolListenNode {
         AddFloorInfoVo addFloorInfoVo1 = new AddFloorInfoVo();
         addFloorInfoVo1.setFloorId(floorTid1);
         addFloorInfoVo1.setFloorName(floorName1);
-        addFloorInfoVo1.setBindHomeId(bindHome1);
+//        addFloorInfoVo1.setBindHomeId(bindHome1);
 
         String floorTid2 = SdkTestConst.SECOND_FLOOR_TID;
         String floorName2 = SdkTestConst.SECOND_FLOOR_NAME;
@@ -34,7 +32,7 @@ public class SyncFloorCommandNode extends ProtocolListenNode {
         AddFloorInfoVo addFloorInfoVo2 = new AddFloorInfoVo();
         addFloorInfoVo2.setFloorId(floorTid2);
         addFloorInfoVo2.setFloorName(floorName2);
-        addFloorInfoVo2.setBindHomeId(bindHome2);
+//        addFloorInfoVo2.setBindHomeId(bindHome2);
 
         addFloorInfoVoList.add(addFloorInfoVo1);
         addFloorInfoVoList.add(addFloorInfoVo2);

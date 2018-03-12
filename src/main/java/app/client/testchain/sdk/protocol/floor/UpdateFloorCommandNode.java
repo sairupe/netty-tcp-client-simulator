@@ -2,11 +2,9 @@ package app.client.testchain.sdk.protocol.floor;
 
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.request.sdk.floor.C_UPDATE_FLOOR_C;
-import app.client.net.protocol.request.sdk.home.C_UPDATE_HOME_C;
 import app.client.net.protocol.request.sdk.vo.AddFloorInfoVo;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
-import com.gowild.vo.db.AddHomeInfoVo;
 
 import java.util.ArrayList;
 import java.util.List;

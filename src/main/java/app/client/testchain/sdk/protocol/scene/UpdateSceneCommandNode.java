@@ -1,12 +1,10 @@
 package app.client.testchain.sdk.protocol.scene;
 
 import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.request.sdk.home.C_UPDATE_HOME_C;
 import app.client.net.protocol.request.sdk.scene.C_UPDATE_SCENE_C;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
-import com.gowild.vo.db.AddHomeInfoVo;
-import com.gowild.vo.db.AddSceneInfoVo;
+import com.gowild.sdk.vo.db.AddSceneInfoVo;
 
 import java.util.ArrayList;
 import java.util.List;

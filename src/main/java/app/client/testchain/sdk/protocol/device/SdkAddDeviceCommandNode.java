@@ -5,8 +5,8 @@ import app.client.net.protocol.request.sdk.device.C_BIND_DEVICE_C;
 import app.client.net.protocol.request.sdk.vo.AddDeviceInfoVo;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
-import com.gowild.basic.constant.SdkConstant;
-import com.gowild.basic.enums.DeviceTypeEnum;
+import com.gowild.sdk.basic.constant.SdkConstant;
+import com.gowild.sdk.basic.enums.DeviceTypeEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,14 +25,14 @@ public class SdkAddDeviceCommandNode extends ProtocolListenNode {
         String device1SceneId = "";
         AddDeviceInfoVo addDeviceInfoVo1 = new AddDeviceInfoVo();
         addDeviceInfoVo1.setDeviceId(device1);
-        addDeviceInfoVo1.setDeviceName("萝卜灯2");
+        addDeviceInfoVo1.setDeviceName(device1Name);
         addDeviceInfoVo1.setOpenStatus(SdkConstant.DEFAULT_OPEN_STATUS_INTVALUE);
         addDeviceInfoVo1.setOnlineStatus(SdkConstant.DEFAULT_ONLINE_STATUS_INTVALUE);
         addDeviceInfoVo1.setDeviceSn(device1SN);
         addDeviceInfoVo1.setAreaId(device1AreaId);
         addDeviceInfoVo1.setSceneId(device1SceneId);
         addDeviceInfoVo1.setDeviceType(DeviceTypeEnum.LIGHT.getDeviceType());
-//        addDeviceInfoVo1.setAreaId(SdkTestConst.FIRST_AREA_TID);
+        addDeviceInfoVo1.setAreaId(SdkTestConst.FIRST_AREA_TID);
 
         String device2Id = SdkTestConst.SECOND_DEVICE_UID;
         String device2Name = SdkTestConst.SECOND_DEVICE_NAME;
@@ -48,11 +48,11 @@ public class SdkAddDeviceCommandNode extends ProtocolListenNode {
         addDeviceInfoVo2.setAreaId(device2AreaId);
         addDeviceInfoVo2.setSceneId(device2SceneId);
         addDeviceInfoVo2.setDeviceType(DeviceTypeEnum.LIGHT.getDeviceType());
-//        addDeviceInfoVo2.setAreaId(SdkTestConst.SECOND_AREA_TID);
+        addDeviceInfoVo2.setAreaId(SdkTestConst.SECOND_AREA_TID);
 
         List<AddDeviceInfoVo> addDeviceInfoVoList = new ArrayList<>();
         addDeviceInfoVoList.add(addDeviceInfoVo1);
-//        addDeviceInfoVoList.add(addDeviceInfoVo2);
+        addDeviceInfoVoList.add(addDeviceInfoVo2);
 
         C_BIND_DEVICE_C addDevices = ProtocolFactory.createRequestProtocol(C_BIND_DEVICE_C.class,
                 userSession.getCtx());

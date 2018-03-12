@@ -4,6 +4,7 @@ import app.client.net.annotation.Receiver;
 import app.client.net.protocol.response.sdk.area.S_ADD_AREA_RESULT;
 import app.client.net.protocol.response.sdk.area.S_DELETE_AREA_RESULT;
 import app.client.net.protocol.response.sdk.area.S_SYNC_AREA_RESULT;
+import app.client.net.protocol.response.sdk.area.S_UPDATE_AREA_BIND_FLOOR;
 import app.client.net.protocol.response.sdk.area.S_UPDATE_AREA_RESULT;
 import app.client.net.protocol.response.sdk.floor.S_ADD_FLOOR_RESULT;
 import app.client.net.protocol.response.sdk.floor.S_DELETE_FLOOR_RESULT;
@@ -40,5 +41,11 @@ public class AreaServiceImpl extends AbstractServiceImpl implements IAreaService
     public void syncAreaResult(S_SYNC_AREA_RESULT response) {
         SdkBothMsgProto.SdkCommonResponseMsg msg = response.getCommonResponseMsg();
         System.out.println("====== >>> SDK【同步】区域返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
+    }
+
+    @Override
+    public void updateAreaBindFloorResult(S_UPDATE_AREA_BIND_FLOOR response) {
+        SdkBothMsgProto.SdkCommonResponseMsg msg = response.getCommonResponseMsg();
+        System.out.println("====== >>> SDK【更新】区域绑定楼层返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
     }
 }

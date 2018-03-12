@@ -19,8 +19,8 @@ import app.client.service.AbstractServiceImpl;
 import app.client.service.device.DeviceServiceImpl;
 import app.client.user.session.UserSession;
 import com.gowild.core.util.HttpUtil;
-import com.gowild.protocol.SdkMsgType;
-import com.gowild.protocol.SdkTcp2DeviceProtocol;
+import com.gowild.sdk.protocol.SdkMsgType;
+import com.gowild.sdk.protocol.SdkTcp2DeviceProtocol;
 import com.gowild.sdktcp.metadata.pb.SdkBothMsgProto;
 import com.gowild.sdktcp.metadata.pb.SdkDownloadMsgProto;
 import org.json.JSONObject;
@@ -115,8 +115,8 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
     @Override
     public void xbLogin(UserSession userSession) {
         C_XB_LOGIN xbLogin = ProtocolFactory.createRequestProtocol(C_XB_LOGIN.class, userSession.getCtx());
-        //xbLogin.setMac("94:a1:a2:f3:ec:51");
-        xbLogin.setMac("94:a1:a2:f4:2f:fd");
+        //xbLogin.setMac("94:a1:a2:f3:ec:51");//94:a1:a2:67:96:ce
+        xbLogin.setMac("94:a1:a2:67:96:ce");
         xbLogin.setSn("");
 
         xbLogin.setVersion("2.1.2");

@@ -3,8 +3,8 @@ package app.client.net.protocol.request.sdk.area;
 import app.client.net.annotation.Protocol;
 import app.client.net.protocol.ProtocolType;
 import app.client.net.protocol.RequestProtocol;
-import com.gowild.protocol.Device2SdkTcpProtocol;
-import com.gowild.protocol.SdkMsgType;
+import com.gowild.sdk.protocol.Device2SdkTcpProtocol;
+import com.gowild.sdk.protocol.SdkMsgType;
 import com.gowild.sdktcp.metadata.pb.SdkUploadMsgProto;
 
 import java.util.List;

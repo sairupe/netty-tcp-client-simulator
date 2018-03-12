@@ -4,7 +4,7 @@ import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.request.sdk.device.C_DEVICE_SIMULAR_COMMAND;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
-import com.gowild.basic.enums.DeviceTypeEnum;
+import com.gowild.sdk.basic.enums.DeviceTypeEnum;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -14,6 +14,8 @@ import org.json.JSONObject;
 public class SimularCommandNode extends ProtocolListenNode {
     @Override
     public void doExecute() {
+        if(true)
+            return;
 
 //        {
 //            "bindMasterId":1,

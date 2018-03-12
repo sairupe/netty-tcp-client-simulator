@@ -3,12 +3,10 @@ package app.client.net.protocol.request.sdk.scene;
 import app.client.net.annotation.Protocol;
 import app.client.net.protocol.ProtocolType;
 import app.client.net.protocol.RequestProtocol;
-import app.client.net.protocol.request.sdk.vo.AddAreaInfoVo;
-import com.gowild.core.util.StringUtil;
-import com.gowild.protocol.Device2SdkTcpProtocol;
-import com.gowild.protocol.SdkMsgType;
+import com.gowild.sdk.protocol.Device2SdkTcpProtocol;
+import com.gowild.sdk.protocol.SdkMsgType;
+import com.gowild.sdk.vo.db.AddSceneInfoVo;
 import com.gowild.sdktcp.metadata.pb.SdkUploadMsgProto;
-import com.gowild.vo.db.AddSceneInfoVo;
 
 import java.util.List;
 

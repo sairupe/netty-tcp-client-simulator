@@ -15,7 +15,7 @@ public class SdkLoginCommandNode extends ProtocolListenNode {
                 userSession.getCtx());
         login.setUniqueCode("12355");
         login.setDeviceType(12315);
-        login.setDeviceId("12315");
+        login.setDeviceId("deviceId");
         login.setLoginTime(12315);
         login.setDeviceSn("12315");
         login.setEncrypCode("12315");
