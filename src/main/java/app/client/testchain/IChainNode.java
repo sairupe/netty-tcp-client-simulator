@@ -21,8 +21,6 @@ public interface IChainNode {
 
     public AbstractChainNode registListenProtocol(Class<? extends ResponseProtocol> listenningPotocol);
 
-    public void sniff(ResponseProtocol responseProtocol);
-
     public void addLastNext(AbstractChainNode chainNode);
 
     public IChainNode next();

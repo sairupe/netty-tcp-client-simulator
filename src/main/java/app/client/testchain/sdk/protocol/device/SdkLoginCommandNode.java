@@ -20,8 +20,6 @@ public class SdkLoginCommandNode extends ProtocolListenNode {
         login.setDeviceSn("12315");
         login.setEncrypCode("12315");
         userSession.sendMsg(login);
-        // 登录协议后面跟着的协议马上发送会报错，现在临时暂停线程500MS
-        CommonUtil.threadPause();
     }
 
     @Override

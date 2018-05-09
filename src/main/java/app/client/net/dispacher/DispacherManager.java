@@ -3,8 +3,10 @@ package app.client.net.dispacher;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import app.client.net.annotation.Handler;
 import app.client.net.annotation.Protocol;
@@ -28,7 +30,11 @@ public class DispacherManager {
 
 	private static Map<Integer, ProtocolHandlerHolder> protocolId2Method = new ConcurrentHashMap<Integer, ProtocolHandlerHolder>();
 
-	private IChainNode chainNode;
+	/**
+	 * 单独监听某个协议返回而执行的MAP，需要主动执行注册
+	 */
+	private static Map<Integer, Queue<IChainNode>> snipperMap = new ConcurrentHashMap<>();
+
 	/**
     * 初始化分发MAP。在GlobalServiceManager static静态块初始化完成后再初始化这个
     */
@@ -94,9 +100,10 @@ public class DispacherManager {
 				Method method = holder.getMethod();
 				method.invoke(holder.getServiceImpl(), response);
 			}
-			// 分发到链式调用
-			if(chainNode != null){
-				chainNode.sniff(response);
+			Queue<IChainNode> snipperNodeQueue = snipperMap.get(key);
+			if(snipperNodeQueue != null && !snipperNodeQueue.isEmpty()){
+				IChainNode node = snipperNodeQueue.poll();
+				node.execute();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -111,7 +118,13 @@ public class DispacherManager {
 		return instance;
 	}
 
-	public void setChainNode(IChainNode chainNode){
-    	this.chainNode = chainNode;
+
+	public void addRegistryNode(int protolId, IChainNode chainNode){
+		Queue<IChainNode> snipperNodeQueue = snipperMap.get(protolId);
+		if(snipperNodeQueue == null){
+			snipperNodeQueue = new ConcurrentLinkedQueue<>();
+			snipperMap.put(protolId, snipperNodeQueue);
+		}
+		snipperNodeQueue.offer(chainNode);
 	}
 }

@@ -1,7 +1,7 @@
-package app.client.net.task;
+package app.client.net.task.sdk;
 
-import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.RequestProtocol;
+import app.client.net.task.RequestTaskImpl;
 import io.netty.channel.ChannelHandlerContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,12 +12,12 @@ import org.slf4j.LoggerFactory;
  *
  * 2016年4月21日 下午3:20:48
  */
-public class XbHeartBeatTask extends RequestTaskImpl{
+public class SdkDeviceHeartBeatTask extends RequestTaskImpl {
 
     private static final Logger logger = LoggerFactory
-            .getLogger(XbHeartBeatTask.class);
+            .getLogger(SdkDeviceHeartBeatTask.class);
 
-	public XbHeartBeatTask(ChannelHandlerContext ctx, RequestProtocol request) {
+	public SdkDeviceHeartBeatTask(ChannelHandlerContext ctx, RequestProtocol request) {
 		super(ctx, request);
 	}
 	

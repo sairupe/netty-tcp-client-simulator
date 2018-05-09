@@ -29,8 +29,11 @@ public class Netty4SdkClient implements Closeable{
 
     private static final int DEFAULT_MSG_SIZE_LIMIT = 1200;
 
-    private final int port = 6130;
-    private final String host = "localhost";
+//    private final int port = 6130;
+//    private final String host = "localhost";
+
+    private final int port = 7030;
+    private final String host = "172.27.1.49";
 
 
     public void start() throws Exception{

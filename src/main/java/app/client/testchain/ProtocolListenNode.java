@@ -11,10 +11,4 @@ public abstract class ProtocolListenNode extends AbstractChainNode{
         return false;
     }
 
-    @Override
-    public void sniff(ResponseProtocol responseProtocol) {
-        if(responseProtocol.getModuleId() == moduleId && responseProtocol.getSequenceId() == sequenceId){
-            execute();
-        }
-    }
 }

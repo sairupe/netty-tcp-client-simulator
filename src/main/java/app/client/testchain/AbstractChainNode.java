@@ -1,8 +1,10 @@
 package app.client.testchain;
 
 import app.client.net.annotation.Protocol;
+import app.client.net.dispacher.DispacherManager;
 import app.client.net.protocol.ResponseProtocol;
 import app.client.user.session.UserSession;
+import app.client.utils.ClientUtil;
 import app.client.utils.CommonUtil;
 import com.gowild.core.util.LogUtil;
 
@@ -13,6 +15,10 @@ import java.util.Collections;
  * Created by zh on 2017/11/21.
  */
 public abstract class AbstractChainNode implements IChainNode {
+
+    public AbstractChainNode(){
+        this.ifSniff = false;
+    }
 
     /**
      * 链式调用
@@ -26,6 +32,10 @@ public abstract class AbstractChainNode implements IChainNode {
      * 数据库链接对象
      */
     protected Connection connection;
+    /**
+     * 是否是监听协议的节点
+     */
+    protected boolean ifSniff;
     /**
      * 监听模块ID
      */
@@ -53,14 +63,11 @@ public abstract class AbstractChainNode implements IChainNode {
         doExecute();
         nextNode = next();
         if(nextNode != null && nextNode.canExecuteImmediately()){
-            CommonUtil.threadPause();
+            if(!userSession.getLogined()){
+                CommonUtil.threadPause(500);
+            }
             nextNode.execute();
         }
-    }
-
-    @Override
-    public void sniff(ResponseProtocol responseProtocol) {
-        // CHILD IMPLEMENT
     }
 
     @Override
@@ -96,6 +103,9 @@ public abstract class AbstractChainNode implements IChainNode {
            if(protocol != null){
                this.moduleId = protocol.moduleId();
                this.sequenceId = protocol.sequenceId();
+               this.ifSniff = true;
+               int key = ClientUtil.buildProtocolKey(moduleId,sequenceId);
+               DispacherManager.getInstance().addRegistryNode(key, this);
            }
        }
        return this;
@@ -106,4 +116,5 @@ public abstract class AbstractChainNode implements IChainNode {
         this.userSession = userSession;
         this.connection = connection;
     }
+
 }

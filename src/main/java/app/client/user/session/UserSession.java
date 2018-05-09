@@ -32,6 +32,8 @@ public class UserSession {
 		return uid;
 	}
 
+	private boolean logined;
+
 	
 //	public void addResponseToQueue(ResponseProtocol response){
 //		TaskManager.getInstance().addResponse2Queue(response);
@@ -76,5 +78,13 @@ public class UserSession {
 		if(tickTaskFuture != null){
 			tickTaskFuture.cancel(true);
 		}
+	}
+
+	public void setLogined(boolean logined) {
+		this.logined = logined;
+	}
+
+	public boolean getLogined(){
+		return this.logined;
 	}
 }

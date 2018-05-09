@@ -1,8 +1,7 @@
-package app.client.net.task;
+package app.client.net.task.app;
 
-import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.RequestProtocol;
-import app.client.net.protocol.request.C_APP_HEART_BEAT;
+import app.client.net.task.RequestTaskImpl;
 import io.netty.channel.ChannelHandlerContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +12,7 @@ import org.slf4j.LoggerFactory;
  *
  * 2016年4月21日 下午3:20:48
  */
-public class AppHeartBeatTask extends RequestTaskImpl{
+public class AppHeartBeatTask extends RequestTaskImpl {
 
     private static final Logger logger = LoggerFactory
             .getLogger(AppHeartBeatTask.class);

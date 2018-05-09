@@ -1,13 +1,12 @@
 package app.client.testchain.sdk.protocol.device;
 
 import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.request.sdk.device.C_BIND_DEVICE_C;
 import app.client.net.protocol.request.sdk.device.C_UPDATE_DEVICE_C;
 import app.client.net.protocol.request.sdk.vo.AddDeviceInfoVo;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
-import com.gowild.basic.constant.SdkConstant;
-import com.gowild.basic.enums.DeviceTypeEnum;
+import com.gowild.sdk.basic.constant.SdkConstant;
+import com.gowild.sdk.basic.enums.DeviceTypeEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +42,7 @@ public class SdkUpdateDeviceCommandNode extends ProtocolListenNode {
 
         List<AddDeviceInfoVo> addDeviceInfoVoList = new ArrayList<>();
         addDeviceInfoVoList.add(addDeviceInfoVo1);
-//        addDeviceInfoVoList.add(addDeviceInfoVo2);
+        addDeviceInfoVoList.add(addDeviceInfoVo2);
 
         C_UPDATE_DEVICE_C addDevices = ProtocolFactory.createRequestProtocol(C_UPDATE_DEVICE_C.class,
                 userSession.getCtx());

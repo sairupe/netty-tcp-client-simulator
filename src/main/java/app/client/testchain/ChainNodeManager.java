@@ -4,26 +4,15 @@ import app.client.net.dispacher.DispacherManager;
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.request.sdk.device.C_DEVICE_HEART_BEAT;
 import app.client.net.protocol.response.S_DEVICE_LOGIN_RESULT;
-import app.client.net.protocol.response.sdk.device.S_ADD_DEVICE_RESULT;
-import app.client.net.protocol.response.sdk.device.S_SYNC_DEVICE_RESULT;
-import app.client.net.protocol.response.sdk.home.S_UPDATE_HOME_RESULT;
-import app.client.net.task.SdkDeviceHeartBeatTask;
+import app.client.net.task.sdk.SdkDeviceHeartBeatTask;
 import app.client.net.task.TaskManager;
 import app.client.testchain.sdk.db.BaseDbInfoInsertNode;
 import app.client.testchain.sdk.protocol.area.AddAreaCommandNode;
-import app.client.testchain.sdk.protocol.device.SdkAddDeviceCommandNode;
-import app.client.testchain.sdk.protocol.device.SdkDeleteDeviceCommandNode;
-import app.client.testchain.sdk.protocol.device.SdkGetXbBindAllMasterCommandNode;
 import app.client.testchain.sdk.protocol.device.SdkLoginCommandNode;
 import app.client.testchain.sdk.protocol.device.SdkSyncDeviceCommandNode;
-import app.client.testchain.sdk.protocol.device.SdkUpdateDeviceCommandNode;
-import app.client.testchain.sdk.protocol.device.SimularCommandNode;
 import app.client.testchain.sdk.protocol.floor.AddFloorCommandNode;
 import app.client.testchain.sdk.protocol.home.AddHomeCommandNode;
 import app.client.testchain.sdk.protocol.scene.AddSceneCommandNode;
-import app.client.testchain.sdk.protocol.scene.DeleteSceneCommandNode;
-import app.client.testchain.sdk.protocol.scene.SyncSceneCommandNode;
-import app.client.testchain.sdk.protocol.scene.UpdateSceneCommandNode;
 import app.client.user.session.UserSession;
 
 import java.sql.Connection;
@@ -91,61 +80,78 @@ public class ChainNodeManager {
         // 登录指令
         startingChainNode.addLastNext(new SdkLoginCommandNode());
 
-        // 同步设备指令
-//        startingChainNode.addLastNext(new SdkSyncDeviceCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
-        // 添加设备指令
-//        startingChainNode.addLastNext(new SdkAddDeviceCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
-        // 更新设备指令
-//        startingChainNode.addLastNext(new SdkUpdateDeviceCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
-        // 删除设备指令
-//        startingChainNode.addLastNext(new SdkDeleteDeviceCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
+        //全量数据
+//        startingChainNode.addLastNext(new AddHomeCommandNode();
+//        startingChainNode.addLastNext(new AddFloorCommandNode();
+//        startingChainNode.addLastNext(new AddAreaCommandNode();
+//        startingChainNode.addLastNext(new SdkAddDeviceCommandNode();
 
+        // 同步设备指令
+        startingChainNode.addLastNext(new SdkSyncDeviceCommandNode());
+        // 添加设备指令
+//        startingChainNode.addLastNext(new SdkAddDeviceCommandNode());
+        // 更新设备指令
+//        startingChainNode.addLastNext(new SdkUpdateDeviceCommandNode());
+        // 删除设备指令
+//        startingChainNode.addLastNext(new SdkDeleteDeviceCommandNode());
 
         // 添加家庭指令
-//        startingChainNode.addLastNext(new AddHomeCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
+        startingChainNode.addLastNext(new AddHomeCommandNode());
         // 更新家庭指令
-//        startingChainNode.addLastNext(new UpdateHomeCommandNode().registListenProtocol(S_ADD_HOME_RESULT.class));
+//        startingChainNode.addLastNext(new UpdateHomeCommandNode());
         // 同步家庭指令
-//        startingChainNode.addLastNext(new SyncHomeCommandNode().registListenProtocol(S_UPDATE_HOME_RESULT.class));
+//        startingChainNode.addLastNext(new SyncHomeCommandNode());
         // 删除家庭指令
-//        startingChainNode.addLastNext(new DeleteHomeCommandNode().registListenProtocol(S_SYNC_HOME_RESULT.class));
+//        startingChainNode.addLastNext(new DeleteHomeCommandNode());
 
         // 添加楼层指令
-//        startingChainNode.addLastNext(new AddFloorCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
+        startingChainNode.addLastNext(new AddFloorCommandNode());
         // 更新楼层指令
-//        startingChainNode.addLastNext(new UpdateFloorCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
+//        startingChainNode.addLastNext(new UpdateFloorCommandNode());
         // 同步楼层指令
-//        startingChainNode.addLastNext(new SyncFloorCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
+//        startingChainNode.addLastNext(new SyncFloorCommandNode());
         // 删除楼层指令
-//        startingChainNode.addLastNext(new DeleteFloorCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
+//        startingChainNode.addLastNext(new DeleteFloorCommandNode());
 
         // 添加区域指令
-//        startingChainNode.addLastNext(new AddAreaCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
+        startingChainNode.addLastNext(new AddAreaCommandNode());
 //        // 更新区域指令
-//        startingChainNode.addLastNext(new UpdateAreaCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
+//        startingChainNode.addLastNext(new UpdateAreaCommandNode());
 //        // 同步区域指令
-//        startingChainNode.addLastNext(new SyncAreaCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
+//        startingChainNode.addLastNext(new SyncAreaCommandNode());
 //        // 删除区域指令
-//        startingChainNode.addLastNext(new DeleteAreaCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
+//        startingChainNode.addLastNext(new DeleteAreaCommandNode());
 
         // 添加场景指令
-//        startingChainNode.addLastNext(new AddSceneCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
+        startingChainNode.addLastNext(new AddSceneCommandNode());
         // 更新场景指令
-//        startingChainNode.addLastNext(new UpdateSceneCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
+//        startingChainNode.addLastNext(new UpdateSceneCommandNode());
         // 同步场景指令
-        startingChainNode.addLastNext(new SyncSceneCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
+//        startingChainNode.addLastNext(new SyncSceneCommandNode());
         // 删除场景指令
-//        startingChainNode.addLastNext(new DeleteSceneCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
+//        startingChainNode.addLastNext(new DeleteSceneCommandNode());
 
-        // 模拟命令指令
-//        startingChainNode.addLastNext(new SimularCommandNode().registListenProtocol(S_ADD_DEVICE_RESULT.class));
+        // =============== 测试绑定关系 =====================================
+        // 修改设备绑定区域
+//        startingChainNode.addLastNext(new SdkUpdateDeviceBindAreaCommandNode());
+
+        // 修改设备绑定场景
+//        startingChainNode.addLastNext(new SdkUpdateDeviceBindSceneCommandNode());
+
+        // 修改区域绑定楼层
+//        startingChainNode.addLastNext(new UpdateAreaBindFloorCommandNode());
+
+        // 修改楼层绑定家庭
+//        startingChainNode.addLastNext(new UpdateFloorBindHomeCommandNode());
+
+        // 模拟命令指令(JSON格式要修改)
+//        startingChainNode.addLastNext(new SimularCommandNode());
         // 获取所有绑定设备指令
-//        startingChainNode.addLastNext(new SdkGetXbBindAllMasterCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
+//        startingChainNode.addLastNext(new SdkGetXbBindAllMasterCommandNode());
 
 
-//        startingChainNode.addLastNext(new SdkAddDeviceCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
+//        startingChainNode.addLastNext(new SdkAddDeviceCommandNode());
 
-        DispacherManager.getInstance().setChainNode(startingChainNode);
         startingChainNode.start(userSession, con);
 
         // 心跳协议

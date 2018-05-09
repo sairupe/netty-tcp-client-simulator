@@ -11,10 +11,10 @@ import app.client.net.protocol.response.S_APP_HEART_BEAT;
 import app.client.net.protocol.response.S_DEVICE_HEART_BEAT;
 import app.client.net.protocol.response.S_DEVICE_LOGIN_RESULT;
 import app.client.net.protocol.response.S_XB_HEART_BEAT;
-import app.client.net.task.AppHeartBeatTask;
-import app.client.net.task.SdkDeviceHeartBeatTask;
+import app.client.net.task.app.AppHeartBeatTask;
+import app.client.net.task.sdk.SdkDeviceHeartBeatTask;
 import app.client.net.task.TaskManager;
-import app.client.net.task.XbHeartBeatTask;
+import app.client.net.task.xb.XbHeartBeatTask;
 import app.client.service.AbstractServiceImpl;
 import app.client.service.device.DeviceServiceImpl;
 import app.client.user.session.UserSession;
@@ -68,9 +68,8 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
     public void receivedUserLoginResponse(S_DEVICE_LOGIN_RESULT response) {
         // 打印登录结果
         SdkBothMsgProto.SdkCommonResponseMsg commonResponseMsg = response.getCommonResponseMsg();
+        response.getUserSession().setLogined(true);
         System.out.println("====== >>> SDK设备登录返回码是 : " + commonResponseMsg.getCode());
-
-        //deviceServiceImpl.sendSimularCmd(response.getUserSession());
     }
 
     @Override

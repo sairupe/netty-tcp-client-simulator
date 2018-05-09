@@ -5,9 +5,9 @@ package app.client.utils;
  */
 public class CommonUtil {
 
-    public static void threadPause(){
+    public static void threadPause(long millis){
         try {
-            Thread.sleep(100);
+            Thread.sleep(millis);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

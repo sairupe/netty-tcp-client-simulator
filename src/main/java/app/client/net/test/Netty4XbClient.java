@@ -33,8 +33,11 @@ public class Netty4XbClient implements Closeable{
 //    private final int port = 6100;
 //    private final String host = "tcp01.xb.test01.gowild.top";
 
+//    private final int port = 6030;
+//    private final String host = "localhost";
+
     private final int port = 6030;
-    private final String host = "localhost";
+    private final String host = "172.27.1.49";
 
 
     public void start() throws Exception{
