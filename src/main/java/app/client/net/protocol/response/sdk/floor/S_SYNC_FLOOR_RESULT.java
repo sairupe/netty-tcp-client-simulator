@@ -8,7 +8,7 @@ import com.gowild.sdk.protocol.SdkMsgType;
 import com.gowild.sdk.protocol.Tcp2DeviceProtocol;
 import com.gowild.sdk.metadata.pb.SdkBothMsgProto;
 
-@Protocol(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Tcp2DeviceProtocol.SDK_SYNC_FLOOR_RESULT_S, type = ProtocolType.RESPONSE)
+@Protocol(moduleId = SdkMsgType.XB_CLIENT_TYPE, sequenceId = Tcp2DeviceProtocol.SDK_SYNC_FLOOR_RESULT_S, type = ProtocolType.RESPONSE)
 public class S_SYNC_FLOOR_RESULT extends ResponseProtocol{
 
     SdkBothMsgProto.SdkCommonResponseMsg commonResponseMsg;

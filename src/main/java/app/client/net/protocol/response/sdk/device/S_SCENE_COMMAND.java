@@ -8,7 +8,7 @@ import com.gowild.sdk.protocol.SdkMsgType;
 import com.gowild.sdk.protocol.Tcp2DeviceProtocol;
 import com.gowild.sdk.metadata.pb.Tcp2SdkMsgProto;
 
-@Protocol(moduleId = 1, sequenceId = 2760, type = ProtocolType.RESPONSE)
+@Protocol(moduleId = SdkMsgType.XB_CLIENT_TYPE, sequenceId = Tcp2DeviceProtocol.SDK_PUSH_SCENE_COMMAND_S, type = ProtocolType.RESPONSE)
 public class S_SCENE_COMMAND extends ResponseProtocol{
 
     Tcp2SdkMsgProto.SdkSceneCommandMsg sdkSceneCommandMsg;

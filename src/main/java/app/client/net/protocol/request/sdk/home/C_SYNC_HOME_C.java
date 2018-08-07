@@ -11,7 +11,7 @@ import com.gowild.sdk.metadata.pb.Sdk2TcpMsgProto;
 import java.util.List;
 
 
-@Protocol(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Device2TcpProtocol.SDK_SYNC_HOME_C, type = ProtocolType.REQUSET)
+@Protocol(moduleId = SdkMsgType.XB_CLIENT_TYPE, sequenceId = Device2TcpProtocol.SDK_SYNC_HOME_C, type = ProtocolType.REQUSET)
 public class C_SYNC_HOME_C extends RequestProtocol{
 
     private List<AddHomeInfoVo> syncHomeInfoVoList;

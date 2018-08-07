@@ -8,7 +8,7 @@ import com.gowild.sdk.protocol.SdkMsgType;
 import com.gowild.sdk.metadata.pb.Sdk2TcpMsgProto;
 
 
-@Protocol(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Device2TcpProtocol.SDK_DEVICE_LOGIN_C, type = ProtocolType.REQUSET)
+@Protocol(moduleId = SdkMsgType.XB_CLIENT_TYPE, sequenceId = Device2TcpProtocol.SDK_DEVICE_LOGIN_C, type = ProtocolType.REQUSET)
 public class C_DEVICE_LOGIN extends RequestProtocol{
 
     /**

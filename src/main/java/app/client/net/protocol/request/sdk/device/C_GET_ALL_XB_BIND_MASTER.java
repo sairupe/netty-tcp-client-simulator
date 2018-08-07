@@ -9,7 +9,7 @@ import com.gowild.sdk.metadata.pb.BaseBothMsgProto;
 
 
 
-@Protocol(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Device2TcpProtocol.SDK_GET_ALL_DATA_BY_XB_MAC_C, type = ProtocolType.REQUSET)
+@Protocol(moduleId = SdkMsgType.XB_CLIENT_TYPE, sequenceId = Device2TcpProtocol.SDK_GET_ALL_DATA_BY_XB_MAC_C, type = ProtocolType.REQUSET)
 public class C_GET_ALL_XB_BIND_MASTER extends RequestProtocol{
 
     private String xbMac;

@@ -8,7 +8,7 @@ import com.gowild.sdk.protocol.SdkMsgType;
 import com.gowild.sdk.protocol.Tcp2DeviceProtocol;
 import com.gowild.sdk.metadata.pb.SdkBothMsgProto;
 
-@Protocol(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Tcp2DeviceProtocol.SDK_DELETE_SCENE_RESULT_S, type = ProtocolType.RESPONSE)
+@Protocol(moduleId = SdkMsgType.XB_CLIENT_TYPE, sequenceId = Tcp2DeviceProtocol.SDK_DELETE_SCENE_RESULT_S, type = ProtocolType.RESPONSE)
 public class S_DELETE_SCENE_RESULT extends ResponseProtocol{
 
     SdkBothMsgProto.SdkCommonResponseMsg commonResponseMsg;
