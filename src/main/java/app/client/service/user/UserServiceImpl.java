@@ -115,7 +115,7 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
     public void xbLogin(UserSession userSession) {
         C_XB_LOGIN xbLogin = ProtocolFactory.createRequestProtocol(C_XB_LOGIN.class, userSession.getCtx());
         //xbLogin.setMac("94:a1:a2:f3:ec:51");//94:a1:a2:67:96:ce
-        xbLogin.setMac("94:a1:a2:67:96:ce");
+        xbLogin.setMac("94:a1:a2:c0:47:c8");
         xbLogin.setSn("");
 
         xbLogin.setVersion("2.1.2");

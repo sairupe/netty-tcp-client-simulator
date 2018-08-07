@@ -78,7 +78,8 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
     }
 
     @Override
-    @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_PUSH_STATE_COMMAND_S)
+    //@Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_PUSH_STATE_COMMAND_S)
+    @Handler(moduleId = 1, sequenceId = 2752)
     public void receiveStateCommand(S_DEVICE_STATE_COMMAND response) {
         System.out.println("=============>> 收到状态控制指令");
         SdkDownloadMsgProto.PushCommonCommandMsg pushCommonCommandMsg = response.getPushCommonCommandMsg();
@@ -117,7 +118,8 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
     }
 
     @Override
-    @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_PUSH_ATTR_COMMAND_S)
+    //@Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_PUSH_ATTR_COMMAND_S)
+    @Handler(moduleId = 1, sequenceId = 2756)
     public void receiveAttrCommand(S_DEVICE_ATTR_COMMAND response) {
         System.out.println("=============>> 收到属性制指令");
         SdkDownloadMsgProto.PushCommonCommandMsg pushCommonCommandMsg = response.getPushCommonCommandMsg();

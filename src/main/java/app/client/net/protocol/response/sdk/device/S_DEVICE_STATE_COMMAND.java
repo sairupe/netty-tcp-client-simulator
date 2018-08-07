@@ -8,7 +8,7 @@ import com.gowild.sdk.protocol.SdkMsgType;
 import com.gowild.sdk.protocol.SdkTcp2DeviceProtocol;
 import com.gowild.sdktcp.metadata.pb.SdkDownloadMsgProto;
 
-@Protocol(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_PUSH_STATE_COMMAND_S, type = ProtocolType.RESPONSE)
+@Protocol(moduleId = 1, sequenceId = 2752, type = ProtocolType.RESPONSE)
 public class S_DEVICE_STATE_COMMAND extends ResponseProtocol{
 
     SdkDownloadMsgProto.PushCommonCommandMsg pushCommonCommandMsg;

@@ -14,13 +14,13 @@ public class QuickStarter {
             LogUtil.debug("启动APP");
         }
 
-        if(false){
+        if(true){
             Thread xbStarter = new Thread(new XbStartTask());
             xbStarter.start();
             LogUtil.debug("启动XB完毕");
         }
 
-        if(true){
+        if(false){
             LogUtil.debug("暂停...");
             //Thread.sleep(3000);
 

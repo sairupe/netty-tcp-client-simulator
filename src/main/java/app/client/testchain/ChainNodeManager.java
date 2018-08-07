@@ -8,6 +8,7 @@ import app.client.net.task.sdk.SdkDeviceHeartBeatTask;
 import app.client.net.task.TaskManager;
 import app.client.testchain.sdk.db.BaseDbInfoInsertNode;
 import app.client.testchain.sdk.protocol.area.AddAreaCommandNode;
+import app.client.testchain.sdk.protocol.device.SdkAddDeviceCommandNode;
 import app.client.testchain.sdk.protocol.device.SdkLoginCommandNode;
 import app.client.testchain.sdk.protocol.device.SdkSyncDeviceCommandNode;
 import app.client.testchain.sdk.protocol.floor.AddFloorCommandNode;
@@ -81,10 +82,10 @@ public class ChainNodeManager {
         startingChainNode.addLastNext(new SdkLoginCommandNode());
 
         //全量数据
-//        startingChainNode.addLastNext(new AddHomeCommandNode();
-//        startingChainNode.addLastNext(new AddFloorCommandNode();
-//        startingChainNode.addLastNext(new AddAreaCommandNode();
-//        startingChainNode.addLastNext(new SdkAddDeviceCommandNode();
+        startingChainNode.addLastNext(new AddHomeCommandNode());
+        startingChainNode.addLastNext(new AddFloorCommandNode());
+        startingChainNode.addLastNext(new AddAreaCommandNode());
+        startingChainNode.addLastNext(new SdkAddDeviceCommandNode());
 
         // 同步设备指令
         startingChainNode.addLastNext(new SdkSyncDeviceCommandNode());
