@@ -5,10 +5,10 @@ import app.client.net.protocol.ProtocolType;
 import app.client.net.protocol.ResponseProtocol;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.gowild.sdk.protocol.SdkMsgType;
-import com.gowild.sdk.protocol.SdkTcp2DeviceProtocol;
-import com.gowild.sdktcp.metadata.pb.SdkBothMsgProto;
+import com.gowild.sdk.protocol.Tcp2DeviceProtocol;
+import com.gowild.sdk.metadata.pb.SdkBothMsgProto;
 
-@Protocol(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_ADD_SCENE_INFO_RESULT_S, type = ProtocolType.RESPONSE)
+@Protocol(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Tcp2DeviceProtocol.SDK_ADD_SCENE_RESULT_S, type = ProtocolType.RESPONSE)
 public class S_ADD_SCENE_RESULT extends ResponseProtocol{
 
     SdkBothMsgProto.SdkCommonResponseMsg commonResponseMsg;

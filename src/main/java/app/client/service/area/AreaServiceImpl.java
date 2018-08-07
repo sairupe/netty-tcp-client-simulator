@@ -11,7 +11,7 @@ import app.client.net.protocol.response.sdk.floor.S_DELETE_FLOOR_RESULT;
 import app.client.net.protocol.response.sdk.floor.S_SYNC_FLOOR_RESULT;
 import app.client.net.protocol.response.sdk.floor.S_UPDATE_FLOOR_RESULT;
 import app.client.service.AbstractServiceImpl;
-import com.gowild.sdktcp.metadata.pb.SdkBothMsgProto;
+import com.gowild.sdk.metadata.pb.SdkBothMsgProto;
 
 /**
  * Created by zh on 2018/2/27.

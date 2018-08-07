@@ -3,7 +3,6 @@ package app.client.testchain;
 import app.client.net.dispacher.DispacherManager;
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.request.sdk.device.C_DEVICE_HEART_BEAT;
-import app.client.net.protocol.response.S_DEVICE_LOGIN_RESULT;
 import app.client.net.task.sdk.SdkDeviceHeartBeatTask;
 import app.client.net.task.TaskManager;
 import app.client.testchain.sdk.db.BaseDbInfoInsertNode;

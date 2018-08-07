@@ -5,7 +5,7 @@ import app.client.net.protocol.ProtocolType;
 import app.client.net.protocol.RequestProtocol;
 import com.gowild.sdk.protocol.SdkMsgType;
 import com.gowild.sdk.protocol.XbTcp2SdkTcpProtocol;
-import com.gowild.sdktcp.metadata.pb.BaseBothMsgProto;
+import com.gowild.sdk.metadata.pb.BaseBothMsgProto;
 
 
 @Protocol(moduleId = SdkMsgType.XB_CLIENT_TYPE, sequenceId = XbTcp2SdkTcpProtocol.SDK_RECEIVED_STATE_CONTROL_COMMAND, type = ProtocolType.REQUSET)

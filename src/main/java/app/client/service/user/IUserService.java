@@ -2,8 +2,6 @@ package app.client.service.user;
 
 import app.client.net.protocol.ResponseProtocol;
 import app.client.net.protocol.response.S_APP_HEART_BEAT;
-import app.client.net.protocol.response.S_DEVICE_HEART_BEAT;
-import app.client.net.protocol.response.S_DEVICE_LOGIN_RESULT;
 import app.client.net.protocol.response.S_XB_HEART_BEAT;
 import app.client.service.IService;
 import app.client.user.session.UserSession;
@@ -18,10 +16,6 @@ public interface IUserService extends IService{
 	
     public void userLogin(UserSession userSession);
 	
-    public void receivedUserLoginResponse(S_DEVICE_LOGIN_RESULT response);
-
-    public void receivedHeartBeatResponse(S_DEVICE_HEART_BEAT response);
-
     public void receivedAppHeartBeatResponse(S_APP_HEART_BEAT response);
 
     public void receivedXbHeartBeatResponse(S_XB_HEART_BEAT response);

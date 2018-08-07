@@ -9,20 +9,20 @@ import app.client.net.protocol.response.sdk.device.S_DEVICE_ATTR_COMMAND;
 import app.client.net.protocol.response.sdk.device.S_DEVICE_MODE_COMMAND;
 import app.client.net.protocol.response.sdk.device.S_DEVICE_STATE_COMMAND;
 import app.client.net.protocol.response.sdk.device.S_ADD_DEVICE_RESULT;
-import app.client.net.protocol.response.sdk.device.S_GET_ALL_XB_BIND_MASTER;
 import app.client.net.protocol.response.sdk.device.S_SCENE_COMMAND;
 import app.client.net.protocol.response.sdk.device.S_SYNC_DEVICE_RESULT;
 import app.client.net.protocol.response.sdk.device.S_UPDATE_DEVICE_BIND_AREA;
 import app.client.net.protocol.response.sdk.device.S_UPDATE_DEVICE_BIND_SCENE;
 import app.client.net.protocol.response.sdk.device.S_UPDATE_DEVICE_RESULT;
 import app.client.service.AbstractServiceImpl;
+import app.client.testchain.sdk.SdkTestConst;
 import app.client.user.session.UserSession;
 import com.google.protobuf.ProtocolStringList;
 import com.gowild.sdk.protocol.SdkMsgType;
-import com.gowild.sdk.protocol.SdkTcp2DeviceProtocol;
-import com.gowild.sdktcp.metadata.pb.BaseBothMsgProto;
-import com.gowild.sdktcp.metadata.pb.SdkBothMsgProto;
-import com.gowild.sdktcp.metadata.pb.SdkDownloadMsgProto;
+import com.gowild.sdk.protocol.Tcp2DeviceProtocol;
+import com.gowild.sdk.metadata.pb.BaseBothMsgProto;
+import com.gowild.sdk.metadata.pb.SdkBothMsgProto;
+import com.gowild.sdk.metadata.pb.Tcp2SdkMsgProto;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -78,120 +78,222 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
     }
 
     @Override
-    //@Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_PUSH_STATE_COMMAND_S)
+    //@Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Tcp2DeviceProtocol.SDK_PUSH_STATE_COMMAND_S)
     @Handler(moduleId = 1, sequenceId = 2752)
     public void receiveStateCommand(S_DEVICE_STATE_COMMAND response) {
         System.out.println("=============>> 收到状态控制指令");
-        SdkDownloadMsgProto.PushCommonCommandMsg pushCommonCommandMsg = response.getPushCommonCommandMsg();
+        Tcp2SdkMsgProto.PushCommonCommandMsg pushCommonCommandMsg = response.getPushCommonCommandMsg();
         List<SdkBothMsgProto.SdkCommandWrapperMsg> sdkCommandWrapperMsgList =  pushCommonCommandMsg.getCmdWrappersList();
         for(SdkBothMsgProto.SdkCommandWrapperMsg sdkCommandWrapperMsg : sdkCommandWrapperMsgList){
-            SdkBothMsgProto.SdkCommandDeviceMsg typeDevice = sdkCommandWrapperMsg.getTypeDevice();
+
+            SdkBothMsgProto.SdkNewCommandStructMsg new_control = sdkCommandWrapperMsg.getNewControl();
+
+            SdkBothMsgProto.SdkNewControlDeviceListMsg type_device = new_control.getTypeDevice();
+            List<SdkBothMsgProto.SdkNewControlDeviceInfoMsg> device_list = type_device.getDeviceListList();
             StringBuilder sb = new StringBuilder();
-            int deviceType = typeDevice.getDeviceType();
-            sb.append("deviceType:" + deviceType + "|");
-            ProtocolStringList ids = typeDevice.getDeviceIdListList();
-            sb.append("deviceIds:" + deviceType + "|");
-            for(String id : ids){
-                sb.append(id + "|");
+            int deviceType = type_device.getDeviceType();
+            sb.append("=========================NEW CONTROL ==============================" + "\n");
+            sb.append("deviceType:  " + deviceType + "\n");
+            sb.append("deviceInfos:  " + "\n");
+            for(SdkBothMsgProto.SdkNewControlDeviceInfoMsg device : device_list){
+                sb.append(device.getDeviceId() + "|" + device.getDeviceName() + "\n");
             }
-            SdkBothMsgProto.SdkCommandParamMsg cmdParams = sdkCommandWrapperMsg.getCmdParams();
-            int attrValueType = cmdParams.getAttrValueType();
-            String attrValue = cmdParams.getAttrValue();
-            sb.append("attrValueType:" + attrValueType + " | attrValue:" + attrValue);
-            SdkBothMsgProto.SdkBaseCommandMsg baseCommand = sdkCommandWrapperMsg.getBaseCommand();
-            int mainType = baseCommand.getMainTypeId();
-            int subType = baseCommand.getSubTypeId();
 
-            String action = baseCommand.getAction();
-            String attr = baseCommand.getAttr();
-            String attrValueTypeStr = baseCommand.getAttrValueType();
-            attrValue = baseCommand.getAttrValue();
-            String mode = baseCommand.getMode();
+            // command
+            SdkBothMsgProto.SdkNewControlMsg new_base_command = new_control.getBaseCommand();
+            int main_type = new_base_command.getMainTypeId();
+            int sub_type = new_base_command.getSubTypeId();
 
-            long execTime = baseCommand.getExecTime();
-            sb.append("| mainType :" + mainType + " | subType:" + subType + "|");
-            sb.append("action :" + action + " | attr:" + attr + "| attrValueTypeStr:" + attrValueTypeStr
-                    + " | attrValue:" + attrValue + " | mode:" + mode);
-            System.out.println(sb.toString());
-            System.out.println("====================华丽的分割线======================");
+            String new_action = new_base_command.getAction();
+            String new_attr = new_base_command.getAttr();
+            String new_attr_value_type = new_base_command.getAttrValueType();
+            String new_attr_value = new_base_command.getAttrValue();
+            String new_mode = new_base_command.getMode();
+
+            sb.append("\n");
+            sb.append("main_type : " + main_type + " | sub_type: " + sub_type + "\n");
+            sb.append("new_action :" + new_action + " | new_attr:" + new_attr + "| "
+                    + " | new_attr_value_type:" + new_attr_value_type + " | new_attr_value:" + new_attr_value + " | new_mode:" + new_mode + "\n");
+
+            // param
+            SdkBothMsgProto.SdkNewControlParamMsg cmd_params = new_control.getCmdParams();
+            int attr_value_type = cmd_params.getAttrValueType();
+            String attr_value = cmd_params.getAttrValue();
+            sb.append("attr_value_type : " + attr_value_type
+                    + "(" + SdkTestConst.getAttrValueTypeStringById(attr_value_type) + ")"
+                    + "| attr_value: " + attr_value + "\n");
+
+
+            sb.append("=========================OLD CONTROL ==============================" + "\n");
+            SdkBothMsgProto.SdkOldCommandStructMsg old_control = sdkCommandWrapperMsg.getOldControl();
+            SdkBothMsgProto.SdkOldControlDeviceListMsg type_device_old = old_control.getTypeDevice();
+
+            int old_deviceType = type_device_old.getDeviceType();
+            List<SdkBothMsgProto.SdkOldControlDeviceInfoMsg> old_device_list = type_device_old.getDeviceListList();
+            sb.append("deviceType:  " + old_deviceType + "|" + "\n");
+            sb.append("deviceInfos:  " + "\n");
+            for(SdkBothMsgProto.SdkOldControlDeviceInfoMsg device : old_device_list){
+                sb.append(device.getDeviceId() + "|" + device.getDeviceName() + "\n");
+            }
+
+            SdkBothMsgProto.SdkOldControlMsg old_base_command = old_control.getBaseCommand();
+            String old_action_code = old_base_command.getActionCode();
+            String old_attribute_code = old_base_command.getAttributeCode();
+            String old_attribute_value_code = old_base_command.getAttributeValueCode();
+            String old_mode_code = old_base_command.getModeCode();
+            String old_state_code = old_base_command.getStateCode();
+
+            sb.append("old_action :" + old_action_code + " | old_attr:" + old_attribute_code + "| "
+                    + " | old_attrValue:" + old_attribute_value_code + " | old_mode:" + old_mode_code + " | old_state:" + old_state_code + "\n");
+
+            System.out.print(sb.toString());
+            System.out.println("====================华丽的分割线======================" + "\n");
         }
     }
 
     @Override
-    //@Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_PUSH_ATTR_COMMAND_S)
+    //@Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Tcp2DeviceProtocol.SDK_PUSH_ATTR_COMMAND_S)
     @Handler(moduleId = 1, sequenceId = 2756)
     public void receiveAttrCommand(S_DEVICE_ATTR_COMMAND response) {
         System.out.println("=============>> 收到属性制指令");
-        SdkDownloadMsgProto.PushCommonCommandMsg pushCommonCommandMsg = response.getPushCommonCommandMsg();
+        Tcp2SdkMsgProto.PushCommonCommandMsg pushCommonCommandMsg = response.getPushCommonCommandMsg();
         List<SdkBothMsgProto.SdkCommandWrapperMsg> sdkCommandWrapperMsgList =  pushCommonCommandMsg.getCmdWrappersList();
         for(SdkBothMsgProto.SdkCommandWrapperMsg sdkCommandWrapperMsg : sdkCommandWrapperMsgList){
-            SdkBothMsgProto.SdkCommandDeviceMsg typeDevice = sdkCommandWrapperMsg.getTypeDevice();
+
+            SdkBothMsgProto.SdkNewCommandStructMsg new_control = sdkCommandWrapperMsg.getNewControl();
+
+            SdkBothMsgProto.SdkNewControlDeviceListMsg type_device = new_control.getTypeDevice();
+            List<SdkBothMsgProto.SdkNewControlDeviceInfoMsg> device_list = type_device.getDeviceListList();
             StringBuilder sb = new StringBuilder();
-            int deviceType = typeDevice.getDeviceType();
-            sb.append("deviceType:" + deviceType + "|");
-            ProtocolStringList ids = typeDevice.getDeviceIdListList();
-            sb.append("deviceIds:" + deviceType + "|");
-            for(String id : ids){
-                sb.append(id + "|");
+            int deviceType = type_device.getDeviceType();
+            sb.append("=========================NEW CONTROL ==============================" + "\n");
+            sb.append("deviceType:  " + deviceType + "\n");
+            sb.append("deviceInfos:  " + "\n");
+            for(SdkBothMsgProto.SdkNewControlDeviceInfoMsg device : device_list){
+                sb.append(device.getDeviceId() + "|" + device.getDeviceName() + "\n");
             }
-            SdkBothMsgProto.SdkCommandParamMsg cmdParams = sdkCommandWrapperMsg.getCmdParams();
-            int attrValueType = cmdParams.getAttrValueType();
-            String attrValue = cmdParams.getAttrValue();
-            sb.append("attrValueType:" + attrValueType + " | attrValue:" + attrValue);
-            SdkBothMsgProto.SdkBaseCommandMsg baseCommand = sdkCommandWrapperMsg.getBaseCommand();
-            int mainType = baseCommand.getMainTypeId();
-            int subType = baseCommand.getSubTypeId();
 
-            String action = baseCommand.getAction();
-            String attr = baseCommand.getAttr();
-            String attrValueTypeStr = baseCommand.getAttrValueType();
-            attrValue = baseCommand.getAttrValue();
-            String mode = baseCommand.getMode();
+            // command
+            SdkBothMsgProto.SdkNewControlMsg new_base_command = new_control.getBaseCommand();
+            int main_type = new_base_command.getMainTypeId();
+            int sub_type = new_base_command.getSubTypeId();
 
-            long execTime = baseCommand.getExecTime();
-            sb.append("| mainType :" + mainType + " | subType:" + subType + "|");
-            sb.append("action :" + action + " | attr:" + attr + "| attrValueTypeStr:" + attrValueTypeStr
-                    + " | attrValue:" + attrValue + " | mode:" + mode);
-            System.out.println(sb.toString());
-            System.out.println("====================华丽的分割线======================");
+            String new_action = new_base_command.getAction();
+            String new_attr = new_base_command.getAttr();
+            String new_attr_value_type = new_base_command.getAttrValueType();
+            String new_attr_value = new_base_command.getAttrValue();
+            String new_mode = new_base_command.getMode();
+
+            sb.append("\n");
+            sb.append("main_type : " + main_type + " | sub_type: " + sub_type + "\n");
+            sb.append("new_action :" + new_action + " | new_attr:" + new_attr + "| "
+                    + " | new_attr_value_type:" + new_attr_value_type + " | new_attr_value:" + new_attr_value + " | new_mode:" + new_mode + "\n");
+
+            // param
+            SdkBothMsgProto.SdkNewControlParamMsg cmd_params = new_control.getCmdParams();
+            int attr_value_type = cmd_params.getAttrValueType();
+            String attr_value = cmd_params.getAttrValue();
+            sb.append("attr_value_type : " + attr_value_type
+                    + "(" + SdkTestConst.getAttrValueTypeStringById(attr_value_type) + ")"
+                    + "| attr_value: " + attr_value + "\n");
+
+
+            sb.append("=========================OLD CONTROL ==============================" + "\n");
+            SdkBothMsgProto.SdkOldCommandStructMsg old_control = sdkCommandWrapperMsg.getOldControl();
+            SdkBothMsgProto.SdkOldControlDeviceListMsg type_device_old = old_control.getTypeDevice();
+
+            int old_deviceType = type_device_old.getDeviceType();
+            List<SdkBothMsgProto.SdkOldControlDeviceInfoMsg> old_device_list = type_device_old.getDeviceListList();
+            sb.append("deviceType:  " + old_deviceType + "|" + "\n");
+            sb.append("deviceInfos:  " + "\n");
+            for(SdkBothMsgProto.SdkOldControlDeviceInfoMsg device : old_device_list){
+                sb.append(device.getDeviceId() + "|" + device.getDeviceName() + "\n");
+            }
+
+            SdkBothMsgProto.SdkOldControlMsg old_base_command = old_control.getBaseCommand();
+            String old_action_code = old_base_command.getActionCode();
+            String old_attribute_code = old_base_command.getAttributeCode();
+            String old_attribute_value_code = old_base_command.getAttributeValueCode();
+            String old_mode_code = old_base_command.getModeCode();
+            String old_state_code = old_base_command.getStateCode();
+
+            sb.append("old_action :" + old_action_code + " | old_attr:" + old_attribute_code + "| "
+                    + " | old_attrValue:" + old_attribute_value_code + " | old_mode:" + old_mode_code + " | old_state:" + old_state_code + "\n");
+
+            System.out.print(sb.toString());
+            System.out.println("====================华丽的分割线======================" + "\n");
         }
     }
 
     @Override
     public void receiveModeCommand(S_DEVICE_MODE_COMMAND response) {
         System.out.println("=============>> 收到模式控制指令");
-        SdkDownloadMsgProto.PushCommonCommandMsg pushCommonCommandMsg = response.getPushCommonCommandMsg();
+        Tcp2SdkMsgProto.PushCommonCommandMsg pushCommonCommandMsg = response.getPushCommonCommandMsg();
         List<SdkBothMsgProto.SdkCommandWrapperMsg> sdkCommandWrapperMsgList =  pushCommonCommandMsg.getCmdWrappersList();
         for(SdkBothMsgProto.SdkCommandWrapperMsg sdkCommandWrapperMsg : sdkCommandWrapperMsgList){
-            SdkBothMsgProto.SdkCommandDeviceMsg typeDevice = sdkCommandWrapperMsg.getTypeDevice();
+
+            SdkBothMsgProto.SdkNewCommandStructMsg new_control = sdkCommandWrapperMsg.getNewControl();
+
+            SdkBothMsgProto.SdkNewControlDeviceListMsg type_device = new_control.getTypeDevice();
+            List<SdkBothMsgProto.SdkNewControlDeviceInfoMsg> device_list = type_device.getDeviceListList();
             StringBuilder sb = new StringBuilder();
-            int deviceType = typeDevice.getDeviceType();
-            sb.append("deviceType:" + deviceType + "|");
-            ProtocolStringList ids = typeDevice.getDeviceIdListList();
-            sb.append("deviceIds:" + deviceType + "|");
-            for(String id : ids){
-                sb.append(id + "|");
+            int deviceType = type_device.getDeviceType();
+            sb.append("=========================NEW CONTROL ==============================" + "\n");
+            sb.append("deviceType:  " + deviceType + "\n");
+            sb.append("deviceInfos:  " + "\n");
+            for(SdkBothMsgProto.SdkNewControlDeviceInfoMsg device : device_list){
+                sb.append(device.getDeviceId() + "|" + device.getDeviceName() + "\n");
             }
-            SdkBothMsgProto.SdkCommandParamMsg cmdParams = sdkCommandWrapperMsg.getCmdParams();
-            int attrValueType = cmdParams.getAttrValueType();
-            String attrValue = cmdParams.getAttrValue();
-            sb.append("attrValueType:" + attrValueType + " | attrValue:" + attrValue);
-            SdkBothMsgProto.SdkBaseCommandMsg baseCommand = sdkCommandWrapperMsg.getBaseCommand();
-            int mainType = baseCommand.getMainTypeId();
-            int subType = baseCommand.getSubTypeId();
 
-            String action = baseCommand.getAction();
-            String attr = baseCommand.getAttr();
-            String attrValueTypeStr = baseCommand.getAttrValueType();
-            attrValue = baseCommand.getAttrValue();
-            String mode = baseCommand.getMode();
+            // command
+            SdkBothMsgProto.SdkNewControlMsg new_base_command = new_control.getBaseCommand();
+            int main_type = new_base_command.getMainTypeId();
+            int sub_type = new_base_command.getSubTypeId();
 
-            long execTime = baseCommand.getExecTime();
-            sb.append("| mainType :" + mainType + " | subType:" + subType + "|");
-            sb.append("action :" + action + " | attr:" + attr + "| attrValueTypeStr:" + attrValueTypeStr
-                    + " | attrValue:" + attrValue + " | mode:" + mode);
-            System.out.println(sb.toString());
-            System.out.println("====================华丽的分割线======================");
+            String new_action = new_base_command.getAction();
+            String new_attr = new_base_command.getAttr();
+            String new_attr_value_type = new_base_command.getAttrValueType();
+            String new_attr_value = new_base_command.getAttrValue();
+            String new_mode = new_base_command.getMode();
+
+            sb.append("\n");
+            sb.append("main_type : " + main_type + " | sub_type: " + sub_type + "\n");
+            sb.append("new_action :" + new_action + " | new_attr:" + new_attr + "| "
+                    + " | new_attr_value_type:" + new_attr_value_type + " | new_attr_value:" + new_attr_value + " | new_mode:" + new_mode + "\n");
+
+            // param
+            SdkBothMsgProto.SdkNewControlParamMsg cmd_params = new_control.getCmdParams();
+            int attr_value_type = cmd_params.getAttrValueType();
+            String attr_value = cmd_params.getAttrValue();
+            sb.append("attr_value_type : " + attr_value_type
+                    + "(" + SdkTestConst.getAttrValueTypeStringById(attr_value_type) + ")"
+                    + "| attr_value: " + attr_value + "\n");
+
+
+            sb.append("=========================OLD CONTROL ==============================" + "\n");
+            SdkBothMsgProto.SdkOldCommandStructMsg old_control = sdkCommandWrapperMsg.getOldControl();
+            SdkBothMsgProto.SdkOldControlDeviceListMsg type_device_old = old_control.getTypeDevice();
+
+            int old_deviceType = type_device_old.getDeviceType();
+            List<SdkBothMsgProto.SdkOldControlDeviceInfoMsg> old_device_list = type_device_old.getDeviceListList();
+            sb.append("deviceType:  " + old_deviceType + "|" + "\n");
+            sb.append("deviceInfos:  " + "\n");
+            for(SdkBothMsgProto.SdkOldControlDeviceInfoMsg device : old_device_list){
+                sb.append(device.getDeviceId() + "|" + device.getDeviceName() + "\n");
+            }
+
+            SdkBothMsgProto.SdkOldControlMsg old_base_command = old_control.getBaseCommand();
+            String old_action_code = old_base_command.getActionCode();
+            String old_attribute_code = old_base_command.getAttributeCode();
+            String old_attribute_value_code = old_base_command.getAttributeValueCode();
+            String old_mode_code = old_base_command.getModeCode();
+            String old_state_code = old_base_command.getStateCode();
+
+            sb.append("old_action :" + old_action_code + " | old_attr:" + old_attribute_code + "| "
+                    + " | old_attrValue:" + old_attribute_value_code + " | old_mode:" + old_mode_code + " | old_state:" + old_state_code + "\n");
+
+            System.out.print(sb.toString());
+            System.out.println("====================华丽的分割线======================" + "\n");
         }
 
     }
@@ -199,48 +301,56 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
     @Override
     public void receiveSceneCommand(S_SCENE_COMMAND response) {
         System.out.println("=============>> 收到场景控制指令");
-        SdkDownloadMsgProto.SdkSceneCommandMsg pushCommonCommandMsg = response.getSdkSceneCommandMsg();
-        List<String> sceneIdList = pushCommonCommandMsg.getSceneIdList();
-        SdkBothMsgProto.SdkBaseCommandMsg baseCommand = pushCommonCommandMsg.getBaseCommand();
-
-        int mainType = baseCommand.getMainTypeId();
-        int subType = baseCommand.getSubTypeId();
-
-        String action = baseCommand.getAction();
-        String attr = baseCommand.getAttr();
-        String attrValueTypeStr = baseCommand.getAttrValueType();
-        String attrValue = baseCommand.getAttrValue();
-        String mode = baseCommand.getMode();
-
         StringBuilder sb = new StringBuilder();
-        sb.append("sceneIdList :");
-        for(String sceneId : sceneIdList){
-            sb.append(sceneId + " | ");
+
+        Tcp2SdkMsgProto.SdkSceneCommandMsg sdkSceneCommandMsg = response.getSdkSceneCommandMsg();
+
+        // scenelist
+        List<Tcp2SdkMsgProto.SceneTidWithName> sceneListList = sdkSceneCommandMsg.getSceneListList();
+        for(Tcp2SdkMsgProto.SceneTidWithName scene : sceneListList){
+            sb.append("sceneTid:" + scene.getSceneTid() + " | sceneName" + scene.getSceneName() + "\n");
         }
-        sb.append("mainType :" + mainType + " | subType:" + subType + "|");
-        sb.append("action :" + action + " | attr:" + attr + "| attrValueTypeStr:" + attrValueTypeStr
-                + " | attrValue:" + attrValue + " | mode:" + mode);
-        System.out.println(sb.toString());
-        System.out.println("====================华丽的分割线======================");
+
+        // command
+        SdkBothMsgProto.SdkNewControlMsg new_base_command = sdkSceneCommandMsg.getBaseCommand();
+        int main_type = new_base_command.getMainTypeId();
+        int sub_type = new_base_command.getSubTypeId();
+
+        String new_action = new_base_command.getAction();
+        String new_attr = new_base_command.getAttr();
+        String new_attr_value_type = new_base_command.getAttrValueType();
+        String new_attr_value = new_base_command.getAttrValue();
+        String new_mode = new_base_command.getMode();
+
+        sb.append("\n");
+        sb.append("main_type : " + main_type + " | sub_type: " + sub_type + "\n");
+        sb.append("new_action :" + new_action + " | new_attr:" + new_attr + "| "
+                + " | new_attr_value_type:" + new_attr_value_type + " | new_attr_value:" + new_attr_value + " | new_mode:" + new_mode + "\n");
+
+        // speak
+        sb.append("speak text : " + sdkSceneCommandMsg.getSpeakText() + "\n");
+
+        System.out.print(sb.toString());
+        System.out.println("====================华丽的分割线======================" + "\n");
 
     }
 
     @Override
-    @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_MASTER_BIND_DEVICES_RESULT_S)
+    @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Tcp2DeviceProtocol.SDK_MASTER_BIND_DEVICES_RESULT_S)
     public void receiveAddMasterBindDeviceResult(S_ADD_DEVICE_RESULT response) {
         SdkBothMsgProto.SdkCommonResponseMsg msg = response.getCommonResponseMsg();
         System.out.println("====== >>> SDK【增加】主机绑定设备返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
     }
 
     @Override
-    @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_DELETE_MASTER_BIND_DEVICE_RESULT_S)
+    @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Tcp2DeviceProtocol.SDK_DELETE_MASTER_BIND_DEVICE_RESULT_S)
     public void receiveDeleteMasterBindDeviceResult(S_DELETE_DEVICE_RESULT response) {
         SdkBothMsgProto.SdkCommonResponseMsg msg = response.getCommonResponseMsg();
         System.out.println("====== >>> SDK【删除】主机绑定设备返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
     }
 
     @Override
-    @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_SYNC_DEVICE_RESULT_S)
+    @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Tcp2DeviceProtocol.SDK_SYNC_DEVICE_RESULT_S)
     public void receiveSyncMasterBindDeviceResult(S_SYNC_DEVICE_RESULT response) {
         SdkBothMsgProto.SdkCommonResponseMsg msg = response.getCommonResponseMsg();
         System.out.println("====== >>> SDK【同步】主机绑定设备返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
@@ -250,12 +360,6 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
     public void receiveUpdateMasterBindDeviceResult(S_UPDATE_DEVICE_RESULT response) {
         SdkBothMsgProto.SdkCommonResponseMsg msg = response.getCommonResponseMsg();
         System.out.println("====== >>> SDK【更新】主机绑定设备返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
-    }
-
-    @Override
-    public void receiveGetXbBindAllMasterInfoResult(S_GET_ALL_XB_BIND_MASTER response) {
-        BaseBothMsgProto.StringMsg masterInfos = response.getMasterInfos();
-        System.out.println("====== >>> SDK【获取】XB下面所有主机数据为 : " + masterInfos.getValue());
     }
 
     @Override
@@ -271,7 +375,7 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
     }
 
 //    @Override
-//    @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_RECEIVED_DEVICE_COMMAND_S)
+//    @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Tcp2DeviceProtocol.SDK_RECEIVED_DEVICE_COMMAND_S)
 //    public void receiveDeviceCmd(S_DEVICE_CMD response) {
 //        String state = response.getSdkDeviceCommandMsg().getCommand().getState();
 //        String action = response.getSdkDeviceCommandMsg().getCommand().getAction();
@@ -282,7 +386,7 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
 //    }
 //
 //    @Override
-//    @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_RECEIVED_DEVICE_TYPE_COMMAND_S)
+//    @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Tcp2DeviceProtocol.SDK_RECEIVED_DEVICE_TYPE_COMMAND_S)
 //    public void receiveDeviceTypeCmd(S_DEVICE_TYPE_CMD response) {
 //        String state = response.getSdkDeviceTypeCommandMsg().getCommand().getState();
 //        String action = response.getSdkDeviceTypeCommandMsg().getCommand().getAction();
@@ -293,7 +397,7 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
 //    }
 //
 //    @Override
-//    @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_RECEIVED_SCENE_COMMAND_S)
+//    @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Tcp2DeviceProtocol.SDK_RECEIVED_SCENE_COMMAND_S)
 //    public void receiveSceneCmd(S_SCENE_CMD response) {
 //        String state = response.getSdkSceneCommandMsg().getCommand().getState();
 //        String action = response.getSdkSceneCommandMsg().getCommand().getAction();
@@ -304,7 +408,7 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
 //    }
 //
 //    @Override
-//    @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_RECEIVED_AREA_COMMAND_S)
+//    @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Tcp2DeviceProtocol.SDK_RECEIVED_AREA_COMMAND_S)
 //    public void receiveAreaCmd(S_AREA_CMD response) {
 //        String state = response.getSdkAreaCommandMsg().getCommand().getState();
 //        String action = response.getSdkAreaCommandMsg().getCommand().getAction();

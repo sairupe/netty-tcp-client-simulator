@@ -5,14 +5,14 @@ import app.client.net.protocol.ProtocolType;
 import app.client.net.protocol.RequestProtocol;
 import app.client.net.protocol.request.sdk.vo.AddAreaInfoVo;
 import com.gowild.core.util.StringUtil;
-import com.gowild.sdk.protocol.Device2SdkTcpProtocol;
+import com.gowild.sdk.protocol.Device2TcpProtocol;
 import com.gowild.sdk.protocol.SdkMsgType;
-import com.gowild.sdktcp.metadata.pb.SdkUploadMsgProto;
+import com.gowild.sdk.metadata.pb.Sdk2TcpMsgProto;
 
 import java.util.List;
 
 
-@Protocol(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Device2SdkTcpProtocol.SDK_SYNC_AREA_C, type = ProtocolType.REQUSET)
+@Protocol(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Device2TcpProtocol.SDK_SYNC_AREA_C, type = ProtocolType.REQUSET)
 public class C_SYNC_AREA_C extends RequestProtocol{
 
     private List<AddAreaInfoVo> syncAreaInfoVoList;
@@ -20,9 +20,9 @@ public class C_SYNC_AREA_C extends RequestProtocol{
     @Override
     public void writeBinaryData(){
 
-        SdkUploadMsgProto.SdkAddAreaMsg.Builder build = SdkUploadMsgProto.SdkAddAreaMsg.newBuilder();
+        Sdk2TcpMsgProto.SdkAddAreaBatchMsg.Builder build = Sdk2TcpMsgProto.SdkAddAreaBatchMsg.newBuilder();
         for(AddAreaInfoVo addAreaInfoVo : syncAreaInfoVoList){
-            SdkUploadMsgProto.SdkAddAreaInfo.Builder second = SdkUploadMsgProto.SdkAddAreaInfo.newBuilder();
+            Sdk2TcpMsgProto.SdkAddArea.Builder second = Sdk2TcpMsgProto.SdkAddArea.newBuilder();
             second.setAreaId(addAreaInfoVo.getAreaId());
             second.setAreaName(addAreaInfoVo.getAreaName());
             String bindFloorId = addAreaInfoVo.getBindFloorId();

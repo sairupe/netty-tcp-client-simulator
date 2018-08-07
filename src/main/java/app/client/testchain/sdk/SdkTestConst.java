@@ -44,4 +44,25 @@ public class SdkTestConst {
 
     public static final String XB_MAC = "94:a1:a2:f4:5d:d5";
 
+
+    public static String getAttrValueTypeStringById(int attrValueTypeId){
+        switch (attrValueTypeId){
+            case 1:{
+                return "TIME";
+            }
+            case 2:{
+                return "NUM";
+            }
+            case 3:{
+                return "COLOR";
+            }
+            case 4:{
+                return "SPECIAL";
+            }
+            default:{
+                break;
+            }
+        }
+        return null;
+    }
 }

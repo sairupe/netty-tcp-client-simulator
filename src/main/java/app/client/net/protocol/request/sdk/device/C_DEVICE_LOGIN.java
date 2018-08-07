@@ -3,12 +3,12 @@ package app.client.net.protocol.request.sdk.device;
 import app.client.net.annotation.Protocol;
 import app.client.net.protocol.ProtocolType;
 import app.client.net.protocol.RequestProtocol;
-import com.gowild.sdk.protocol.Device2SdkTcpProtocol;
+import com.gowild.sdk.protocol.Device2TcpProtocol;
 import com.gowild.sdk.protocol.SdkMsgType;
-import com.gowild.sdktcp.metadata.pb.SdkUploadMsgProto;
+import com.gowild.sdk.metadata.pb.Sdk2TcpMsgProto;
 
 
-@Protocol(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Device2SdkTcpProtocol.SDK_DEVICE_LOGIN_C, type = ProtocolType.REQUSET)
+@Protocol(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Device2TcpProtocol.SDK_DEVICE_LOGIN_C, type = ProtocolType.REQUSET)
 public class C_DEVICE_LOGIN extends RequestProtocol{
 
     /**
@@ -39,20 +39,17 @@ public class C_DEVICE_LOGIN extends RequestProtocol{
 
     @Override
     public void writeBinaryData(){
-
-
-
-        SdkUploadMsgProto.SdkDeviceLoginMsg.Builder build = SdkUploadMsgProto.SdkDeviceLoginMsg.newBuilder();
-        build.setUniqueCode(uniqueCode);
-        build.setDeviceType(deviceType);
-        build.setDeviceId(deviceId);
-        build.setLoginTime(loginTime);
-        build.setDeviceSn(deviceSn);
-        build.setEncryptCode(encrypCode);
-        byte[] bytes = build.build().toByteArray();
-        for(byte b : bytes){
-            writeByte(b);
-        }
+//        Sdk2TcpMsgProto.SdkDeviceLoginMsg.Builder build = Sdk2TcpMsgProto.SdkDeviceLoginMsg.newBuilder();
+//        build.setUniqueCode(uniqueCode);
+//        build.setDeviceType(deviceType);
+//        build.setDeviceId(deviceId);
+//        build.setLoginTime(loginTime);
+//        build.setDeviceSn(deviceSn);
+//        build.setEncryptCode(encrypCode);
+//        byte[] bytes = build.build().toByteArray();
+//        for(byte b : bytes){
+//            writeByte(b);
+//        }
     }
 
     public String getUniqueCode() {

@@ -3,15 +3,15 @@ package app.client.net.protocol.request.sdk.scene;
 import app.client.net.annotation.Protocol;
 import app.client.net.protocol.ProtocolType;
 import app.client.net.protocol.RequestProtocol;
-import com.gowild.sdk.protocol.Device2SdkTcpProtocol;
+import com.gowild.sdk.protocol.Device2TcpProtocol;
 import com.gowild.sdk.protocol.SdkMsgType;
 import com.gowild.sdk.vo.db.AddSceneInfoVo;
-import com.gowild.sdktcp.metadata.pb.SdkUploadMsgProto;
+import com.gowild.sdk.metadata.pb.Sdk2TcpMsgProto;
 
 import java.util.List;
 
 
-@Protocol(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Device2SdkTcpProtocol.SDK_UPDATE_SCENE_INFO_C, type = ProtocolType.REQUSET)
+@Protocol(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Device2TcpProtocol.SDK_UPDATE_SCENE_C, type = ProtocolType.REQUSET)
 public class C_UPDATE_SCENE_C extends RequestProtocol{
 
     private List<AddSceneInfoVo> updateSceneInfoVoList;
@@ -19,9 +19,9 @@ public class C_UPDATE_SCENE_C extends RequestProtocol{
     @Override
     public void writeBinaryData(){
 
-        SdkUploadMsgProto.SdkUpdateSceneMsg.Builder build = SdkUploadMsgProto.SdkUpdateSceneMsg.newBuilder();
+        Sdk2TcpMsgProto.SdkUpdateSceneBatchMsg.Builder build = Sdk2TcpMsgProto.SdkUpdateSceneBatchMsg.newBuilder();
         for(AddSceneInfoVo addSceneInfoVo : updateSceneInfoVoList){
-            SdkUploadMsgProto.SdkUpdateSceneInfo.Builder second = SdkUploadMsgProto.SdkUpdateSceneInfo.newBuilder();
+            Sdk2TcpMsgProto.SdkUpdateScene.Builder second = Sdk2TcpMsgProto.SdkUpdateScene.newBuilder();
             second.setSceneId(addSceneInfoVo.getSceneTid());
             second.setSceneName(addSceneInfoVo.getSceneName());
             build.addSceneList(second.build());

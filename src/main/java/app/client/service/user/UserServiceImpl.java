@@ -8,8 +8,6 @@ import app.client.net.protocol.request.*;
 import app.client.net.protocol.request.sdk.device.C_DEVICE_HEART_BEAT;
 import app.client.net.protocol.request.sdk.device.C_DEVICE_LOGIN;
 import app.client.net.protocol.response.S_APP_HEART_BEAT;
-import app.client.net.protocol.response.S_DEVICE_HEART_BEAT;
-import app.client.net.protocol.response.S_DEVICE_LOGIN_RESULT;
 import app.client.net.protocol.response.S_XB_HEART_BEAT;
 import app.client.net.task.app.AppHeartBeatTask;
 import app.client.net.task.sdk.SdkDeviceHeartBeatTask;
@@ -20,9 +18,9 @@ import app.client.service.device.DeviceServiceImpl;
 import app.client.user.session.UserSession;
 import com.gowild.core.util.HttpUtil;
 import com.gowild.sdk.protocol.SdkMsgType;
-import com.gowild.sdk.protocol.SdkTcp2DeviceProtocol;
-import com.gowild.sdktcp.metadata.pb.SdkBothMsgProto;
-import com.gowild.sdktcp.metadata.pb.SdkDownloadMsgProto;
+import com.gowild.sdk.protocol.Tcp2DeviceProtocol;
+import com.gowild.sdk.metadata.pb.SdkBothMsgProto;
+import com.gowild.sdk.metadata.pb.Tcp2SdkMsgProto;
 import org.json.JSONObject;
 
 import javax.annotation.Resource;
@@ -61,23 +59,6 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
         SdkDeviceHeartBeatTask task = new SdkDeviceHeartBeatTask(userSession.getCtx(), heartBeat);
         TaskManager.getInstance().addTickTask(task, 2, 30, TimeUnit.SECONDS);
 
-    }
-
-    @Override
-    @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_DEVICE_LOGIN_RESULT_S)
-    public void receivedUserLoginResponse(S_DEVICE_LOGIN_RESULT response) {
-        // 打印登录结果
-        SdkBothMsgProto.SdkCommonResponseMsg commonResponseMsg = response.getCommonResponseMsg();
-        response.getUserSession().setLogined(true);
-        System.out.println("====== >>> SDK设备登录返回码是 : " + commonResponseMsg.getCode());
-    }
-
-    @Override
-    @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = SdkTcp2DeviceProtocol.SDK_DEVICE_HEART_BEAT_S)
-    public void receivedHeartBeatResponse(S_DEVICE_HEART_BEAT response) {
-        SdkDownloadMsgProto.SdkDeviceHeartBeatMsg msg = response.getHeartBeatMsg();
-        System.out.println("====== >>> SDK设备返回时间是 : " + msg.getServerTime() + " | "
-                + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(msg.getServerTime())));
     }
 
     @Override

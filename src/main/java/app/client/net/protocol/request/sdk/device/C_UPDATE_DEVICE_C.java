@@ -4,14 +4,14 @@ import app.client.net.annotation.Protocol;
 import app.client.net.protocol.ProtocolType;
 import app.client.net.protocol.RequestProtocol;
 import app.client.net.protocol.request.sdk.vo.AddDeviceInfoVo;
-import com.gowild.sdk.protocol.Device2SdkTcpProtocol;
+import com.gowild.sdk.protocol.Device2TcpProtocol;
 import com.gowild.sdk.protocol.SdkMsgType;
-import com.gowild.sdktcp.metadata.pb.SdkUploadMsgProto;
+import com.gowild.sdk.metadata.pb.Sdk2TcpMsgProto;
 
 import java.util.List;
 
 
-@Protocol(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Device2SdkTcpProtocol.SDK_UPDATE_DEVICE_INFO_C, type = ProtocolType.REQUSET)
+@Protocol(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Device2TcpProtocol.SDK_UPDATE_DEVICE_C, type = ProtocolType.REQUSET)
 public class C_UPDATE_DEVICE_C extends RequestProtocol{
 
     private List<AddDeviceInfoVo> updateDeviceInfoVoList;
@@ -19,9 +19,9 @@ public class C_UPDATE_DEVICE_C extends RequestProtocol{
     @Override
     public void writeBinaryData(){
 
-        SdkUploadMsgProto.SdkUpdateDeviceMsg.Builder build = SdkUploadMsgProto.SdkUpdateDeviceMsg.newBuilder();
+        Sdk2TcpMsgProto.SdkUpdateDeviceBatchMsg.Builder build = Sdk2TcpMsgProto.SdkUpdateDeviceBatchMsg.newBuilder();
         for(AddDeviceInfoVo addDeviceInfoVo : updateDeviceInfoVoList){
-            SdkUploadMsgProto.SdkUpdateDeviceInfo.Builder second = SdkUploadMsgProto.SdkUpdateDeviceInfo.newBuilder();
+            Sdk2TcpMsgProto.SdkUpdateDevice.Builder second = Sdk2TcpMsgProto.SdkUpdateDevice.newBuilder();
             second.setDeviceId(addDeviceInfoVo.getDeviceId());
             second.setDeviceName(addDeviceInfoVo.getDeviceName());
             second.setOpenStatus(addDeviceInfoVo.getOpenStatus());

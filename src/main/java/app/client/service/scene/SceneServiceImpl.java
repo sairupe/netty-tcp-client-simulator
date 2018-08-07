@@ -10,7 +10,7 @@ import app.client.net.protocol.response.sdk.scene.S_DELETE_SCENE_RESULT;
 import app.client.net.protocol.response.sdk.scene.S_SYNC_SCENE_RESULT;
 import app.client.net.protocol.response.sdk.scene.S_UPDATE_SCENE_RESULT;
 import app.client.service.AbstractServiceImpl;
-import com.gowild.sdktcp.metadata.pb.SdkBothMsgProto;
+import com.gowild.sdk.metadata.pb.SdkBothMsgProto;
 
 /**
  * Created by zh on 2018/2/27.

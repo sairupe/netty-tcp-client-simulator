@@ -6,7 +6,7 @@ import app.client.net.protocol.response.sdk.home.S_DELETE_HOME_RESULT;
 import app.client.net.protocol.response.sdk.home.S_SYNC_HOME_RESULT;
 import app.client.net.protocol.response.sdk.home.S_UPDATE_HOME_RESULT;
 import app.client.service.AbstractServiceImpl;
-import com.gowild.sdktcp.metadata.pb.SdkBothMsgProto;
+import com.gowild.sdk.metadata.pb.SdkBothMsgProto;
 
 /**
  * Created by zh on 2018/2/27.
