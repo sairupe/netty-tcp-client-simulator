@@ -1,7 +1,7 @@
 package app.client.testchain.sdk.protocol.scene;
 
 import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.request.sdk.scene.C_SYNC_SCENE_C;
+import app.client.net.protocol.request.sdk.batch.scene.C_SYNC_SCENE;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
 import com.gowild.sdk.vo.db.AddSceneInfoVo;
@@ -33,7 +33,7 @@ public class SyncSceneCommandNode extends ProtocolListenNode {
         addSceneInfoVoList.add(addSceneInfoVo1);
         addSceneInfoVoList.add(addSceneInfoVo2);
 
-        C_SYNC_SCENE_C protocol = ProtocolFactory.createRequestProtocol(C_SYNC_SCENE_C.class,
+        C_SYNC_SCENE protocol = ProtocolFactory.createRequestProtocol(C_SYNC_SCENE.class,
                 userSession.getCtx());
         protocol.setSyncSceneInfoVoList(addSceneInfoVoList);
         userSession.sendMsg(protocol);

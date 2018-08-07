@@ -1,7 +1,7 @@
 package app.client.testchain.sdk.protocol.area;
 
 import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.request.sdk.area.C_SYNC_AREA_C;
+import app.client.net.protocol.request.sdk.batch.area.C_SYNC_AREA;
 import app.client.net.protocol.request.sdk.vo.AddAreaInfoVo;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
@@ -33,7 +33,7 @@ public class SyncAreaCommandNode extends ProtocolListenNode {
         addAreaInfoVoList.add(addAreaInfoVo1);
         addAreaInfoVoList.add(addAreaInfoVo2);
 
-        C_SYNC_AREA_C protocol = ProtocolFactory.createRequestProtocol(C_SYNC_AREA_C.class,
+        C_SYNC_AREA protocol = ProtocolFactory.createRequestProtocol(C_SYNC_AREA.class,
                 userSession.getCtx());
         protocol.setSyncAreaInfoVoList(addAreaInfoVoList);
         userSession.sendMsg(protocol);

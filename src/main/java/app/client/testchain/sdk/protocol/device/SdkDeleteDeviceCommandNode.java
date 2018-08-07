@@ -1,7 +1,7 @@
 package app.client.testchain.sdk.protocol.device;
 
 import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.request.sdk.device.C_DELETE_DEVICE_C;
+import app.client.net.protocol.request.sdk.batch.device.C_DELETE_DEVICE;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
 
@@ -21,7 +21,7 @@ public class SdkDeleteDeviceCommandNode extends ProtocolListenNode {
         deleteList.add(deleteId1);
 //        deleteList.add(deleteId2);
 
-        C_DELETE_DEVICE_C deleteDevices = ProtocolFactory.createRequestProtocol(C_DELETE_DEVICE_C.class,
+        C_DELETE_DEVICE deleteDevices = ProtocolFactory.createRequestProtocol(C_DELETE_DEVICE.class,
                 userSession.getCtx());
         deleteDevices.setDeleteDeviceIdList(deleteList);
         userSession.sendMsg(deleteDevices);

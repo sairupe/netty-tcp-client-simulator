@@ -1,7 +1,7 @@
 package app.client.testchain.sdk.protocol.device;
 
 import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.request.sdk.device.C_DEVICE_HEART_BEAT;
+import app.client.net.protocol.request.sdk.batch.device.C_DEVICE_HEART_BEAT;
 import app.client.net.task.sdk.SdkDeviceHeartBeatTask;
 import app.client.net.task.TaskManager;
 import app.client.testchain.ProtocolListenNode;

@@ -1,9 +1,8 @@
 package app.client.testchain.sdk.protocol.device;
 
 import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.request.sdk.device.C_DEVICE_LOGIN;
+import app.client.net.protocol.request.sdk.batch.device.C_DEVICE_LOGIN;
 import app.client.testchain.ProtocolListenNode;
-import app.client.utils.CommonUtil;
 
 /**
  * Created by zh on 2017/11/21.

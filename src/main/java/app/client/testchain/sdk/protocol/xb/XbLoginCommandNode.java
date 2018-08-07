@@ -10,10 +10,19 @@ import app.client.testchain.ProtocolListenNode;
 public class XbLoginCommandNode extends ProtocolListenNode {
     @Override
     public void doExecute() {
-        C_XB_LOGIN login = ProtocolFactory.createRequestProtocol(C_XB_LOGIN.class,
+        C_XB_LOGIN xbLogin = ProtocolFactory.createRequestProtocol(C_XB_LOGIN.class,
                 userSession.getCtx());
-        login.setMac("94:a1:a2:f3:ec:51");
-        userSession.sendMsg(login);
+        xbLogin.setMac("94:a1:a2:c0:47:c8");
+        xbLogin.setSn("");
+
+        xbLogin.setVersion("2.1.2");
+        xbLogin.setVersionV2("100");
+
+        xbLogin.setbVersion("119");
+        xbLogin.setGifV1("157");
+        xbLogin.setLoginIp("116.24.65.206");
+
+        userSession.sendMsg(xbLogin);
     }
 
     @Override

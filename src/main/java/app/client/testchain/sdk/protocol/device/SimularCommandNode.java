@@ -1,7 +1,7 @@
 package app.client.testchain.sdk.protocol.device;
 
 import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.request.sdk.device.C_DEVICE_SIMULAR_COMMAND;
+import app.client.net.protocol.request.sdk.batch.device.C_DEVICE_SIMULAR_COMMAND;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
 import com.gowild.sdk.basic.enums.DeviceTypeEnum;

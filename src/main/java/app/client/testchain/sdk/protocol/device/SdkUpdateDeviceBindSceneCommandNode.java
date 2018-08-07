@@ -1,7 +1,7 @@
 package app.client.testchain.sdk.protocol.device;
 
 import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.request.sdk.device.C_UPDATE_DEVICE_BIND_SCENE;
+import app.client.net.protocol.request.sdk.batch.device.C_UPDATE_DEVICE_BIND_SCENE_BATCH;
 import app.client.net.protocol.request.sdk.vo.UpdateDeviceBindScene;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
@@ -34,7 +34,7 @@ public class SdkUpdateDeviceBindSceneCommandNode extends ProtocolListenNode {
         updateList.add(updateDeviceBindScene1);
         updateList.add(updateDeviceBindScene2);
 
-        C_UPDATE_DEVICE_BIND_SCENE updateDeviceBindScene = ProtocolFactory.createRequestProtocol(C_UPDATE_DEVICE_BIND_SCENE.class,
+        C_UPDATE_DEVICE_BIND_SCENE_BATCH updateDeviceBindScene = ProtocolFactory.createRequestProtocol(C_UPDATE_DEVICE_BIND_SCENE_BATCH.class,
                 userSession.getCtx());
         updateDeviceBindScene.setUpdateDeviceBindSceneList(updateList);
         userSession.sendMsg(updateDeviceBindScene);

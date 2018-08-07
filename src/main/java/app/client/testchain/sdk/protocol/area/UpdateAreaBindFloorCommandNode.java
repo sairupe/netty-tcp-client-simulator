@@ -1,12 +1,8 @@
 package app.client.testchain.sdk.protocol.area;
 
 import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.request.sdk.area.C_UPDATE_AREA_BIND_FLOOR;
-import app.client.net.protocol.request.sdk.area.C_UPDATE_AREA_C;
-import app.client.net.protocol.request.sdk.device.C_UPDATE_DEVICE_BIND_SCENE;
-import app.client.net.protocol.request.sdk.vo.AddAreaInfoVo;
+import app.client.net.protocol.request.sdk.batch.area.C_UPDATE_AREA_BIND_FLOOR_BATCH;
 import app.client.net.protocol.request.sdk.vo.UpdateAreaBindFloor;
-import app.client.net.protocol.request.sdk.vo.UpdateDeviceBindScene;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
 
@@ -38,7 +34,7 @@ public class UpdateAreaBindFloorCommandNode extends ProtocolListenNode {
         updateList.add(updateAreaBindFloor1);
         updateList.add(updateAreaBindFloor2);
 
-        C_UPDATE_AREA_BIND_FLOOR updateAreaBindFloor = ProtocolFactory.createRequestProtocol(C_UPDATE_AREA_BIND_FLOOR.class,
+        C_UPDATE_AREA_BIND_FLOOR_BATCH updateAreaBindFloor = ProtocolFactory.createRequestProtocol(C_UPDATE_AREA_BIND_FLOOR_BATCH.class,
                 userSession.getCtx());
         updateAreaBindFloor.setUpdateAreaBindFloorList(updateList);
         userSession.sendMsg(updateAreaBindFloor);

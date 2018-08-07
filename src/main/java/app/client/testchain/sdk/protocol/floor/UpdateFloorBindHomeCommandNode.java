@@ -1,11 +1,7 @@
 package app.client.testchain.sdk.protocol.floor;
 
 import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.request.sdk.area.C_UPDATE_AREA_BIND_FLOOR;
-import app.client.net.protocol.request.sdk.floor.C_UPDATE_FLOOR_BIND_HOME;
-import app.client.net.protocol.request.sdk.floor.C_UPDATE_FLOOR_C;
-import app.client.net.protocol.request.sdk.vo.AddFloorInfoVo;
-import app.client.net.protocol.request.sdk.vo.UpdateAreaBindFloor;
+import app.client.net.protocol.request.sdk.batch.floor.C_UPDATE_FLOOR_BIND_HOME_BATCH;
 import app.client.net.protocol.request.sdk.vo.UpdateFloorBindHome;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
@@ -38,7 +34,7 @@ public class UpdateFloorBindHomeCommandNode extends ProtocolListenNode {
         updateList.add(updateFloorBindHome1);
         updateList.add(updateFloorBindHome2);
 
-        C_UPDATE_FLOOR_BIND_HOME updateFloorBindHome = ProtocolFactory.createRequestProtocol(C_UPDATE_FLOOR_BIND_HOME.class,
+        C_UPDATE_FLOOR_BIND_HOME_BATCH updateFloorBindHome = ProtocolFactory.createRequestProtocol(C_UPDATE_FLOOR_BIND_HOME_BATCH.class,
                 userSession.getCtx());
         updateFloorBindHome.setUpdateFloorBindHomeList(updateList);
         userSession.sendMsg(updateFloorBindHome);

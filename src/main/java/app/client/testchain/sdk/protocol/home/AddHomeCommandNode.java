@@ -1,7 +1,7 @@
 package app.client.testchain.sdk.protocol.home;
 
 import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.request.sdk.home.C_ADD_HOME_C;
+import app.client.net.protocol.request.sdk.batch.home.C_ADD_HOME_BATCH;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
 import com.gowild.sdk.vo.db.AddHomeInfoVo;
@@ -32,7 +32,7 @@ public class AddHomeCommandNode extends ProtocolListenNode {
         addHomeInfoVoList.add(addHomeInfoVo1);
         addHomeInfoVoList.add(addHomeInfoVo2);
 
-        C_ADD_HOME_C protocol = ProtocolFactory.createRequestProtocol(C_ADD_HOME_C.class,
+        C_ADD_HOME_BATCH protocol = ProtocolFactory.createRequestProtocol(C_ADD_HOME_BATCH.class,
                 userSession.getCtx());
         protocol.setAddHomeInfoVoList(addHomeInfoVoList);
         userSession.sendMsg(protocol);

@@ -5,8 +5,8 @@ import app.client.net.annotation.Receiver;
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.ResponseProtocol;
 import app.client.net.protocol.request.*;
-import app.client.net.protocol.request.sdk.device.C_DEVICE_HEART_BEAT;
-import app.client.net.protocol.request.sdk.device.C_DEVICE_LOGIN;
+import app.client.net.protocol.request.sdk.batch.device.C_DEVICE_HEART_BEAT;
+import app.client.net.protocol.request.sdk.batch.device.C_DEVICE_LOGIN;
 import app.client.net.protocol.response.S_APP_HEART_BEAT;
 import app.client.net.protocol.response.S_XB_HEART_BEAT;
 import app.client.net.task.app.AppHeartBeatTask;
@@ -18,14 +18,9 @@ import app.client.service.device.DeviceServiceImpl;
 import app.client.user.session.UserSession;
 import com.gowild.core.util.HttpUtil;
 import com.gowild.sdk.protocol.SdkMsgType;
-import com.gowild.sdk.protocol.Tcp2DeviceProtocol;
-import com.gowild.sdk.metadata.pb.SdkBothMsgProto;
-import com.gowild.sdk.metadata.pb.Tcp2SdkMsgProto;
 import org.json.JSONObject;
 
 import javax.annotation.Resource;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -110,7 +105,7 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
 
         C_XB_HEART_BEAT heartBeat = ProtocolFactory.createRequestProtocol(C_XB_HEART_BEAT.class, userSession.getCtx());
         XbHeartBeatTask task = new XbHeartBeatTask(userSession.getCtx(), heartBeat);
-        TaskManager.getInstance().addTickTask(task, 5, 30, TimeUnit.SECONDS);
+        TaskManager.getInstance().addTickTask(task, 5, 5, TimeUnit.SECONDS);
     }
 
     @Override

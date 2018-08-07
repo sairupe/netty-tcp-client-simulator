@@ -1,18 +1,12 @@
 package app.client.testchain;
 
-import app.client.net.dispacher.DispacherManager;
 import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.request.sdk.device.C_DEVICE_HEART_BEAT;
+import app.client.net.protocol.request.C_XB_HEART_BEAT;
 import app.client.net.task.sdk.SdkDeviceHeartBeatTask;
 import app.client.net.task.TaskManager;
 import app.client.testchain.sdk.db.BaseDbInfoInsertNode;
-import app.client.testchain.sdk.protocol.area.AddAreaCommandNode;
-import app.client.testchain.sdk.protocol.device.SdkAddDeviceCommandNode;
-import app.client.testchain.sdk.protocol.device.SdkLoginCommandNode;
-import app.client.testchain.sdk.protocol.device.SdkSyncDeviceCommandNode;
-import app.client.testchain.sdk.protocol.floor.AddFloorCommandNode;
 import app.client.testchain.sdk.protocol.home.AddHomeCommandNode;
-import app.client.testchain.sdk.protocol.scene.AddSceneCommandNode;
+import app.client.testchain.sdk.protocol.xb.XbLoginCommandNode;
 import app.client.user.session.UserSession;
 
 import java.sql.Connection;
@@ -78,16 +72,16 @@ public class ChainNodeManager {
         startingChainNode = new BaseDbInfoInsertNode();
         startingChainNode.setVar(userSession, con);
         // 登录指令
-        startingChainNode.addLastNext(new SdkLoginCommandNode());
+        startingChainNode.addLastNext(new XbLoginCommandNode());
 
         //全量数据
-        startingChainNode.addLastNext(new AddHomeCommandNode());
-        startingChainNode.addLastNext(new AddFloorCommandNode());
-        startingChainNode.addLastNext(new AddAreaCommandNode());
-        startingChainNode.addLastNext(new SdkAddDeviceCommandNode());
+//        startingChainNode.addLastNext(new AddHomeCommandNode());
+//        startingChainNode.addLastNext(new AddFloorCommandNode());
+//        startingChainNode.addLastNext(new AddAreaCommandNode());
+//        startingChainNode.addLastNext(new SdkAddDeviceCommandNode());
 
         // 同步设备指令
-        startingChainNode.addLastNext(new SdkSyncDeviceCommandNode());
+//        startingChainNode.addLastNext(new SdkSyncDeviceCommandNode());
         // 添加设备指令
 //        startingChainNode.addLastNext(new SdkAddDeviceCommandNode());
         // 更新设备指令
@@ -105,7 +99,7 @@ public class ChainNodeManager {
 //        startingChainNode.addLastNext(new DeleteHomeCommandNode());
 
         // 添加楼层指令
-        startingChainNode.addLastNext(new AddFloorCommandNode());
+//        startingChainNode.addLastNext(new AddFloorCommandNode());
         // 更新楼层指令
 //        startingChainNode.addLastNext(new UpdateFloorCommandNode());
         // 同步楼层指令
@@ -114,7 +108,7 @@ public class ChainNodeManager {
 //        startingChainNode.addLastNext(new DeleteFloorCommandNode());
 
         // 添加区域指令
-        startingChainNode.addLastNext(new AddAreaCommandNode());
+//        startingChainNode.addLastNext(new AddAreaCommandNode());
 //        // 更新区域指令
 //        startingChainNode.addLastNext(new UpdateAreaCommandNode());
 //        // 同步区域指令
@@ -123,7 +117,7 @@ public class ChainNodeManager {
 //        startingChainNode.addLastNext(new DeleteAreaCommandNode());
 
         // 添加场景指令
-        startingChainNode.addLastNext(new AddSceneCommandNode());
+//        startingChainNode.addLastNext(new AddSceneCommandNode());
         // 更新场景指令
 //        startingChainNode.addLastNext(new UpdateSceneCommandNode());
         // 同步场景指令
@@ -155,8 +149,8 @@ public class ChainNodeManager {
         startingChainNode.start(userSession, con);
 
         // 心跳协议
-        C_DEVICE_HEART_BEAT heartBeat = ProtocolFactory.createRequestProtocol(C_DEVICE_HEART_BEAT.class,userSession.getCtx());
+        C_XB_HEART_BEAT heartBeat = ProtocolFactory.createRequestProtocol(C_XB_HEART_BEAT.class,userSession.getCtx());
         SdkDeviceHeartBeatTask task = new SdkDeviceHeartBeatTask(userSession.getCtx(), heartBeat);
-        TaskManager.getInstance().addTickTask(task, 2, 5, TimeUnit.SECONDS);
+        TaskManager.getInstance().addTickTask(task, 2, 10, TimeUnit.SECONDS);
     }
 }

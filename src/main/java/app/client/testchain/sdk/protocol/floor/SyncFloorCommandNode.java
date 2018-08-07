@@ -1,7 +1,7 @@
 package app.client.testchain.sdk.protocol.floor;
 
 import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.request.sdk.floor.C_SYNC_FLOOR_C;
+import app.client.net.protocol.request.sdk.batch.floor.C_SYNC_FLOOR;
 import app.client.net.protocol.request.sdk.vo.AddFloorInfoVo;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
@@ -37,7 +37,7 @@ public class SyncFloorCommandNode extends ProtocolListenNode {
         addFloorInfoVoList.add(addFloorInfoVo1);
         addFloorInfoVoList.add(addFloorInfoVo2);
 
-        C_SYNC_FLOOR_C protocol = ProtocolFactory.createRequestProtocol(C_SYNC_FLOOR_C.class,
+        C_SYNC_FLOOR protocol = ProtocolFactory.createRequestProtocol(C_SYNC_FLOOR.class,
                 userSession.getCtx());
         protocol.setSyncFloorInfoVoList(addFloorInfoVoList);
         userSession.sendMsg(protocol);

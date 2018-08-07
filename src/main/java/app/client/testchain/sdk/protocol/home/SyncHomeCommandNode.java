@@ -1,7 +1,7 @@
 package app.client.testchain.sdk.protocol.home;
 
 import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.request.sdk.home.C_SYNC_HOME_C;
+import app.client.net.protocol.request.sdk.batch.home.C_SYNC_HOME;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
 import com.gowild.sdk.vo.db.AddHomeInfoVo;
@@ -33,7 +33,7 @@ public class SyncHomeCommandNode extends ProtocolListenNode {
         addHomeInfoVoList.add(addHomeInfoVo1);
         addHomeInfoVoList.add(addHomeInfoVo2);
 
-        C_SYNC_HOME_C protocol = ProtocolFactory.createRequestProtocol(C_SYNC_HOME_C.class,
+        C_SYNC_HOME protocol = ProtocolFactory.createRequestProtocol(C_SYNC_HOME.class,
                 userSession.getCtx());
         protocol.setSyncHomeInfoVoList(addHomeInfoVoList);
         userSession.sendMsg(protocol);

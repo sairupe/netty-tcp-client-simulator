@@ -1,7 +1,7 @@
 package app.client.testchain.sdk.protocol.home;
 
 import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.request.sdk.home.C_DELETE_HOME_C;
+import app.client.net.protocol.request.sdk.batch.home.C_DELETE_HOME;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
 
@@ -20,7 +20,7 @@ public class DeleteHomeCommandNode extends ProtocolListenNode {
         deleteHomeIdList.add(firstHomeId);
         deleteHomeIdList.add(secondHomeId);
 
-        C_DELETE_HOME_C protocol = ProtocolFactory.createRequestProtocol(C_DELETE_HOME_C.class,
+        C_DELETE_HOME protocol = ProtocolFactory.createRequestProtocol(C_DELETE_HOME.class,
                 userSession.getCtx());
         protocol.setDeleteHomeIdList(deleteHomeIdList);
         userSession.sendMsg(protocol);

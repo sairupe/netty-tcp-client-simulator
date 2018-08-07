@@ -1,7 +1,7 @@
 package app.client.testchain.sdk.protocol.device;
 
 import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.request.sdk.device.C_GET_ALL_XB_BIND_MASTER;
+import app.client.net.protocol.request.sdk.batch.device.C_GET_ALL_XB_BIND_MASTER;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
 

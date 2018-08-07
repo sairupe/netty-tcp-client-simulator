@@ -1,7 +1,7 @@
 package app.client.testchain.sdk.protocol.area;
 
 import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.request.sdk.area.C_ADD_AREA_C;
+import app.client.net.protocol.request.sdk.batch.area.C_ADD_AREA_BATCH;
 import app.client.net.protocol.request.sdk.vo.AddAreaInfoVo;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
@@ -36,7 +36,7 @@ public class AddAreaCommandNode extends ProtocolListenNode {
         addAreaInfoVoList.add(addAreaInfoVo1);
         addAreaInfoVoList.add(addAreaInfoVo2);
 
-        C_ADD_AREA_C protocol = ProtocolFactory.createRequestProtocol(C_ADD_AREA_C.class,
+        C_ADD_AREA_BATCH protocol = ProtocolFactory.createRequestProtocol(C_ADD_AREA_BATCH.class,
                 userSession.getCtx());
         protocol.setAddAreaInfoVoList(addAreaInfoVoList);
         userSession.sendMsg(protocol);

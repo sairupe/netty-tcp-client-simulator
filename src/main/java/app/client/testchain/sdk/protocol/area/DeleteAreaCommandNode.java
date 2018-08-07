@@ -1,8 +1,7 @@
 package app.client.testchain.sdk.protocol.area;
 
 import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.request.sdk.area.C_DELETE_AREA_C;
-import app.client.net.protocol.request.sdk.home.C_DELETE_HOME_C;
+import app.client.net.protocol.request.sdk.batch.area.C_DELETE_AREA;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
 
@@ -21,7 +20,7 @@ public class DeleteAreaCommandNode extends ProtocolListenNode {
         deleteAreaIdList.add(firstAreaId);
         deleteAreaIdList.add(secondAreaId);
 
-        C_DELETE_AREA_C protocol = ProtocolFactory.createRequestProtocol(C_DELETE_AREA_C.class,
+        C_DELETE_AREA protocol = ProtocolFactory.createRequestProtocol(C_DELETE_AREA.class,
                 userSession.getCtx());
         protocol.setDeleteAreaIdList(deleteAreaIdList);
         userSession.sendMsg(protocol);

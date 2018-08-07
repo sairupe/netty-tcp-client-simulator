@@ -1,7 +1,7 @@
 package app.client.testchain.sdk.protocol.home;
 
 import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.request.sdk.home.C_UPDATE_HOME_C;
+import app.client.net.protocol.request.sdk.batch.home.C_UPDATE_HOME_BATCH;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
 import com.gowild.sdk.vo.db.AddHomeInfoVo;
@@ -35,7 +35,7 @@ public class UpdateHomeCommandNode extends ProtocolListenNode {
         updateHomeInfoVoList.add(addHomeInfoVo2);
 
 
-        C_UPDATE_HOME_C protocol = ProtocolFactory.createRequestProtocol(C_UPDATE_HOME_C.class,
+        C_UPDATE_HOME_BATCH protocol = ProtocolFactory.createRequestProtocol(C_UPDATE_HOME_BATCH.class,
                 userSession.getCtx());
         protocol.setUpdateHomeInfoVoList(updateHomeInfoVoList);
         userSession.sendMsg(protocol);

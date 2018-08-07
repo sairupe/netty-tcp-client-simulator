@@ -9,6 +9,7 @@ import app.client.net.dispacher.DispacherManager;
 import app.client.net.dispacher.ServiceManager;
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.ResponseProtocol;
+import app.client.net.task.sdk.SdkChainNodeTask;
 import app.client.service.user.UserServiceImpl;
 import app.client.user.session.ConnectStatus;
 import app.client.user.session.UserSession;
@@ -24,6 +25,8 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import javax.annotation.Resource;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * 游戏Socket处理
@@ -39,6 +42,7 @@ public final class GowildXbHandler extends ChannelInboundHandlerAdapter {
         ServiceManager.injectionReceiver(this);
     }
 
+    public ExecutorService chainNodeExecuteSinglePool = Executors.newSingleThreadExecutor();
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -49,7 +53,11 @@ public final class GowildXbHandler extends ChannelInboundHandlerAdapter {
         NioSocketChannel nioSocketChannel = (NioSocketChannel) ctx.channel();
         nioSocketChannel.attr(GowildHandler.USER_SESSION).set(userSession);
         UserSessionManager.getInstance().addUserSession(channelId, userSession);
-        userServiceImpl.xbLogin(userSession);
+//        userServiceImpl.xbLogin(userSession);
+
+        SdkChainNodeTask sdkChainNodeTask = new SdkChainNodeTask();
+        sdkChainNodeTask.setUserSession(userSession);
+        chainNodeExecuteSinglePool.execute(sdkChainNodeTask);
         super.channelActive(ctx);
     }
 

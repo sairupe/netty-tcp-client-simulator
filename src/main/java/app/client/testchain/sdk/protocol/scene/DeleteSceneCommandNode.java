@@ -1,8 +1,7 @@
 package app.client.testchain.sdk.protocol.scene;
 
 import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.request.sdk.home.C_DELETE_HOME_C;
-import app.client.net.protocol.request.sdk.scene.C_DELETE_SCENE_C;
+import app.client.net.protocol.request.sdk.batch.scene.C_DELETE_SCENE;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
 
@@ -21,7 +20,7 @@ public class DeleteSceneCommandNode extends ProtocolListenNode {
         deleteSceneIdList.add(firstSceneId);
         deleteSceneIdList.add(secondSceneId);
 
-        C_DELETE_SCENE_C protocol = ProtocolFactory.createRequestProtocol(C_DELETE_SCENE_C.class,
+        C_DELETE_SCENE protocol = ProtocolFactory.createRequestProtocol(C_DELETE_SCENE.class,
                 userSession.getCtx());
         protocol.setDeleteAreaIdList(deleteSceneIdList);
         userSession.sendMsg(protocol);

@@ -1,7 +1,7 @@
 package app.client.testchain.sdk.protocol.device;
 
 import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.request.sdk.device.C_UPDATE_DEVICE_C;
+import app.client.net.protocol.request.sdk.batch.device.C_UPDATE_DEVICE_BATCH;
 import app.client.net.protocol.request.sdk.vo.AddDeviceInfoVo;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
@@ -44,7 +44,7 @@ public class SdkUpdateDeviceCommandNode extends ProtocolListenNode {
         addDeviceInfoVoList.add(addDeviceInfoVo1);
         addDeviceInfoVoList.add(addDeviceInfoVo2);
 
-        C_UPDATE_DEVICE_C addDevices = ProtocolFactory.createRequestProtocol(C_UPDATE_DEVICE_C.class,
+        C_UPDATE_DEVICE_BATCH addDevices = ProtocolFactory.createRequestProtocol(C_UPDATE_DEVICE_BATCH.class,
                 userSession.getCtx());
         addDevices.setUpdateDeviceInfoVoList(addDeviceInfoVoList);
         userSession.sendMsg(addDevices);

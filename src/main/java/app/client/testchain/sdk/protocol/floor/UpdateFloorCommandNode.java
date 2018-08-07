@@ -1,7 +1,7 @@
 package app.client.testchain.sdk.protocol.floor;
 
 import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.request.sdk.floor.C_UPDATE_FLOOR_C;
+import app.client.net.protocol.request.sdk.batch.floor.C_UPDATE_FLOOR_BATCH;
 import app.client.net.protocol.request.sdk.vo.AddFloorInfoVo;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
@@ -37,7 +37,7 @@ public class UpdateFloorCommandNode extends ProtocolListenNode {
         updateFloorInfoVoList.add(addFloorInfoVo2);
 
 
-        C_UPDATE_FLOOR_C protocol = ProtocolFactory.createRequestProtocol(C_UPDATE_FLOOR_C.class,
+        C_UPDATE_FLOOR_BATCH protocol = ProtocolFactory.createRequestProtocol(C_UPDATE_FLOOR_BATCH.class,
                 userSession.getCtx());
         protocol.setUpdateHomeInfoVoList(updateFloorInfoVoList);
         userSession.sendMsg(protocol);
