@@ -5,7 +5,30 @@ import app.client.net.protocol.request.C_XB_HEART_BEAT;
 import app.client.net.task.sdk.SdkDeviceHeartBeatTask;
 import app.client.net.task.TaskManager;
 import app.client.testchain.sdk.db.BaseDbInfoInsertNode;
+import app.client.testchain.sdk.protocol.area.AddAreaCommandNode;
+import app.client.testchain.sdk.protocol.area.DeleteAreaCommandNode;
+import app.client.testchain.sdk.protocol.area.SyncAreaCommandNode;
+import app.client.testchain.sdk.protocol.area.UpdateAreaBindFloorCommandNode;
+import app.client.testchain.sdk.protocol.area.UpdateAreaCommandNode;
+import app.client.testchain.sdk.protocol.device.SdkAddDeviceCommandNode;
+import app.client.testchain.sdk.protocol.device.SdkDeleteDeviceCommandNode;
+import app.client.testchain.sdk.protocol.device.SdkSyncDeviceCommandNode;
+import app.client.testchain.sdk.protocol.device.SdkUpdateDeviceBindAreaCommandNode;
+import app.client.testchain.sdk.protocol.device.SdkUpdateDeviceBindSceneCommandNode;
+import app.client.testchain.sdk.protocol.device.SdkUpdateDeviceCommandNode;
+import app.client.testchain.sdk.protocol.floor.AddFloorCommandNode;
+import app.client.testchain.sdk.protocol.floor.DeleteFloorCommandNode;
+import app.client.testchain.sdk.protocol.floor.SyncFloorCommandNode;
+import app.client.testchain.sdk.protocol.floor.UpdateFloorBindHomeCommandNode;
+import app.client.testchain.sdk.protocol.floor.UpdateFloorCommandNode;
 import app.client.testchain.sdk.protocol.home.AddHomeCommandNode;
+import app.client.testchain.sdk.protocol.home.DeleteHomeCommandNode;
+import app.client.testchain.sdk.protocol.home.SyncHomeCommandNode;
+import app.client.testchain.sdk.protocol.home.UpdateHomeCommandNode;
+import app.client.testchain.sdk.protocol.scene.AddSceneCommandNode;
+import app.client.testchain.sdk.protocol.scene.DeleteSceneCommandNode;
+import app.client.testchain.sdk.protocol.scene.SyncSceneCommandNode;
+import app.client.testchain.sdk.protocol.scene.UpdateSceneCommandNode;
 import app.client.testchain.sdk.protocol.xb.XbLoginCommandNode;
 import app.client.user.session.UserSession;
 
@@ -21,6 +44,7 @@ public class ChainNodeManager {
 
     private static ChainNodeManager chainNodeManager = new ChainNodeManager();
     private static Connection con;
+
     private ChainNodeManager() {
 
     }
@@ -36,7 +60,7 @@ public class ChainNodeManager {
         }
         try {
             con = DriverManager.getConnection(urlstr, "root", "123456");
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
             System.err.println("sqlexception :" + ex.getMessage());
             System.err.println("sql :" + sql);
@@ -48,11 +72,11 @@ public class ChainNodeManager {
      */
     public IChainNode startingChainNode;
 
-    public static ChainNodeManager getInstance(){
+    public static ChainNodeManager getInstance() {
         return chainNodeManager;
     }
 
-    public void start(UserSession userSession){
+    public void start(UserSession userSession) {
 //        startingChainNode = new BaseDbInfoInsertNode();
 //        startingChainNode.setVar(userSession, con);
 //        startingChainNode.addLastNext(new XbLoginCommandNode());
@@ -90,7 +114,7 @@ public class ChainNodeManager {
 //        startingChainNode.addLastNext(new SdkDeleteDeviceCommandNode());
 
         // 添加家庭指令
-        startingChainNode.addLastNext(new AddHomeCommandNode());
+//        startingChainNode.addLastNext(new AddHomeCommandNode());
         // 更新家庭指令
 //        startingChainNode.addLastNext(new UpdateHomeCommandNode());
         // 同步家庭指令
@@ -149,8 +173,8 @@ public class ChainNodeManager {
         startingChainNode.start(userSession, con);
 
         // 心跳协议
-        C_XB_HEART_BEAT heartBeat = ProtocolFactory.createRequestProtocol(C_XB_HEART_BEAT.class,userSession.getCtx());
+        C_XB_HEART_BEAT heartBeat = ProtocolFactory.createRequestProtocol(C_XB_HEART_BEAT.class, userSession.getCtx());
         SdkDeviceHeartBeatTask task = new SdkDeviceHeartBeatTask(userSession.getCtx(), heartBeat);
-        TaskManager.getInstance().addTickTask(task, 2, 10, TimeUnit.SECONDS);
+        TaskManager.getInstance().addTickTask(task, 2, 60, TimeUnit.SECONDS);
     }
 }

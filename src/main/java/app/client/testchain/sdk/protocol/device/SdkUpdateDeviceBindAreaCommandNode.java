@@ -24,7 +24,7 @@ public class SdkUpdateDeviceBindAreaCommandNode extends ProtocolListenNode {
         updateDeviceBindArea1.setAreaId(areaId1);
 
         String device2 = SdkTestConst.SECOND_DEVICE_UID;
-        String areaId2 = SdkTestConst.FIRST_AREA_TID;
+        String areaId2 = SdkTestConst.SECOND_AREA_TID;
 
         UpdateDeviceBindArea updateDeviceBindArea2 = new UpdateDeviceBindArea();
         updateDeviceBindArea2.setDeviceId(device2);

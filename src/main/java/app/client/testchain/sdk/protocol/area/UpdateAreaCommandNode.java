@@ -25,7 +25,7 @@ public class UpdateAreaCommandNode extends ProtocolListenNode {
 
         AddAreaInfoVo addAreaInfoVo1 = new AddAreaInfoVo();
         addAreaInfoVo1.setAreaId(firstAreaTid);
-        addAreaInfoVo1.setAreaName(secondAreaTid);
+        addAreaInfoVo1.setAreaName(firstAreaName);
 
         AddAreaInfoVo addAreaInfoVo2 = new AddAreaInfoVo();
         addAreaInfoVo2.setAreaId(secondAreaTid);

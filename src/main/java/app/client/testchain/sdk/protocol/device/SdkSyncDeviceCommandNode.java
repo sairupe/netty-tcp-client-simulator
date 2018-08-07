@@ -29,14 +29,14 @@ public class SdkSyncDeviceCommandNode extends ProtocolListenNode {
         addDeviceInfoVo1.setOpenStatus(SdkConstant.DEFAULT_OPEN_STATUS_INTVALUE);
         addDeviceInfoVo1.setOnlineStatus(SdkConstant.DEFAULT_ONLINE_STATUS_INTVALUE);
         addDeviceInfoVo1.setDeviceSn(device1SN);
-//        addDeviceInfoVo1.setAreaId(device1AreaId);
+        addDeviceInfoVo1.setAreaId(device1AreaId);
 //        addDeviceInfoVo1.setSceneId(device1SceneId);
         addDeviceInfoVo1.setDeviceType(DeviceTypeEnum.LIGHT.getDeviceType());
 
         String device2Id = SdkTestConst.SECOND_DEVICE_UID;
         String device2Name = SdkTestConst.SECOND_DEVICE_NAME;
         String device2SN = SdkTestConst.SECOND_DEVICE_SN;
-        String device2AreaId = "";
+        String device2AreaId = SdkTestConst.SECOND_AREA_TID;
         String device2SceneId = "";
         AddDeviceInfoVo addDeviceInfoVo2 = new AddDeviceInfoVo();
         addDeviceInfoVo2.setDeviceId(device2Id);
@@ -44,7 +44,7 @@ public class SdkSyncDeviceCommandNode extends ProtocolListenNode {
         addDeviceInfoVo2.setOpenStatus(SdkConstant.DEFAULT_OPEN_STATUS_INTVALUE);
         addDeviceInfoVo2.setOnlineStatus(SdkConstant.DEFAULT_ONLINE_STATUS_INTVALUE);
         addDeviceInfoVo2.setDeviceSn(device2SN);
-//        addDeviceInfoVo2.setAreaId(device2AreaId);
+        addDeviceInfoVo2.setAreaId(device2AreaId);
 //        addDeviceInfoVo2.setSceneId(device2SceneId);
         addDeviceInfoVo2.setDeviceType(DeviceTypeEnum.LIGHT.getDeviceType());
 

@@ -19,7 +19,7 @@ public class SdkDeleteDeviceCommandNode extends ProtocolListenNode {
         String deleteId2 = SdkTestConst.SECOND_DEVICE_UID;
         List<String> deleteList = new ArrayList<>();
         deleteList.add(deleteId1);
-//        deleteList.add(deleteId2);
+        deleteList.add(deleteId2);
 
         C_DELETE_DEVICE deleteDevices = ProtocolFactory.createRequestProtocol(C_DELETE_DEVICE.class,
                 userSession.getCtx());

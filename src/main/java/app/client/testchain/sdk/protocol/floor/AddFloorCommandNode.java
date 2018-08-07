@@ -18,7 +18,7 @@ public class AddFloorCommandNode extends ProtocolListenNode {
         List<AddFloorInfoVo> addFloorInfoVoList = new ArrayList<>();
 
         String floorTid1 = SdkTestConst.FIRST_FLOOR_TID;
-        String floorName1 = SdkTestConst.FIRST_FLOOR_TID;
+        String floorName1 = SdkTestConst.FIRST_FLOOR_NAME;
         String bindHomeId1 = SdkTestConst.FIRST_HOME_TID;
 
         AddFloorInfoVo addFloorInfoVo1 = new AddFloorInfoVo();

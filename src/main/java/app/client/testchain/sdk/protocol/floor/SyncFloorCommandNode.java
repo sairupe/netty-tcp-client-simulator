@@ -32,7 +32,7 @@ public class SyncFloorCommandNode extends ProtocolListenNode {
         AddFloorInfoVo addFloorInfoVo2 = new AddFloorInfoVo();
         addFloorInfoVo2.setFloorId(floorTid2);
         addFloorInfoVo2.setFloorName(floorName2);
-//        addFloorInfoVo2.setBindHomeId(bindHome2);
+        addFloorInfoVo2.setBindHomeId(bindHome2);
 
         addFloorInfoVoList.add(addFloorInfoVo1);
         addFloorInfoVoList.add(addFloorInfoVo2);

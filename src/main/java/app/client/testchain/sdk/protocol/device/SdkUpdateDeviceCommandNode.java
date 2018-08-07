@@ -23,7 +23,7 @@ public class SdkUpdateDeviceCommandNode extends ProtocolListenNode {
         String device1SN = SdkTestConst.FIRST_DEVICE_SN;
         AddDeviceInfoVo addDeviceInfoVo1 = new AddDeviceInfoVo();
         addDeviceInfoVo1.setDeviceId(device1);
-        addDeviceInfoVo1.setDeviceName(device1Name);
+        addDeviceInfoVo1.setDeviceName("sdadasda");
         addDeviceInfoVo1.setOpenStatus(SdkConstant.DEFAULT_OPEN_STATUS_INTVALUE);
         addDeviceInfoVo1.setOnlineStatus(SdkConstant.DEFAULT_ONLINE_STATUS_INTVALUE);
         addDeviceInfoVo1.setDeviceSn(device1SN);
@@ -34,7 +34,7 @@ public class SdkUpdateDeviceCommandNode extends ProtocolListenNode {
         String device2SN = SdkTestConst.SECOND_DEVICE_SN;
         AddDeviceInfoVo addDeviceInfoVo2 = new AddDeviceInfoVo();
         addDeviceInfoVo2.setDeviceId(device2Id);
-        addDeviceInfoVo2.setDeviceName(device2Name);
+        addDeviceInfoVo2.setDeviceName("asdasda");
         addDeviceInfoVo2.setOpenStatus(SdkConstant.DEFAULT_OPEN_STATUS_INTVALUE);
         addDeviceInfoVo2.setOnlineStatus(SdkConstant.DEFAULT_ONLINE_STATUS_INTVALUE);
         addDeviceInfoVo2.setDeviceSn(device2SN);
