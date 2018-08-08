@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by zh on 2018/2/27.
  */
-public class AddHomeCommandNode extends ProtocolListenNode {
+public class AddHomeBatchCommandNode extends ProtocolListenNode {
     @Override
     public void doExecute() {
         List<AddHomeInfoVo> addHomeInfoVoList = new ArrayList<>();

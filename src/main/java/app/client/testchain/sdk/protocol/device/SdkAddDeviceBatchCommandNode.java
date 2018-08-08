@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by zh on 2017/11/21.
  */
-public class SdkAddDeviceCommandNode extends ProtocolListenNode {
+public class SdkAddDeviceBatchCommandNode extends ProtocolListenNode {
     @Override
     public void doExecute() {
 

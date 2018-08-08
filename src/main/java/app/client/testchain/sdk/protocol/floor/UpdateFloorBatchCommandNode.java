@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by zh on 2018/2/27.
  */
-public class UpdateFloorCommandNode extends ProtocolListenNode {
+public class UpdateFloorBatchCommandNode extends ProtocolListenNode {
     @Override
     public void doExecute() {
 

@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by zh on 2018/2/27.
  */
-public class AddSceneCommandNode extends ProtocolListenNode {
+public class AddSceneBatchCommandNode extends ProtocolListenNode {
     @Override
     public void doExecute() {
         List<AddSceneInfoVo> addSceneInfoVoList = new ArrayList<>();

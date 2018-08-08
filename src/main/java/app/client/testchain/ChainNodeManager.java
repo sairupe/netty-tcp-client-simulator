@@ -5,30 +5,30 @@ import app.client.net.protocol.request.C_XB_HEART_BEAT;
 import app.client.net.task.sdk.SdkDeviceHeartBeatTask;
 import app.client.net.task.TaskManager;
 import app.client.testchain.sdk.db.BaseDbInfoInsertNode;
-import app.client.testchain.sdk.protocol.area.AddAreaCommandNode;
+import app.client.testchain.sdk.protocol.area.AddAreaBatchCommandNode;
 import app.client.testchain.sdk.protocol.area.DeleteAreaCommandNode;
 import app.client.testchain.sdk.protocol.area.SyncAreaCommandNode;
-import app.client.testchain.sdk.protocol.area.UpdateAreaBindFloorCommandNode;
-import app.client.testchain.sdk.protocol.area.UpdateAreaCommandNode;
-import app.client.testchain.sdk.protocol.device.SdkAddDeviceCommandNode;
+import app.client.testchain.sdk.protocol.area.UpdateAreaBatchCommandNode;
+import app.client.testchain.sdk.protocol.area.UpdateAreaBindFloorBatchCommandNode;
+import app.client.testchain.sdk.protocol.device.SdkAddDeviceBatchCommandNode;
 import app.client.testchain.sdk.protocol.device.SdkDeleteDeviceCommandNode;
 import app.client.testchain.sdk.protocol.device.SdkSyncDeviceCommandNode;
-import app.client.testchain.sdk.protocol.device.SdkUpdateDeviceBindAreaCommandNode;
-import app.client.testchain.sdk.protocol.device.SdkUpdateDeviceBindSceneCommandNode;
-import app.client.testchain.sdk.protocol.device.SdkUpdateDeviceCommandNode;
-import app.client.testchain.sdk.protocol.floor.AddFloorCommandNode;
+import app.client.testchain.sdk.protocol.device.SdkUpdateDeviceBatchCommandNode;
+import app.client.testchain.sdk.protocol.device.SdkUpdateDeviceBindAreaBatchCommandNode;
+import app.client.testchain.sdk.protocol.device.SdkUpdateDeviceBindSceneBatchCommandNode;
+import app.client.testchain.sdk.protocol.floor.AddFloorBatchCommandNode;
 import app.client.testchain.sdk.protocol.floor.DeleteFloorCommandNode;
 import app.client.testchain.sdk.protocol.floor.SyncFloorCommandNode;
-import app.client.testchain.sdk.protocol.floor.UpdateFloorBindHomeCommandNode;
-import app.client.testchain.sdk.protocol.floor.UpdateFloorCommandNode;
-import app.client.testchain.sdk.protocol.home.AddHomeCommandNode;
+import app.client.testchain.sdk.protocol.floor.UpdateFloorBatchCommandNode;
+import app.client.testchain.sdk.protocol.floor.UpdateFloorBindHomeBatchCommandNode;
+import app.client.testchain.sdk.protocol.home.AddHomeBatchCommandNode;
 import app.client.testchain.sdk.protocol.home.DeleteHomeCommandNode;
 import app.client.testchain.sdk.protocol.home.SyncHomeCommandNode;
-import app.client.testchain.sdk.protocol.home.UpdateHomeCommandNode;
-import app.client.testchain.sdk.protocol.scene.AddSceneCommandNode;
+import app.client.testchain.sdk.protocol.home.UpdateHomeBatchCommandNode;
+import app.client.testchain.sdk.protocol.scene.AddSceneBatchCommandNode;
 import app.client.testchain.sdk.protocol.scene.DeleteSceneCommandNode;
 import app.client.testchain.sdk.protocol.scene.SyncSceneCommandNode;
-import app.client.testchain.sdk.protocol.scene.UpdateSceneCommandNode;
+import app.client.testchain.sdk.protocol.scene.UpdateSceneBatchCommandNode;
 import app.client.testchain.sdk.protocol.xb.XbLoginCommandNode;
 import app.client.user.session.UserSession;
 
@@ -99,68 +99,68 @@ public class ChainNodeManager {
         startingChainNode.addLastNext(new XbLoginCommandNode());
 
         //全量数据
-//        startingChainNode.addLastNext(new AddHomeCommandNode());
-//        startingChainNode.addLastNext(new AddFloorCommandNode());
-//        startingChainNode.addLastNext(new AddAreaCommandNode());
-//        startingChainNode.addLastNext(new SdkAddDeviceCommandNode());
+        startingChainNode.addLastNext(new AddHomeBatchCommandNode());
+        startingChainNode.addLastNext(new AddFloorBatchCommandNode());
+        startingChainNode.addLastNext(new AddAreaBatchCommandNode());
+        startingChainNode.addLastNext(new SdkAddDeviceBatchCommandNode());
 
         // 同步设备指令
         startingChainNode.addLastNext(new SdkSyncDeviceCommandNode());
         // 添加设备指令
-//        startingChainNode.addLastNext(new SdkAddDeviceCommandNode());
+        startingChainNode.addLastNext(new SdkAddDeviceBatchCommandNode());
         // 更新设备指令
-//        startingChainNode.addLastNext(new SdkUpdateDeviceCommandNode());
+        startingChainNode.addLastNext(new SdkUpdateDeviceBatchCommandNode());
         // 删除设备指令
-//        startingChainNode.addLastNext(new SdkDeleteDeviceCommandNode());
+        startingChainNode.addLastNext(new SdkDeleteDeviceCommandNode());
 
         // 添加家庭指令
-//        startingChainNode.addLastNext(new AddHomeCommandNode());
+        startingChainNode.addLastNext(new AddHomeBatchCommandNode());
         // 更新家庭指令
-//        startingChainNode.addLastNext(new UpdateHomeCommandNode());
+        startingChainNode.addLastNext(new UpdateHomeBatchCommandNode());
         // 同步家庭指令
-//        startingChainNode.addLastNext(new SyncHomeCommandNode());
+        startingChainNode.addLastNext(new SyncHomeCommandNode());
         // 删除家庭指令
-//        startingChainNode.addLastNext(new DeleteHomeCommandNode());
+        startingChainNode.addLastNext(new DeleteHomeCommandNode());
 
         // 添加楼层指令
-//        startingChainNode.addLastNext(new AddFloorCommandNode());
+        startingChainNode.addLastNext(new AddFloorBatchCommandNode());
         // 更新楼层指令
-//        startingChainNode.addLastNext(new UpdateFloorCommandNode());
+        startingChainNode.addLastNext(new UpdateFloorBatchCommandNode());
         // 同步楼层指令
-//        startingChainNode.addLastNext(new SyncFloorCommandNode());
+        startingChainNode.addLastNext(new SyncFloorCommandNode());
         // 删除楼层指令
-//        startingChainNode.addLastNext(new DeleteFloorCommandNode());
+        startingChainNode.addLastNext(new DeleteFloorCommandNode());
 
         // 添加区域指令
-//        startingChainNode.addLastNext(new AddAreaCommandNode());
+        startingChainNode.addLastNext(new AddAreaBatchCommandNode());
 //        // 更新区域指令
-//        startingChainNode.addLastNext(new UpdateAreaCommandNode());
+        startingChainNode.addLastNext(new UpdateAreaBatchCommandNode());
 //        // 同步区域指令
-//        startingChainNode.addLastNext(new SyncAreaCommandNode());
+        startingChainNode.addLastNext(new SyncAreaCommandNode());
 //        // 删除区域指令
-//        startingChainNode.addLastNext(new DeleteAreaCommandNode());
+        startingChainNode.addLastNext(new DeleteAreaCommandNode());
 
         // 添加场景指令
-//        startingChainNode.addLastNext(new AddSceneCommandNode());
+        startingChainNode.addLastNext(new AddSceneBatchCommandNode());
         // 更新场景指令
-//        startingChainNode.addLastNext(new UpdateSceneCommandNode());
+        startingChainNode.addLastNext(new UpdateSceneBatchCommandNode());
         // 同步场景指令
-//        startingChainNode.addLastNext(new SyncSceneCommandNode());
+        startingChainNode.addLastNext(new SyncSceneCommandNode());
         // 删除场景指令
-//        startingChainNode.addLastNext(new DeleteSceneCommandNode());
+        startingChainNode.addLastNext(new DeleteSceneCommandNode());
 
         // =============== 测试绑定关系 =====================================
         // 修改设备绑定区域
-//        startingChainNode.addLastNext(new SdkUpdateDeviceBindAreaCommandNode());
+        startingChainNode.addLastNext(new SdkUpdateDeviceBindAreaBatchCommandNode());
 
         // 修改设备绑定场景
-//        startingChainNode.addLastNext(new SdkUpdateDeviceBindSceneCommandNode());
+        startingChainNode.addLastNext(new SdkUpdateDeviceBindSceneBatchCommandNode());
 
         // 修改区域绑定楼层
-//        startingChainNode.addLastNext(new UpdateAreaBindFloorCommandNode());
+        startingChainNode.addLastNext(new UpdateAreaBindFloorBatchCommandNode());
 
         // 修改楼层绑定家庭
-//        startingChainNode.addLastNext(new UpdateFloorBindHomeCommandNode());
+        startingChainNode.addLastNext(new UpdateFloorBindHomeBatchCommandNode());
 
         // 模拟命令指令(JSON格式要修改)
 //        startingChainNode.addLastNext(new SimularCommandNode());
