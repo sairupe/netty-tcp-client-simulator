@@ -105,7 +105,7 @@ public class ChainNodeManager {
 //        startingChainNode.addLastNext(new SdkAddDeviceCommandNode());
 
         // 同步设备指令
-//        startingChainNode.addLastNext(new SdkSyncDeviceCommandNode());
+        startingChainNode.addLastNext(new SdkSyncDeviceCommandNode());
         // 添加设备指令
 //        startingChainNode.addLastNext(new SdkAddDeviceCommandNode());
         // 更新设备指令

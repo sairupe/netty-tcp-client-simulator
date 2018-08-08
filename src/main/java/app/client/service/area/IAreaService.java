@@ -1,14 +1,13 @@
 package app.client.service.area;
 
-import app.client.net.protocol.response.sdk.area.S_ADD_AREA_RESULT;
-import app.client.net.protocol.response.sdk.area.S_DELETE_AREA_RESULT;
-import app.client.net.protocol.response.sdk.area.S_SYNC_AREA_RESULT;
-import app.client.net.protocol.response.sdk.area.S_UPDATE_AREA_BIND_FLOOR;
-import app.client.net.protocol.response.sdk.area.S_UPDATE_AREA_RESULT;
-import app.client.net.protocol.response.sdk.floor.S_ADD_FLOOR_RESULT;
-import app.client.net.protocol.response.sdk.floor.S_DELETE_FLOOR_RESULT;
-import app.client.net.protocol.response.sdk.floor.S_SYNC_FLOOR_RESULT;
-import app.client.net.protocol.response.sdk.floor.S_UPDATE_FLOOR_RESULT;
+import app.client.net.protocol.response.sdk.batch.area.S_ADD_AREA_BATCH;
+import app.client.net.protocol.response.sdk.batch.area.S_DELETE_AREA;
+import app.client.net.protocol.response.sdk.batch.area.S_SYNC_AREA;
+import app.client.net.protocol.response.sdk.batch.area.S_UPDATE_AREA_BATCH;
+import app.client.net.protocol.response.sdk.batch.area.S_UPDATE_AREA_BIND_FLOOR_BATCH;
+import app.client.net.protocol.response.sdk.single.area.S_ADD_AREA;
+import app.client.net.protocol.response.sdk.single.area.S_UPDATE_AREA;
+import app.client.net.protocol.response.sdk.single.area.S_UPDATE_AREA_BIND_FLOOR;
 import app.client.service.IService;
 
 /**
@@ -19,13 +18,21 @@ import app.client.service.IService;
  */
 public interface IAreaService extends IService{
 
-    public void addAreaResult(S_ADD_AREA_RESULT response);
+    public void addAreaResult(S_ADD_AREA response);
 
-    public void deleteAreaResult(S_DELETE_AREA_RESULT response);
-
-    public void updateAreaResult(S_UPDATE_AREA_RESULT response);
-
-    public void syncAreaResult(S_SYNC_AREA_RESULT response);
+    public void updateAreaResult(S_UPDATE_AREA response);
 
     public void updateAreaBindFloorResult(S_UPDATE_AREA_BIND_FLOOR response);
+
+
+    public void addAreaBatchResult(S_ADD_AREA_BATCH response);
+
+    public void updateAreaBatchResult(S_UPDATE_AREA_BATCH response);
+
+    public void updateAreaBindFloorBatchResult(S_UPDATE_AREA_BIND_FLOOR_BATCH response);
+
+
+    public void syncAreaResult(S_SYNC_AREA response);
+
+    public void deleteAreaResult(S_DELETE_AREA response);
 }
