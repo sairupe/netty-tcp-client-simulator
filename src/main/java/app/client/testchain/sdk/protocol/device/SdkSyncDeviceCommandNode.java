@@ -29,7 +29,7 @@ public class SdkSyncDeviceCommandNode extends ProtocolListenNode {
         addDeviceInfoVo1.setOpenStatus(SdkConstant.DEFAULT_OPEN_STATUS_INTVALUE);
         addDeviceInfoVo1.setOnlineStatus(SdkConstant.DEFAULT_ONLINE_STATUS_INTVALUE);
         addDeviceInfoVo1.setDeviceSn(device1SN);
-        addDeviceInfoVo1.setAreaId(device1AreaId);
+//        addDeviceInfoVo1.setAreaId(device1AreaId);
 //        addDeviceInfoVo1.setSceneId(device1SceneId);
         addDeviceInfoVo1.setDeviceType(DeviceTypeEnum.LIGHT.getDeviceType());
 
@@ -44,7 +44,7 @@ public class SdkSyncDeviceCommandNode extends ProtocolListenNode {
         addDeviceInfoVo2.setOpenStatus(SdkConstant.DEFAULT_OPEN_STATUS_INTVALUE);
         addDeviceInfoVo2.setOnlineStatus(SdkConstant.DEFAULT_ONLINE_STATUS_INTVALUE);
         addDeviceInfoVo2.setDeviceSn(device2SN);
-        addDeviceInfoVo2.setAreaId(device2AreaId);
+//        addDeviceInfoVo2.setAreaId(device2AreaId);
 //        addDeviceInfoVo2.setSceneId(device2SceneId);
         addDeviceInfoVo2.setDeviceType(DeviceTypeEnum.LIGHT.getDeviceType());
 

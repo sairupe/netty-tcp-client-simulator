@@ -4,6 +4,7 @@ import app.client.net.annotation.Handler;
 import app.client.net.annotation.Receiver;
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.request.sdk.batch.device.C_DEVICE_SIMULAR_COMMAND;
+import app.client.net.protocol.response.sdk.S_DOCKER_SPEAK;
 import app.client.net.protocol.response.sdk.batch.device.S_ADD_DEVICE_BATCH;
 import app.client.net.protocol.response.sdk.batch.device.S_DELETE_DEVICE;
 import app.client.net.protocol.response.sdk.batch.device.S_DEVICE_ATTR_COMMAND;
@@ -21,6 +22,7 @@ import app.client.net.protocol.response.sdk.single.device.S_UPDATE_DEVICE_BIND_S
 import app.client.service.AbstractServiceImpl;
 import app.client.testchain.sdk.SdkTestConst;
 import app.client.user.session.UserSession;
+import com.gowild.sdk.metadata.pb.BaseBothMsgProto;
 import com.gowild.sdk.protocol.SdkMsgType;
 import com.gowild.sdk.protocol.Tcp2DeviceProtocol;
 import com.gowild.sdk.metadata.pb.SdkBothMsgProto;
@@ -402,5 +404,11 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
         SdkBothMsgProto.SdkCommonResponseMsg msg = response.getCommonResponseMsg();
         System.out.println("====== >>> SDK【批量更新】设备绑定场景返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
 
+    }
+
+    @Override
+    public void receiveDockerSpeak(S_DOCKER_SPEAK reponse) {
+        BaseBothMsgProto.StringMsg stringMsg = reponse.getStringMsg();
+        System.out.println("====== >>> 设备间通信【DOCKER】讲话是 : " + stringMsg.getValue());
     }
 }

@@ -12,7 +12,10 @@ public class XbLoginCommandNode extends ProtocolListenNode {
     public void doExecute() {
         C_XB_LOGIN xbLogin = ProtocolFactory.createRequestProtocol(C_XB_LOGIN.class,
                 userSession.getCtx());
-        xbLogin.setMac("94:a1:a2:c0:47:c8");
+        //2967
+//        xbLogin.setMac("94:a1:a2:c0:47:c8");
+        //2968
+        xbLogin.setMac("94:a1:a2:bf:b7:f0");
         xbLogin.setSn("");
 
         xbLogin.setVersion("2.1.2");
@@ -21,6 +24,7 @@ public class XbLoginCommandNode extends ProtocolListenNode {
         xbLogin.setbVersion("119");
         xbLogin.setGifV1("157");
         xbLogin.setLoginIp("116.24.65.206");
+
 
         userSession.sendMsg(xbLogin);
     }

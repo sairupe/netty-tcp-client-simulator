@@ -1,5 +1,6 @@
 package app.client.service.device;
 
+import app.client.net.protocol.response.sdk.S_DOCKER_SPEAK;
 import app.client.net.protocol.response.sdk.batch.device.S_ADD_DEVICE_BATCH;
 import app.client.net.protocol.response.sdk.batch.device.S_DELETE_DEVICE;
 import app.client.net.protocol.response.sdk.batch.device.S_DEVICE_ATTR_COMMAND;
@@ -58,5 +59,8 @@ public interface IDeviceService extends IService{
     public void receiveUpdateDeviceBindAreaBatchResult(S_UPDATE_DEVICE_BIND_AREA_BATCH response);
 
     public void receiveUpdateDeviceBindSceneBatchResult(S_UPDATE_DEVICE_BIND_SCENE_BATCH response);
+
+
+    public void receiveDockerSpeak(S_DOCKER_SPEAK reponse);
 
 }
