@@ -8,14 +8,21 @@ import app.client.testchain.ProtocolListenNode;
  * Created by zh on 2017/11/21.
  */
 public class XbLoginCommandNode extends ProtocolListenNode {
+
+    private String mac;
+
+    public XbLoginCommandNode(String mac){
+        this.mac = mac;
+    }
+
     @Override
     public void doExecute() {
         C_XB_LOGIN xbLogin = ProtocolFactory.createRequestProtocol(C_XB_LOGIN.class,
                 userSession.getCtx());
         //2967
 //        xbLogin.setMac("94:a1:a2:c0:47:c8");
-        //2968
-        xbLogin.setMac("94:a1:a2:bf:b7:f0");
+        //2968 94:a1:a2:bf:b7:f0
+        xbLogin.setMac(mac);
         xbLogin.setSn("");
 
         xbLogin.setVersion("2.1.2");
@@ -32,5 +39,13 @@ public class XbLoginCommandNode extends ProtocolListenNode {
     @Override
     public boolean canExecuteImmediately(){
         return true;
+    }
+
+    public String getMac() {
+        return mac;
+    }
+
+    public void setMac(String mac) {
+        this.mac = mac;
     }
 }
