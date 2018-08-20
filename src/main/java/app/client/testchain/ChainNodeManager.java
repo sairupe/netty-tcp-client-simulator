@@ -128,12 +128,12 @@ public class ChainNodeManager {
         // 2307  94:a1:a2:bd:c5:c6 生榨米粉(DOCKER)
         String mac2307 = "94:a1:a2:bd:c5:c6";
         String token2307 = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiZ293aWxkIl0sInVzZXJfbmFtZSI6Ijk0OmExOmEyOmJkOmM1OmM2Iiwic2NvcGUiOlsicmVhZCIsIndyaXRlIiwidHJ1c3QiXSwiZXhwIjoxNTM2NzQyMzA0LCJhdXRob3JpdGllcyI6WyJST0xFX0FQUCJdLCJqdGkiOiI5OTRkMjYzMi03YzRiLTQzZjMtYmM3YS1iNTBkNGVhYmUzNDYiLCJjbGllbnRfaWQiOiJnb3dpbGRfYXBwX2NsaWVudCJ9.fv2cFYxNZwKAhzFcZjtrCCme29B04YqACxPHFJREuBI";
-//        startingChainNode.addLastNext(new DockerLoginCommandNode(mac2307, token2307));
+        startingChainNode.addLastNext(new DockerLoginCommandNode(mac2307, token2307));
 
         // 2308  94:a1:a2:bd:93:d2 老友粉(XB)
-        String mac2308 = "94:a1:a2:bd:c5:c6";
-        String token2308 = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiZ293aWxkIl0sInVzZXJfbmFtZSI6Ijk0OmExOmEyOmJkOmM1OmM2Iiwic2NvcGUiOlsicmVhZCIsIndyaXRlIiwidHJ1c3QiXSwiZXhwIjoxNTM2NzQyMzA0LCJhdXRob3JpdGllcyI6WyJST0xFX0FQUCJdLCJqdGkiOiI5OTRkMjYzMi03YzRiLTQzZjMtYmM3YS1iNTBkNGVhYmUzNDYiLCJjbGllbnRfaWQiOiJnb3dpbGRfYXBwX2NsaWVudCJ9.fv2cFYxNZwKAhzFcZjtrCCme29B04YqACxPHFJREuBI";
-        startingChainNode.addLastNext(new DockerLoginCommandNode(mac2308, token2308));
+        String mac2308 = "94:a1:a2:bd:93:d2";
+        String token2308 = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiZ293aWxkIl0sInVzZXJfbmFtZSI6Ijk0OmExOmEyOmJkOjkzOmQyIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIiwidHJ1c3QiXSwiZXhwIjoxNTM3MDYzODk4LCJhdXRob3JpdGllcyI6WyJST0xFX0FQUCJdLCJqdGkiOiJmMDBkNTI1ZS1hYTM2LTQ5Y2ItYTVlNS03MTMwMTcxZmYwOGQiLCJjbGllbnRfaWQiOiJnb3dpbGRfYXBwX2NsaWVudCJ9.uGybkRCoOl3r9sk5Q0iTPd5JMOjMmdEB97JlhyxdQb4";
+//        startingChainNode.addLastNext(new DockerLoginCommandNode(mac2308, token2308));
 
 
         // 测试

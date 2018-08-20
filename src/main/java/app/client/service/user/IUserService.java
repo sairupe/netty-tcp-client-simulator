@@ -2,6 +2,7 @@ package app.client.service.user;
 
 import app.client.net.protocol.ResponseProtocol;
 import app.client.net.protocol.response.S_APP_HEART_BEAT;
+import app.client.net.protocol.response.S_XB_CHAT;
 import app.client.net.protocol.response.S_XB_HEART_BEAT;
 import app.client.service.IService;
 import app.client.user.session.UserSession;
@@ -19,6 +20,8 @@ public interface IUserService extends IService{
     public void receivedAppHeartBeatResponse(S_APP_HEART_BEAT response);
 
     public void receivedXbHeartBeatResponse(S_XB_HEART_BEAT response);
+
+    public void receivedXbChatResponse(S_XB_CHAT response);
 	
     public void createUser(UserSession userSession);
 	

@@ -8,6 +8,7 @@ import app.client.net.protocol.request.*;
 import app.client.net.protocol.request.sdk.batch.device.C_DEVICE_HEART_BEAT;
 import app.client.net.protocol.request.sdk.batch.device.C_DEVICE_LOGIN;
 import app.client.net.protocol.response.S_APP_HEART_BEAT;
+import app.client.net.protocol.response.S_XB_CHAT;
 import app.client.net.protocol.response.S_XB_HEART_BEAT;
 import app.client.net.task.app.AppHeartBeatTask;
 import app.client.net.task.sdk.SdkDeviceHeartBeatTask;
@@ -18,6 +19,7 @@ import app.client.service.device.DeviceServiceImpl;
 import app.client.user.session.UserSession;
 import com.gowild.core.util.HttpUtil;
 import com.gowild.sdk.protocol.SdkMsgType;
+import com.gowild.xb.tcp.proto.ChatMsgProto;
 import org.json.JSONObject;
 
 import javax.annotation.Resource;
@@ -69,6 +71,15 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
         info.setRobotPower((byte) 88);
         response.getUserSession().sendMsg(info);
         System.out.println("====== >>> XB设备收到返回时间====");
+    }
+
+    @Override
+    public void receivedXbChatResponse(S_XB_CHAT response) {
+        ChatMsgProto.ChatMsg chatMsg = response.getChatMsg();
+        String text = chatMsg.getReply();
+        String expression = chatMsg.getExpression();
+        String mood = chatMsg.getMood();
+        System.out.println("====== >>> XB收到闲聊，text:" + text + " | expression: " + expression + " | mood: " + mood);
     }
 
     @Override

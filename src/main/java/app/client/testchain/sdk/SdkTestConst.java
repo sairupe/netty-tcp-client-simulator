@@ -11,12 +11,15 @@ public class SdkTestConst {
 
     public static final String FIRST_DEVICE_UID = "12315-1";
     public static final String SECOND_DEVICE_UID = "12315-2";
+    public static final String THIRD_DEVICE_UID = "12315-3";
 
-    public static final String FIRST_DEVICE_NAME = "苹果";
-    public static final String SECOND_DEVICE_NAME = "香蕉";
+    public static final String FIRST_DEVICE_NAME = "设备一";
+    public static final String SECOND_DEVICE_NAME = "设备二";
+    public static final String THIRD_DEVICE_NAME = "设备三";
 
     public static final String FIRST_DEVICE_SN = FIRST_DEVICE_UID;
     public static final String SECOND_DEVICE_SN = SECOND_DEVICE_UID;
+    public static final String THIRD_DEVICE_SN = THIRD_DEVICE_UID;
 
     public static final String FIRST_HOME_TID = "home1";
     public static final String SECOND_HOME_TID = "home2";

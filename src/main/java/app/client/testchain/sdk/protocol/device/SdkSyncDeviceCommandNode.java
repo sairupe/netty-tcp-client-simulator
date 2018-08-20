@@ -29,7 +29,7 @@ public class SdkSyncDeviceCommandNode extends ProtocolListenNode {
         addDeviceInfoVo1.setOpenStatus(SdkConstant.DEFAULT_OPEN_STATUS_INTVALUE);
         addDeviceInfoVo1.setOnlineStatus(SdkConstant.DEFAULT_ONLINE_STATUS_INTVALUE);
         addDeviceInfoVo1.setDeviceSn(device1SN);
-//        addDeviceInfoVo1.setAreaId(device1AreaId);
+        addDeviceInfoVo1.setAreaId(device1AreaId);
 //        addDeviceInfoVo1.setSceneId(device1SceneId);
         addDeviceInfoVo1.setDeviceType(DeviceTypeEnum.LIGHT.getDeviceType());
 
@@ -44,13 +44,31 @@ public class SdkSyncDeviceCommandNode extends ProtocolListenNode {
         addDeviceInfoVo2.setOpenStatus(SdkConstant.DEFAULT_OPEN_STATUS_INTVALUE);
         addDeviceInfoVo2.setOnlineStatus(SdkConstant.DEFAULT_ONLINE_STATUS_INTVALUE);
         addDeviceInfoVo2.setDeviceSn(device2SN);
-//        addDeviceInfoVo2.setAreaId(device2AreaId);
+        addDeviceInfoVo2.setAreaId(device2AreaId);
 //        addDeviceInfoVo2.setSceneId(device2SceneId);
         addDeviceInfoVo2.setDeviceType(DeviceTypeEnum.LIGHT.getDeviceType());
+
+
+        String device3Id = SdkTestConst.THIRD_DEVICE_UID;
+        String device3Name = SdkTestConst.THIRD_DEVICE_NAME;
+        String device3SN = SdkTestConst.THIRD_DEVICE_SN;
+        String device3AreaId = SdkTestConst.SECOND_AREA_TID;
+        String device3SceneId = "";
+        AddDeviceInfoVo addDeviceInfoVo3 = new AddDeviceInfoVo();
+        addDeviceInfoVo3.setDeviceId(device3Id);
+        addDeviceInfoVo3.setDeviceName(device3Name);
+        addDeviceInfoVo3.setOpenStatus(SdkConstant.DEFAULT_OPEN_STATUS_INTVALUE);
+        addDeviceInfoVo3.setOnlineStatus(SdkConstant.DEFAULT_ONLINE_STATUS_INTVALUE);
+        addDeviceInfoVo3.setDeviceSn(device3SN);
+        addDeviceInfoVo3.setAreaId(device3AreaId);
+//        addDeviceInfoVo3.setSceneId(device2SceneId);
+        addDeviceInfoVo3.setDeviceType(DeviceTypeEnum.LIGHT.getDeviceType());
+
 
         List<AddDeviceInfoVo> addDeviceInfoVoList = new ArrayList<>();
         addDeviceInfoVoList.add(addDeviceInfoVo1);
         addDeviceInfoVoList.add(addDeviceInfoVo2);
+        addDeviceInfoVoList.add(addDeviceInfoVo3);
 
         C_SYNC_DEVICE addDevices = ProtocolFactory.createRequestProtocol(C_SYNC_DEVICE.class,
                 userSession.getCtx());
