@@ -67,9 +67,9 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
     @Override
     @Handler(moduleId = SdkMsgType.XB_CLIENT_TYPE, sequenceId = 110)
     public void receivedXbHeartBeatResponse(S_XB_HEART_BEAT response) {
-        C_MACHINE_INFO_UPDATE info = ProtocolFactory.createRequestProtocol(C_MACHINE_INFO_UPDATE.class, response.getUserSession().getCtx());
-        info.setRobotPower((byte) 88);
-        response.getUserSession().sendMsg(info);
+//        C_MACHINE_INFO_UPDATE info = ProtocolFactory.createRequestProtocol(C_MACHINE_INFO_UPDATE.class, response.getUserSession().getCtx());
+//        info.setRobotPower((byte) 88);
+//        response.getUserSession().sendMsg(info);
         System.out.println("====== >>> XB设备收到返回时间====");
     }
 

@@ -165,6 +165,13 @@
             <artifactId>disruptor</artifactId>
             <version>3.3.7</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.3.5</version>
+        </dependency>
+
     </dependencies>
     <!-- 依赖关系 end -->
 </project>

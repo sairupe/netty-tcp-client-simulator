@@ -22,9 +22,6 @@ public class Docker2LoginCommandNode extends ProtocolListenNode {
         dockerLogin.setMac("94:a1:a2:bf:b7:f0");
         //2969
 //        dockerLogin.setMac("94:a1:a2:c0:37:2c");
-
-
-        dockerLogin.setToken(token);
         userSession.sendMsg(dockerLogin);
     }
 
