@@ -122,11 +122,11 @@ public class ChainNodeManager {
 
         // 2307  94:a1:a2:bd:c5:c6 生榨米粉(DOCKER)
         String mac2307 = "94:a1:a2:bd:c5:c6";
-//        startingChainNode.addLastNext(new DockerLoginCommandNode(mac2307));
+        startingChainNode.addLastNext(new DockerLoginCommandNode(mac2307));
 
         // 2308  94:a1:a2:bd:93:d2 老友粉(XB)
         String mac2308 = "94:a1:a2:bd:93:d2";
-        startingChainNode.addLastNext(new DockerLoginCommandNode(mac2308));
+//        startingChainNode.addLastNext(new DockerLoginCommandNode(mac2308));
 
 
         // 测试

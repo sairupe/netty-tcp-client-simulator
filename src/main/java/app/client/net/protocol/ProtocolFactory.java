@@ -11,6 +11,8 @@ import app.client.net.annotation.Protocol;
 import app.client.user.session.UserSessionManager;
 import app.client.utils.ClassUtil;
 import app.client.utils.ClientUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author syriana.zh
@@ -20,6 +22,8 @@ import app.client.utils.ClientUtil;
  *         2016年4月15日 下午2:40:06
  */
 public class ProtocolFactory {
+
+    private static Logger logger = LoggerFactory.getLogger(ProtocolFactory.class);
 
 	private static Map<Integer, RequestProtocol> requestPrototypeMap = new ConcurrentHashMap<Integer, RequestProtocol>();
 
@@ -128,7 +132,7 @@ public class ProtocolFactory {
         try{
             int key = ClientUtil.buildProtocolKey(moduleId, sequenceId);
             if (reponsePrototypeMap.get(key) == null){
-                System.out.println("===========protoclId 空:" + key);
+                System.out.println("===========protoclId 空: moduleId:{" + moduleId + "}, sequenceId:{" + sequenceId + "}");
                 return null;
             }
             protype = reponsePrototypeMap.get(key).getClass()
