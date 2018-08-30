@@ -37,7 +37,7 @@ public class GowildEncoder extends MessageToByteEncoder<RequestProtocol> {
         // 若存在不同线程给同一玩家发送数据的情况，因此加密过程需要同步处理
         byte[] plainText = new byte[size];
         buffer.readBytes(plainText);
-        System.out.println("plainText | " + Arrays.toString(plainText));
+//        System.out.println("plainText | " + Arrays.toString(plainText));
         //获取key
         int[] encryptKey = getKey(ctx);
         //加密过程

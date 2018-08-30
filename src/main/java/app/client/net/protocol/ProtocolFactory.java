@@ -132,7 +132,10 @@ public class ProtocolFactory {
         try{
             int key = ClientUtil.buildProtocolKey(moduleId, sequenceId);
             if (reponsePrototypeMap.get(key) == null){
-                System.out.println("===========protoclId 空: moduleId:{" + moduleId + "}, sequenceId:{" + sequenceId + "}");
+                System.out.println("===========================" +
+                        "======================================" +
+                        "========================================" +
+                        "收到protoclId 空: moduleId:{" + moduleId + "}, sequenceId:{" + sequenceId + "}");
                 return null;
             }
             protype = reponsePrototypeMap.get(key).getClass()

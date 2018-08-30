@@ -1,6 +1,7 @@
 package app.client.testchain;
 
 import app.client.net.protocol.ProtocolFactory;
+import app.client.net.protocol.request.C_DOCKER_LOGIN;
 import app.client.net.protocol.request.C_XB_HEART_BEAT;
 import app.client.net.task.sdk.SdkDeviceHeartBeatTask;
 import app.client.net.task.TaskManager;
@@ -33,6 +34,7 @@ import app.client.testchain.sdk.protocol.scene.SyncSceneCommandNode;
 import app.client.testchain.sdk.protocol.scene.UpdateSceneBatchCommandNode;
 import app.client.testchain.sdk.protocol.xb.XbLoginCommandNode;
 import app.client.user.session.UserSession;
+import app.client.utils.CommonUtil;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -105,29 +107,60 @@ public class ChainNodeManager {
         //    94:a1:a2:c0:47:c8
         String mac2967 = "94:a1:a2:c0:47:c8";
 //        startingChainNode.addLastNext(new DockerLoginCommandNode(mac2967));
+        C_DOCKER_LOGIN login2967 = ProtocolFactory.createRequestProtocol(C_DOCKER_LOGIN.class,
+                userSession.getCtx());
+        login2967.setMac(mac2967);
+        userSession.sendMsg(login2967);
+
         // 2968  94:a1:a2:bf:b7:f0
         String mac2968 = "94:a1:a2:bf:b7:f0";
 //        startingChainNode.addLastNext(new DockerLoginCommandNode(mac2968));
+        C_DOCKER_LOGIN login2968 = ProtocolFactory.createRequestProtocol(C_DOCKER_LOGIN.class,
+                userSession.getCtx());
+        login2968.setMac(mac2968);
+        userSession.sendMsg(login2968);
+
         // 2969  94:a1:a2:c0:37:2c
         String mac2969 = "94:a1:a2:c0:37:2c";
 //        startingChainNode.addLastNext(new DockerLoginCommandNode(mac2969));
+        C_DOCKER_LOGIN login2969 = ProtocolFactory.createRequestProtocol(C_DOCKER_LOGIN.class,
+                userSession.getCtx());
+        login2969.setMac(mac2969);
+        userSession.sendMsg(login2969);
 
         // 2305  94:a1:a2:f4:2f:fd 老友炒粉 ------------  废弃
         String mac2305 = "94:a1:a2:f4:2f:fd";
 //        startingChainNode.addLastNext(new DockerLoginCommandNode(mac2305));
+        C_DOCKER_LOGIN login2305 = ProtocolFactory.createRequestProtocol(C_DOCKER_LOGIN.class,
+                userSession.getCtx());
+        login2305.setMac(mac2305);
+        userSession.sendMsg(login2305);
 
         // 2306  94:a1:a2:f4:91:19 桂林米粉(DOCKER)
         String mac2306 = "94:a1:a2:f4:91:19";
 //        startingChainNode.addLastNext(new DockerLoginCommandNode(mac2306));
+        C_DOCKER_LOGIN login2306 = ProtocolFactory.createRequestProtocol(C_DOCKER_LOGIN.class,
+                userSession.getCtx());
+        login2306.setMac(mac2306);
+        userSession.sendMsg(login2306);
 
         // 2307  94:a1:a2:bd:c5:c6 生榨米粉(DOCKER)
         String mac2307 = "94:a1:a2:bd:c5:c6";
-        startingChainNode.addLastNext(new DockerLoginCommandNode(mac2307));
+//        startingChainNode.addLastNext(new DockerLoginCommandNode(mac2307));
+        C_DOCKER_LOGIN login2307 = ProtocolFactory.createRequestProtocol(C_DOCKER_LOGIN.class,
+                userSession.getCtx());
+        login2307.setMac(mac2307);
+        userSession.sendMsg(login2307);
 
         // 2308  94:a1:a2:bd:93:d2 老友粉(XB)
         String mac2308 = "94:a1:a2:bd:93:d2";
-//        startingChainNode.addLastNext(new DockerLoginCommandNode(mac2308));
+        //startingChainNode.addLastNext(new DockerLoginCommandNode(mac2308));
+        C_DOCKER_LOGIN login2308 = ProtocolFactory.createRequestProtocol(C_DOCKER_LOGIN.class,
+                userSession.getCtx());
+        login2308.setMac(mac2308);
+        userSession.sendMsg(login2308);
 
+        CommonUtil.threadPause(1000);
 
         // 测试
 //        String macTest = "94:a1:a2:bf:99:aa";
@@ -140,10 +173,10 @@ public class ChainNodeManager {
 
 
         //全量数据
-//        startingChainNode.addLastNext(new AddHomeBatchCommandNode());
-//        startingChainNode.addLastNext(new AddFloorBatchCommandNode());
-//        startingChainNode.addLastNext(new AddAreaBatchCommandNode());
-//        startingChainNode.addLastNext(new SdkAddDeviceBatchCommandNode());
+        startingChainNode.addLastNext(new AddHomeBatchCommandNode());
+        startingChainNode.addLastNext(new AddFloorBatchCommandNode());
+        startingChainNode.addLastNext(new AddAreaBatchCommandNode());
+        startingChainNode.addLastNext(new SdkAddDeviceBatchCommandNode());
 
         // 同步设备指令
 //        startingChainNode.addLastNext(new SdkSyncDeviceCommandNode());
