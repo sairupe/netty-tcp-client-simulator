@@ -81,102 +81,49 @@ public class ChainNodeManager {
     }
 
     public void start(UserSession userSession) {
-//        startingChainNode = new BaseDbInfoInsertNode();
-//        startingChainNode.setVar(userSession, con);
-//        startingChainNode.addLastNext(new DockerLoginCommandNode());
-//        startingChainNode.addLastNext(new SimularCommandNode().registListenProtocol(S_DEVICE_LOGIN_RESULT.class));
-//
-//        startingChainNode.start(userSession, con);
-//        DispacherManager.getInstance().setChainNode(startingChainNode);
-//
-//        C_DEVICE_HEART_BEAT heartBeat = ProtocolFactory.createRequestProtocol(C_DEVICE_HEART_BEAT.class,
-//                userSession.getCtx());
-//        SdkDeviceHeartBeatTask task = new SdkDeviceHeartBeatTask(userSession.getCtx(), heartBeat);
-//        TaskManager.getInstance().addTickTask(task, 2, 5, TimeUnit.SECONDS);
 
-//        startingChainNode.addLastNext(new DockerLoginCommandNode());
-
-        // SDK模拟登陆
+        // 数据库任务
         startingChainNode = new BaseDbInfoInsertNode();
         startingChainNode.setVar(userSession, con);
-        // 登录指令
-//        startingChainNode.addLastNext(new XbLoginCommandNode());
-//        startingChainNode.addLastNext(new DockerLoginCommandNode());
-//        startingChainNode.addLastNext(new Docker2LoginCommandNode());
 
+        // 登录指令
         //    94:a1:a2:c0:47:c8
         String mac2967 = "94:a1:a2:c0:47:c8";
-//        startingChainNode.addLastNext(new DockerLoginCommandNode(mac2967));
-        C_DOCKER_LOGIN login2967 = ProtocolFactory.createRequestProtocol(C_DOCKER_LOGIN.class,
-                userSession.getCtx());
-        login2967.setMac(mac2967);
-        userSession.sendMsg(login2967);
+//        doXbOrDockerLogin(userSession, mac2967);
 
         // 2968  94:a1:a2:bf:b7:f0
         String mac2968 = "94:a1:a2:bf:b7:f0";
-//        startingChainNode.addLastNext(new DockerLoginCommandNode(mac2968));
-        C_DOCKER_LOGIN login2968 = ProtocolFactory.createRequestProtocol(C_DOCKER_LOGIN.class,
-                userSession.getCtx());
-        login2968.setMac(mac2968);
-        userSession.sendMsg(login2968);
+//        doXbOrDockerLogin(userSession, mac2968);
 
         // 2969  94:a1:a2:c0:37:2c
         String mac2969 = "94:a1:a2:c0:37:2c";
-//        startingChainNode.addLastNext(new DockerLoginCommandNode(mac2969));
-        C_DOCKER_LOGIN login2969 = ProtocolFactory.createRequestProtocol(C_DOCKER_LOGIN.class,
-                userSession.getCtx());
-        login2969.setMac(mac2969);
-        userSession.sendMsg(login2969);
+//        doXbOrDockerLogin(userSession, mac2969);
 
         // 2305  94:a1:a2:f4:2f:fd 老友炒粉 ------------  废弃
         String mac2305 = "94:a1:a2:f4:2f:fd";
-//        startingChainNode.addLastNext(new DockerLoginCommandNode(mac2305));
-        C_DOCKER_LOGIN login2305 = ProtocolFactory.createRequestProtocol(C_DOCKER_LOGIN.class,
-                userSession.getCtx());
-        login2305.setMac(mac2305);
-        userSession.sendMsg(login2305);
+//        doXbOrDockerLogin(userSession, mac2305);
 
         // 2306  94:a1:a2:f4:91:19 桂林米粉(DOCKER)
         String mac2306 = "94:a1:a2:f4:91:19";
-//        startingChainNode.addLastNext(new DockerLoginCommandNode(mac2306));
-        C_DOCKER_LOGIN login2306 = ProtocolFactory.createRequestProtocol(C_DOCKER_LOGIN.class,
-                userSession.getCtx());
-        login2306.setMac(mac2306);
-        userSession.sendMsg(login2306);
+//        doXbOrDockerLogin(userSession, mac2306);
 
         // 2307  94:a1:a2:bd:c5:c6 生榨米粉(DOCKER)
         String mac2307 = "94:a1:a2:bd:c5:c6";
-//        startingChainNode.addLastNext(new DockerLoginCommandNode(mac2307));
-        C_DOCKER_LOGIN login2307 = ProtocolFactory.createRequestProtocol(C_DOCKER_LOGIN.class,
-                userSession.getCtx());
-        login2307.setMac(mac2307);
-        userSession.sendMsg(login2307);
+//        doXbOrDockerLogin(userSession, mac2307);
 
         // 2308  94:a1:a2:bd:93:d2 老友粉(XB)
         String mac2308 = "94:a1:a2:bd:93:d2";
-        //startingChainNode.addLastNext(new DockerLoginCommandNode(mac2308));
-        C_DOCKER_LOGIN login2308 = ProtocolFactory.createRequestProtocol(C_DOCKER_LOGIN.class,
-                userSession.getCtx());
-        login2308.setMac(mac2308);
-        userSession.sendMsg(login2308);
+//        doXbOrDockerLogin(userSession, mac2308);
 
+        // 预留defaultclient 转换为xbclient的时间
         CommonUtil.threadPause(1000);
-
-        // 测试
-//        String macTest = "94:a1:a2:bf:99:aa";
-//        String tokenTest = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiZ293aWxkIl0sInVzZXJfbmFtZSI6Ijk0OmExOmEyOmJmOjk5OmFhIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIiwidHJ1c3QiXSwiZXhwIjoxNTM2MTUwMTg1LCJhdXRob3JpdGllcyI6WyJST0xFX0FQUCJdLCJqdGkiOiIwZWZlMTRiMC0yYTI3LTQ3ODUtODA2MC05YzhiY2UzNWFiNmUiLCJjbGllbnRfaWQiOiJnb3dpbGRfYXBwX2NsaWVudCJ9.paP4Hr8AirwoJthcIWeYmEe_jKIaPJhVSVte0C0qyU0";
-//        startingChainNode.addLastNext(new DockerLoginCommandNode(macTest, tokenTest));
-
-//        String macOldTest = "94:a1:a2:bf:99:aa";
-//        String tokenOldTest = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiZ293aWxkIl0sInVzZXJfbmFtZSI6Ijk0OmExOmEyOmJmOjk5OmFhIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIiwidHJ1c3QiXSwiZXhwIjoxNTM2MTUwMTg1LCJhdXRob3JpdGllcyI6WyJST0xFX0FQUCJdLCJqdGkiOiIwZWZlMTRiMC0yYTI3LTQ3ODUtODA2MC05YzhiY2UzNWFiNmUiLCJjbGllbnRfaWQiOiJnb3dpbGRfYXBwX2NsaWVudCJ9.paP4Hr8AirwoJthcIWeYmEe_jKIaPJhVSVte0C0qyU0";
-//        startingChainNode.addLastNext(new XbLoginCommandNode(macOldTest));
 
 
         //全量数据
-        startingChainNode.addLastNext(new AddHomeBatchCommandNode());
-        startingChainNode.addLastNext(new AddFloorBatchCommandNode());
-        startingChainNode.addLastNext(new AddAreaBatchCommandNode());
-        startingChainNode.addLastNext(new SdkAddDeviceBatchCommandNode());
+//        startingChainNode.addLastNext(new AddHomeBatchCommandNode());
+//        startingChainNode.addLastNext(new AddFloorBatchCommandNode());
+//        startingChainNode.addLastNext(new AddAreaBatchCommandNode());
+//        startingChainNode.addLastNext(new SdkAddDeviceBatchCommandNode());
 
         // 同步设备指令
 //        startingChainNode.addLastNext(new SdkSyncDeviceCommandNode());
@@ -250,5 +197,13 @@ public class ChainNodeManager {
         C_XB_HEART_BEAT heartBeat = ProtocolFactory.createRequestProtocol(C_XB_HEART_BEAT.class, userSession.getCtx());
         SdkDeviceHeartBeatTask task = new SdkDeviceHeartBeatTask(userSession.getCtx(), heartBeat);
         TaskManager.getInstance().addTickTask(task, 2, 60, TimeUnit.SECONDS);
+    }
+
+    // 小白或者DOCKER登陆
+    private void doXbOrDockerLogin(UserSession userSession, String mac){
+        C_DOCKER_LOGIN loginCmd = ProtocolFactory.createRequestProtocol(C_DOCKER_LOGIN.class,
+                userSession.getCtx());
+        loginCmd.setMac(mac);
+        userSession.sendMsg(loginCmd);
     }
 }
