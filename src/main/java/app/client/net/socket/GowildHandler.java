@@ -9,17 +9,15 @@ import app.client.net.dispacher.DispacherManager;
 import app.client.net.dispacher.ServiceManager;
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.ResponseProtocol;
-import app.client.net.task.sdk.SdkChainNodeTask;
+import app.client.net.task.xb.XbChainNodeTask;
 import app.client.service.user.UserServiceImpl;
-import app.client.testchain.ChainNodeManager;
 import app.client.user.session.ConnectStatus;
 import app.client.user.session.UserSession;
 import app.client.user.session.UserSessionManager;
 import com.gowild.core.util.LogUtil;
-import com.gowild.tcp.core.manager.socket.Connection;
-import com.gowild.tcp.core.manager.socket.ConnectionEventType;
 import com.gowild.tcp.core.manager.socket.Message;
 import com.gowild.tcp.core.manager.socket.SocketUtil;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.socket.nio.NioSocketChannel;
@@ -38,6 +36,7 @@ import java.util.concurrent.Executors;
  *
  * @author Dream.xie
  */
+@ChannelHandler.Sharable
 public final class GowildHandler extends ChannelInboundHandlerAdapter {
 
     @Resource
@@ -72,9 +71,9 @@ public final class GowildHandler extends ChannelInboundHandlerAdapter {
         nioSocketChannel.attr(USER_SESSION).set(userSession);
         UserSessionManager.getInstance().addUserSession(channelId, userSession);
         //userServiceImpl.userLogin(userSession);
-        SdkChainNodeTask sdkChainNodeTask = new SdkChainNodeTask();
-        sdkChainNodeTask.setUserSession(userSession);
-        chainNodeExecuteSinglePool.execute(sdkChainNodeTask);
+        XbChainNodeTask xbChainNodeTask = new XbChainNodeTask();
+        xbChainNodeTask.setUserSession(userSession);
+        chainNodeExecuteSinglePool.execute(xbChainNodeTask);
         super.channelActive(ctx);
     }
 

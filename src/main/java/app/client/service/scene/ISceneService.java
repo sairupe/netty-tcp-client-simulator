@@ -14,7 +14,7 @@ import app.client.service.IService;
  *
  * 2016年4月21日 下午3:21:18
  */
-public interface ISceneService extends IService{
+public interface ISceneService{
 
     public void syncSceneResult(S_SYNC_SCENE response);
 

@@ -3,6 +3,7 @@ package app.client.net.protocol.request;
 import app.client.net.annotation.Protocol;
 import app.client.net.protocol.ProtocolType;
 import app.client.net.protocol.RequestProtocol;
+import app.client.net.test.Netty4XbClient;
 import com.gowild.core.util.LogUtil;
 import com.gowild.sdk.protocol.SdkMsgType;
 import com.gowild.xbtcp.metadata.pb.AccountBothMsgProto;
@@ -34,26 +35,23 @@ public class C_DOCKER_LOGIN extends RequestProtocol{
 
     private String mac;
 
-    private String url = "http://172.27.1.49:6110/oauth/token";
-
-    private String token;
 
     @Override
     public void writeBinaryData(){
 
         String token = "";
         try {
+            String tokenUrl = Netty4XbClient.TOKEN_URL;
             CloseableHttpClient httpclient = HttpClientBuilder.create().build();
-            HttpPost request = new HttpPost(url);
-            request.setHeader("Authorization", "Basic Z293aWxkX2FwcF9jbGllbnQ6U1VrZSQjODNqZGlzbClESl8uLDMyNA==");
+            HttpPost request = new HttpPost(tokenUrl);
 
             List<NameValuePair> list = new ArrayList<NameValuePair>();
-            NameValuePair grant_type = new BasicNameValuePair("grant_type", "password");
-            NameValuePair userName = new BasicNameValuePair("username", mac);
-            NameValuePair password = new BasicNameValuePair("password", mac);
-            list.add(grant_type);
-            list.add(userName);
-            list.add(password);
+            NameValuePair macParam = new BasicNameValuePair("mac", mac);
+            NameValuePair snParam = new BasicNameValuePair("serial_no", mac);
+            NameValuePair clientIdParam = new BasicNameValuePair("client_id", "e3383afbf2d444cdba823c1a8f25ec12");
+            list.add(macParam);
+            list.add(snParam);
+            list.add(clientIdParam);
 
             CloseableHttpResponse response = null;
             try {

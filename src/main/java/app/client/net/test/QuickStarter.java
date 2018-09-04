@@ -1,5 +1,7 @@
 package app.client.net.test;
 
+import app.client.net.dispacher.DispacherManager;
+import app.client.net.task.TaskManager;
 import com.gowild.core.util.LogUtil;
 
 /**
@@ -8,13 +10,23 @@ import com.gowild.core.util.LogUtil;
 public class QuickStarter {
 
     public static void main(String[] args) throws Exception {
-        if(false){
+
+        // 初始化协议原型加载
+        Class.forName("app.client.net.protocol.ProtocolFactory");
+        // 初始化协议加载
+        Class.forName("app.client.net.dispacher.DispacherManager");
+        // 初始化分发器
+        DispacherManager.getInstance().init();
+        // 初始化线程池
+        TaskManager.getInstance().init();
+
+        if(true){
             Thread appStarter = new Thread(new AppStartTask());
             appStarter.start();
             LogUtil.debug("启动APP");
         }
 
-        if(true){
+        if(false){
             Thread xbStarter = new Thread(new XbStartTask());
             xbStarter.start();
             LogUtil.debug("启动XB完毕");
@@ -34,14 +46,16 @@ public class QuickStarter {
 
         @Override
         public void run() {
-            Netty4AppClient appClient = new Netty4AppClient();
-            try {
-                appClient.init();
-                appClient.start();
-            } catch (Exception e) {
-                e.printStackTrace();
+            for(int i = 0; i < 2; i++){
+                Netty4AppClient appClient = new Netty4AppClient();
+                try {
+                    appClient.init();
+                    appClient.start();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    appClient.close();
+                }
             }
-            appClient.close();
         }
     }
 
@@ -55,8 +69,8 @@ public class QuickStarter {
                 xbClient.start();
             } catch (Exception e) {
                 e.printStackTrace();
+                xbClient.close();
             }
-            xbClient.close();
         }
     }
 
@@ -70,8 +84,8 @@ public class QuickStarter {
                 sdkClient.start();
             } catch (Exception e) {
                 e.printStackTrace();
+                sdkClient.close();
             }
-            sdkClient.close();
         }
     }
 }

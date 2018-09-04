@@ -9,22 +9,20 @@ import app.client.net.dispacher.DispacherManager;
 import app.client.net.dispacher.ServiceManager;
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.ResponseProtocol;
-import app.client.net.task.sdk.SdkChainNodeTask;
-import app.client.service.user.UserServiceImpl;
+import app.client.net.task.xb.XbChainNodeTask;
 import app.client.user.session.ConnectStatus;
 import app.client.user.session.UserSession;
 import app.client.user.session.UserSessionManager;
 import com.gowild.core.util.LogUtil;
 import com.gowild.tcp.core.manager.socket.Message;
 import com.gowild.tcp.core.manager.socket.SocketUtil;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.util.AttributeKey;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
-import javax.annotation.Resource;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -33,10 +31,8 @@ import java.util.concurrent.Executors;
  *
  * @author Dream.xie
  */
+@ChannelHandler.Sharable
 public final class GowildXbHandler extends ChannelInboundHandlerAdapter {
-
-    @Resource
-    private UserServiceImpl userServiceImpl;
 
     public GowildXbHandler() {
         ServiceManager.injectionReceiver(this);
@@ -55,9 +51,9 @@ public final class GowildXbHandler extends ChannelInboundHandlerAdapter {
         UserSessionManager.getInstance().addUserSession(channelId, userSession);
 //        userServiceImpl.xbLogin(userSession);
 
-        SdkChainNodeTask sdkChainNodeTask = new SdkChainNodeTask();
-        sdkChainNodeTask.setUserSession(userSession);
-        chainNodeExecuteSinglePool.execute(sdkChainNodeTask);
+        XbChainNodeTask xbChainNodeTask = new XbChainNodeTask();
+        xbChainNodeTask.setUserSession(userSession);
+        chainNodeExecuteSinglePool.execute(xbChainNodeTask);
         super.channelActive(ctx);
     }
 

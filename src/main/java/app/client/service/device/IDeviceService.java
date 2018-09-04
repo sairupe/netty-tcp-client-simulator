@@ -24,7 +24,7 @@ import app.client.user.session.UserSession;
  *
  * 2016年4月21日 下午3:21:18
  */
-public interface IDeviceService extends IService{
+public interface IDeviceService{
 	
     public void sendSimularCmd(UserSession userSession);
 

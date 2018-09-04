@@ -44,12 +44,12 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by zh on 2017/11/21.
  */
-public class ChainNodeManager {
+public class XbChainNodeManager {
 
-    private static ChainNodeManager chainNodeManager = new ChainNodeManager();
+    private static XbChainNodeManager chainNodeManager = new XbChainNodeManager();
     private static Connection con;
 
-    private ChainNodeManager() {
+    private XbChainNodeManager() {
 
     }
 
@@ -76,7 +76,7 @@ public class ChainNodeManager {
      */
     public IChainNode startingChainNode;
 
-    public static ChainNodeManager getInstance() {
+    public static XbChainNodeManager getInstance() {
         return chainNodeManager;
     }
 
@@ -113,7 +113,7 @@ public class ChainNodeManager {
 
         // 2308  94:a1:a2:bd:93:d2 老友粉(XB)
         String mac2308 = "94:a1:a2:bd:93:d2";
-//        doXbOrDockerLogin(userSession, mac2308);
+        doXbOrDockerLogin(userSession, mac2308);
 
         // 预留defaultclient 转换为xbclient的时间
         CommonUtil.threadPause(1000);

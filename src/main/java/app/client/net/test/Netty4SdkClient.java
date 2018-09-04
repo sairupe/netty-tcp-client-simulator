@@ -64,14 +64,6 @@ public class Netty4SdkClient implements Closeable{
     }
 
     public void init() throws Exception{
-        // 初始化协议原型加载
-        Class.forName("app.client.net.protocol.ProtocolFactory");
-        // 初始化协议加载
-        Class.forName("app.client.net.dispacher.DispacherManager");
-        // 初始化分发器
-        DispacherManager.getInstance().init();
-        // 初始化线程池
-        TaskManager.getInstance().init();
     }
 
     public static void main(String[] args) throws Exception {

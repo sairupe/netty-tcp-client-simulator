@@ -1,18 +1,18 @@
-package app.client.net.task.sdk;
+package app.client.net.task.xb;
 
-import app.client.testchain.ChainNodeManager;
+import app.client.testchain.XbChainNodeManager;
 import app.client.user.session.UserSession;
 
 /**
  * Created by zh on 2018/5/9.
  */
-public class SdkChainNodeTask implements Runnable{
+public class XbChainNodeTask implements Runnable{
 
     private UserSession userSession;
 
     @Override
     public void run() {
-        ChainNodeManager.getInstance().start(userSession);
+        XbChainNodeManager.getInstance().start(userSession);
     }
 
     public void setUserSession(UserSession userSession) {

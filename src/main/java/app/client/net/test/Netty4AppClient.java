@@ -30,8 +30,17 @@ public class Netty4AppClient implements Closeable{
 
     private static final int DEFAULT_MSG_SIZE_LIMIT = 1200;
 
-    private static int port = 6030;
-    private final String host = "127.0.0.1";
+//    public static int PORT = 6030;
+//    public static final String HOST = "172.27.1.41";
+//    public static String TOKEN_URL = "http://172.27.1.41:6130/oauth/mobile/token";
+
+//    public static int PORT = 6030;
+//    public static final String HOST = "172.27.1.49";
+//    public static String TOKEN_URL = "http://172.27.1.49:6130/oauth/mobile/token";
+
+    public static final int PORT = 6030;
+    public static final String HOST = "172.27.1.73";
+    public static final String TOKEN_URL = "http://172.27.1.73:6130/oauth/robot/token";
 
 
     public void start() throws Exception{
@@ -40,7 +49,7 @@ public class Netty4AppClient implements Closeable{
             Bootstrap b = new Bootstrap();
             b.group(group);
             b.channel(NioSocketChannel.class);
-            b.remoteAddress(new InetSocketAddress(host, port));
+            b.remoteAddress(new InetSocketAddress(HOST, PORT));
             b.handler(new ChannelInitializer<SocketChannel>() {
 
                 public void initChannel(SocketChannel ch) throws Exception {
@@ -62,15 +71,6 @@ public class Netty4AppClient implements Closeable{
     }
 
     public void init() throws Exception{
-
-        // 初始化协议原型加载
-        Class.forName("app.client.net.protocol.ProtocolFactory");
-        // 初始化协议加载
-        Class.forName("app.client.net.dispacher.DispacherManager");
-        // 初始化分发器
-        DispacherManager.getInstance().init();
-        // 初始化线程池
-        TaskManager.getInstance().init();
     }
 
     public static void main(String[] args) throws Exception {

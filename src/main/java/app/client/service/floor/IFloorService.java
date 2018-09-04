@@ -16,7 +16,7 @@ import app.client.service.IService;
  *
  * 2016年4月21日 下午3:21:18
  */
-public interface IFloorService extends IService{
+public interface IFloorService{
 
     public void syncFloorResult(S_SYNC_FLOOR response);
 

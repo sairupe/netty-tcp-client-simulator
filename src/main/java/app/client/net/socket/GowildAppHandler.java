@@ -9,21 +9,22 @@ import app.client.net.dispacher.DispacherManager;
 import app.client.net.dispacher.ServiceManager;
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.ResponseProtocol;
-import app.client.service.user.UserServiceImpl;
+import app.client.net.task.app.AppChainNodeTask;
 import app.client.user.session.ConnectStatus;
 import app.client.user.session.UserSession;
 import app.client.user.session.UserSessionManager;
 import com.gowild.core.util.LogUtil;
 import com.gowild.tcp.core.manager.socket.Message;
 import com.gowild.tcp.core.manager.socket.SocketUtil;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.util.AttributeKey;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
-import javax.annotation.Resource;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * 游戏Socket处理
@@ -32,13 +33,11 @@ import javax.annotation.Resource;
  */
 public final class GowildAppHandler extends ChannelInboundHandlerAdapter {
 
-    @Resource
-    private UserServiceImpl userServiceImpl;
-
     public GowildAppHandler() {
         ServiceManager.injectionReceiver(this);
     }
 
+    public ExecutorService chainNodeExecuteSinglePool = Executors.newSingleThreadExecutor();
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -49,7 +48,11 @@ public final class GowildAppHandler extends ChannelInboundHandlerAdapter {
         NioSocketChannel nioSocketChannel = (NioSocketChannel) ctx.channel();
         nioSocketChannel.attr(GowildHandler.USER_SESSION).set(userSession);
         UserSessionManager.getInstance().addUserSession(channelId, userSession);
-        userServiceImpl.appLogin(userSession);
+//        userServiceImpl.appLogin(userSession);
+
+        AppChainNodeTask appChainNodeTask = new AppChainNodeTask();
+        appChainNodeTask.setUserSession(userSession);
+        chainNodeExecuteSinglePool.execute(appChainNodeTask);
         super.channelActive(ctx);
     }
 

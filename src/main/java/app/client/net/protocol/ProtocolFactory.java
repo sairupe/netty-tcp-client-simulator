@@ -4,6 +4,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.gowild.sdk.basic.constant.SdkConstant;
+import com.gowild.sdk.protocol.SdkMsgType;
 import io.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.buffer.ChannelBuffer;
 
@@ -132,10 +134,16 @@ public class ProtocolFactory {
         try{
             int key = ClientUtil.buildProtocolKey(moduleId, sequenceId);
             if (reponsePrototypeMap.get(key) == null){
-                System.out.println("===========================" +
+                String clientType = SdkConstant.EMPTY_STRING;
+                if(moduleId == SdkMsgType.XB_CLIENT_TYPE){
+                    clientType = " 小白、DCOKER ";
+                } else{
+                    clientType = " APP ";
+                }
+                System.out.println(
                         "======================================" +
-                        "========================================" +
-                        "收到protoclId 空: moduleId:{" + moduleId + "}, sequenceId:{" + sequenceId + "}");
+                        "========================================【" +
+                        clientType + "】收到protoclId 空: moduleId:{" + moduleId + "}, sequenceId:{" + sequenceId + "}");
                 return null;
             }
             protype = reponsePrototypeMap.get(key).getClass()
