@@ -46,15 +46,13 @@ public class QuickStarter {
 
         @Override
         public void run() {
-            for(int i = 0; i < 2; i++){
-                Netty4AppClient appClient = new Netty4AppClient();
-                try {
-                    appClient.init();
-                    appClient.start();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    appClient.close();
-                }
+            Netty4AppClient appClient = new Netty4AppClient();
+            try {
+                appClient.init();
+                appClient.start();
+            } catch (Exception e) {
+                e.printStackTrace();
+                appClient.close();
             }
         }
     }

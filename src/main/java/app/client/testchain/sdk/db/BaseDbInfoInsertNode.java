@@ -16,9 +16,9 @@ public class BaseDbInfoInsertNode extends DbDataInitialNode {
         String sql = "show tables";
         try(Statement stmt = connection.createStatement();
             ResultSet rs0 = stmt.executeQuery(sql)) {
-//            while (rs0.next()) {
-//                System.out.println(rs0.getString(1));
-//            }
+            while (rs0.next()) {
+                System.out.println(rs0.getString(1));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

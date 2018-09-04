@@ -5,6 +5,7 @@ import app.client.net.protocol.request.C_DOCKER_LOGIN;
 import app.client.net.protocol.request.C_XB_HEART_BEAT;
 import app.client.net.task.sdk.SdkDeviceHeartBeatTask;
 import app.client.net.task.TaskManager;
+import app.client.testchain.sdk.SdkTestConst;
 import app.client.testchain.sdk.db.BaseDbInfoInsertNode;
 import app.client.testchain.sdk.protocol.area.AddAreaBatchCommandNode;
 import app.client.testchain.sdk.protocol.area.DeleteAreaCommandNode;
@@ -54,7 +55,7 @@ public class XbChainNodeManager {
     }
 
     static {
-        String urlstr = "jdbc:mysql://localhost:3306/gwsdk";
+        String urlstr = SdkTestConst.DB_URL;
         String sql = "";
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -191,7 +192,7 @@ public class XbChainNodeManager {
 
 //        startingChainNode.addLastNext(new SdkAddDeviceCommandNode());
 
-        startingChainNode.start(userSession, con);
+        startingChainNode.start();
 
         // 心跳协议
         C_XB_HEART_BEAT heartBeat = ProtocolFactory.createRequestProtocol(C_XB_HEART_BEAT.class, userSession.getCtx());

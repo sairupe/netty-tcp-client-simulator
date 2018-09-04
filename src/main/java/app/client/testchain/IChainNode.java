@@ -11,7 +11,7 @@ import java.sql.Connection;
  */
 public interface IChainNode {
 
-    public void start(UserSession userSession, Connection connection);
+    public void start();
 
     public void execute();
 

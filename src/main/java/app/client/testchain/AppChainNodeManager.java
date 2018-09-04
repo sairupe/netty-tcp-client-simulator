@@ -1,5 +1,6 @@
 package app.client.testchain;
 
+import app.client.data.DbConnecter;
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.request.C_APP_HEART_BEAT;
 import app.client.net.protocol.request.C_APP_LOGIN;
@@ -8,6 +9,7 @@ import app.client.net.protocol.request.C_XB_HEART_BEAT;
 import app.client.net.task.TaskManager;
 import app.client.net.task.app.AppHeartBeatTask;
 import app.client.net.task.sdk.SdkDeviceHeartBeatTask;
+import app.client.testchain.sdk.SdkTestConst;
 import app.client.testchain.sdk.db.BaseDbInfoInsertNode;
 import app.client.user.session.UserSession;
 import app.client.utils.CommonUtil;
@@ -23,28 +25,9 @@ import java.util.concurrent.TimeUnit;
 public class AppChainNodeManager {
 
     private static AppChainNodeManager chainNodeManager = new AppChainNodeManager();
-    private static Connection con;
 
     private AppChainNodeManager() {
 
-    }
-
-    static {
-        String urlstr = "jdbc:mysql://localhost:3306/gwsdk";
-        String sql = "";
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            System.err.print("classnotfoundexception :");
-            System.err.print(e.getMessage());
-        }
-        try {
-            con = DriverManager.getConnection(urlstr, "root", "123456");
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            System.err.println("sqlexception :" + ex.getMessage());
-            System.err.println("sql :" + sql);
-        }
     }
 
     /**
@@ -60,21 +43,21 @@ public class AppChainNodeManager {
 
         // 数据库任务
         startingChainNode = new BaseDbInfoInsertNode();
-        startingChainNode.setVar(userSession, con);
+        startingChainNode.setVar(userSession, DbConnecter.getCon());
 
-        // 登录指令
-        //    94:a1:a2:c0:47:c8
-        String account70 = "18617166985";
-        doAppLogin(userSession, account70);
+//        // 登录指令
+//        //    94:a1:a2:c0:47:c8
+//        String account70 = "18617166985";
+//        doAppLogin(userSession, account70);
+//
+//        CommonUtil.threadPause(1000);
+//
+//        // 心跳协议
+//        C_APP_HEART_BEAT heartBeat = ProtocolFactory.createRequestProtocol(C_APP_HEART_BEAT.class, userSession.getCtx());
+//        AppHeartBeatTask task = new AppHeartBeatTask(userSession.getCtx(), heartBeat);
+//        TaskManager.getInstance().addTickTask(task, 2, 30, TimeUnit.SECONDS);
 
-        CommonUtil.threadPause(1000);
-
-        startingChainNode.start(userSession, con);
-
-        // 心跳协议
-        C_APP_HEART_BEAT heartBeat = ProtocolFactory.createRequestProtocol(C_APP_HEART_BEAT.class, userSession.getCtx());
-        AppHeartBeatTask task = new AppHeartBeatTask(userSession.getCtx(), heartBeat);
-        TaskManager.getInstance().addTickTask(task, 2, 30, TimeUnit.SECONDS);
+        startingChainNode.start();
     }
 
     // APP登陆

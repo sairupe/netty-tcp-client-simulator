@@ -30,17 +30,17 @@ public class Netty4AppClient implements Closeable{
 
     private static final int DEFAULT_MSG_SIZE_LIMIT = 1200;
 
-//    public static int PORT = 6030;
-//    public static final String HOST = "172.27.1.41";
-//    public static String TOKEN_URL = "http://172.27.1.41:6130/oauth/mobile/token";
+    public static int PORT = 6030;
+    public static final String HOST = "172.27.1.41";
+    public static String TOKEN_URL = "http://172.27.1.41:6130/oauth/mobile/token";
 
 //    public static int PORT = 6030;
 //    public static final String HOST = "172.27.1.49";
 //    public static String TOKEN_URL = "http://172.27.1.49:6130/oauth/mobile/token";
 
-    public static final int PORT = 6030;
-    public static final String HOST = "172.27.1.73";
-    public static final String TOKEN_URL = "http://172.27.1.73:6130/oauth/robot/token";
+//    public static final int PORT = 6030;
+//    public static final String HOST = "172.27.1.73";
+//    public static final String TOKEN_URL = "http://172.27.1.73:6130/oauth/robot/token";
 
 
     public void start() throws Exception{

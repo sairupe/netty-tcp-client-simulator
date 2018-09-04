@@ -5,9 +5,9 @@ package app.client.testchain.sdk;
  */
 public class SdkTestConst {
 
-    public static final int BIND_MASTER_ID = 1;
-    public static final int FIRST_DEVICE_ID = 2;
-    public static final int SECOND_DEVICE_ID = 3;
+//    public static final String DB_URL = "jdbc:mysql://localhost:3306/jarvis_device_db";
+    public static final String DB_URL = "jdbc:mysql://172.27.1.81:3306/jarvis_device_db";
+//    public static final String DB_URL = "jdbc:mysql://172.27.1.73:3306/jarvis_device_db";
 
     public static final String FIRST_DEVICE_UID = "12315-1";
     public static final String SECOND_DEVICE_UID = "12315-2";
@@ -45,7 +45,6 @@ public class SdkTestConst {
     public static final String FIRST_SCENE_NAME = "场景一";
     public static final String SECOND_SCENE_NAME = "场景二";
 
-    public static final String XB_MAC = "94:a1:a2:f4:5d:d5";
 
 
     public static String getAttrValueTypeStringById(int attrValueTypeId){

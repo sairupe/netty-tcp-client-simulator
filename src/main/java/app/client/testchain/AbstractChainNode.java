@@ -46,7 +46,7 @@ public abstract class AbstractChainNode implements IChainNode {
     protected int sequenceId;
 
     @Override
-    public void start(UserSession userSession, Connection connection) {
+    public void start() {
         execute();
     }
 
