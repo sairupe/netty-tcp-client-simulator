@@ -78,13 +78,13 @@ public class TaskManager {
 
 	private LinkedBlockingQueue<ResponseProtocol> responseQueue = new LinkedBlockingQueue<ResponseProtocol>();
 	
-	private ScheduledExecutorService requestThreadPool = Executors.newScheduledThreadPool(2);
+	private ScheduledExecutorService requestThreadPool = Executors.newScheduledThreadPool(5);
 	
-	private ScheduledExecutorService responseThreadPool = Executors.newScheduledThreadPool(1);
+	private ScheduledExecutorService responseThreadPool = Executors.newScheduledThreadPool(5);
 
-	private ScheduledExecutorService tickThreadPool = Executors.newScheduledThreadPool(1);
+	private ScheduledExecutorService tickThreadPool = Executors.newScheduledThreadPool(5);
 	
-	private ScheduledExecutorService connectThreadPool = Executors.newScheduledThreadPool(1);
+	private ScheduledExecutorService connectThreadPool = Executors.newScheduledThreadPool(5);
 	
     /**
     * 把请求协议放入队列

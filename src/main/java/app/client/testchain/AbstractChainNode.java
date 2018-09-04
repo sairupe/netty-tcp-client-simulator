@@ -63,9 +63,6 @@ public abstract class AbstractChainNode implements IChainNode {
         doExecute();
         nextNode = next();
         if(nextNode != null && nextNode.canExecuteImmediately()){
-            if(!userSession.getLogined()){
-                CommonUtil.threadPause(500);
-            }
             nextNode.execute();
         }
     }

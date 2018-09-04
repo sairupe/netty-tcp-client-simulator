@@ -117,7 +117,7 @@ public class XbChainNodeManager {
         doXbOrDockerLogin(userSession, mac2308);
 
         // 预留defaultclient 转换为xbclient的时间
-        CommonUtil.threadPause(1000);
+        CommonUtil.threadPause(10);
 
 
         //全量数据

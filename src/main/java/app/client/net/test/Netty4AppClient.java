@@ -1,5 +1,6 @@
 package app.client.net.test;
 
+import app.client.data.StatisticHolder;
 import app.client.net.dispacher.DispacherManager;
 import app.client.net.socket.GowildAppHandler;
 import app.client.net.socket.GowildDecoder;
@@ -60,6 +61,8 @@ public class Netty4AppClient implements Closeable{
                 }
             });
             ChannelFuture f = b.connect().sync();
+            StatisticHolder.incClientCount(1);
+            System.out.println("===================>>>>啓動APP BOOTSTRAP，目前CLIENT數量為：" + StatisticHolder.getClientCount());
             f.channel().closeFuture().sync();
         } finally {
             group.shutdownGracefully().sync();

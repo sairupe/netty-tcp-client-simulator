@@ -45,17 +45,17 @@ public class AppChainNodeManager {
         startingChainNode = new BaseDbInfoInsertNode();
         startingChainNode.setVar(userSession, DbConnecter.getCon());
 
-//        // 登录指令
-//        //    94:a1:a2:c0:47:c8
-//        String account70 = "18617166985";
-//        doAppLogin(userSession, account70);
-//
-//        CommonUtil.threadPause(1000);
-//
-//        // 心跳协议
-//        C_APP_HEART_BEAT heartBeat = ProtocolFactory.createRequestProtocol(C_APP_HEART_BEAT.class, userSession.getCtx());
-//        AppHeartBeatTask task = new AppHeartBeatTask(userSession.getCtx(), heartBeat);
-//        TaskManager.getInstance().addTickTask(task, 2, 30, TimeUnit.SECONDS);
+        // 登录指令
+        //    94:a1:a2:c0:47:c8
+        String account70 = "18617166985";
+        doAppLogin(userSession, account70);
+
+        CommonUtil.threadPause(10);
+
+        // 心跳协议
+        C_APP_HEART_BEAT heartBeat = ProtocolFactory.createRequestProtocol(C_APP_HEART_BEAT.class, userSession.getCtx());
+        AppHeartBeatTask task = new AppHeartBeatTask(userSession.getCtx(), heartBeat);
+        TaskManager.getInstance().addTickTask(task, 2, 5, TimeUnit.SECONDS);
 
         startingChainNode.start();
     }

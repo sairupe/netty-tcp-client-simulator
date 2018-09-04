@@ -1,8 +1,13 @@
 package app.client.net.test;
 
+import app.client.data.DbConnecter;
+import app.client.data.StatisticHolder;
 import app.client.net.dispacher.DispacherManager;
 import app.client.net.task.TaskManager;
+import app.client.utils.CommonUtil;
 import com.gowild.core.util.LogUtil;
+
+import java.sql.Connection;
 
 /**
  * Created by zh on 2017/10/27.
@@ -15,6 +20,8 @@ public class QuickStarter {
         Class.forName("app.client.net.protocol.ProtocolFactory");
         // 初始化协议加载
         Class.forName("app.client.net.dispacher.DispacherManager");
+        // 初始化DB连接
+        Class.forName("app.client.data.DbConnecter");
         // 初始化分发器
         DispacherManager.getInstance().init();
         // 初始化线程池
@@ -46,13 +53,23 @@ public class QuickStarter {
 
         @Override
         public void run() {
-            Netty4AppClient appClient = new Netty4AppClient();
-            try {
-                appClient.init();
-                appClient.start();
-            } catch (Exception e) {
-                e.printStackTrace();
-                appClient.close();
+            for(int i = 0 ; i < 5000; i++){
+                CommonUtil.threadPause(50);
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Netty4AppClient appClient = new Netty4AppClient();
+                        try {
+                            System.out.println("===================>>>>啓動APP CLIENT綫程，目前CLIENT數量為：" + StatisticHolder.getClientCount());
+                            appClient.init();
+                            appClient.start();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            appClient.close();
+                        }
+                    }
+                });
+                thread.start();
             }
         }
     }
