@@ -1,17 +1,29 @@
 package app.client.data;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * Created by zh on 2018/9/4.
  */
 public class StatisticHolder {
 
-    private static int clientCount = 0;
+    private static AtomicInteger robotClientCount = new AtomicInteger(0);
 
-    public static int getClientCount() {
-        return clientCount;
+    private static AtomicInteger appClientCount = new AtomicInteger(0);
+
+    public static int getRobotCount() {
+        return robotClientCount.get();
     }
 
-    public static void incClientCount(int clientCount) {
-        ++StatisticHolder.clientCount;
+    public static int getAppCount() {
+        return appClientCount.get();
+    }
+
+    public static int incRobot(){
+        return robotClientCount.incrementAndGet();
+    }
+
+    public static int incApp(){
+        return appClientCount.incrementAndGet();
     }
 }

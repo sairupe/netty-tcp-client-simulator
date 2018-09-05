@@ -3,7 +3,7 @@ package app.client.net.protocol.request.sdk.batch.area;
 import app.client.net.annotation.Protocol;
 import app.client.net.protocol.ProtocolType;
 import app.client.net.protocol.RequestProtocol;
-import app.client.net.protocol.request.sdk.vo.UpdateAreaBindFloor;
+import app.client.vo.UpdateAreaBindFloor;
 import com.gowild.core.util.StringUtil;
 import com.gowild.sdk.protocol.Device2TcpProtocol;
 import com.gowild.sdk.protocol.SdkMsgType;

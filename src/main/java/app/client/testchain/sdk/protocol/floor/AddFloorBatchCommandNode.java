@@ -2,7 +2,7 @@ package app.client.testchain.sdk.protocol.floor;
 
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.request.sdk.batch.floor.C_ADD_FLOOR_BATCH;
-import app.client.net.protocol.request.sdk.vo.AddFloorInfoVo;
+import app.client.vo.AddFloorInfoVo;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
 

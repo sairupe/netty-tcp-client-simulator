@@ -37,7 +37,7 @@ public class AppChainNodeManager {
 
         // 数据库任务
         startingChainNode = new BaseDbInfoInsertNode();
-        startingChainNode.setVar(userSession, DbConnecter.getCon());
+        startingChainNode.setVar(userSession, DbConnecter.getRobotDbConncetion());
 
         // 登录指令
         //    94:a1:a2:c0:47:c8

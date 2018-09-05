@@ -2,7 +2,7 @@ package app.client.testchain.sdk.protocol.device;
 
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.request.sdk.batch.device.C_UPDATE_DEVICE_BATCH;
-import app.client.net.protocol.request.sdk.vo.AddDeviceInfoVo;
+import app.client.vo.AddDeviceInfoVo;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
 import com.gowild.sdk.basic.constant.SdkConstant;

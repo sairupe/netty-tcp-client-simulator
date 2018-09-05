@@ -1,4 +1,4 @@
-package app.client.net.protocol.request.sdk.vo;
+package app.client.vo;
 
 /**
  * Created by zh on 2018/3/10.

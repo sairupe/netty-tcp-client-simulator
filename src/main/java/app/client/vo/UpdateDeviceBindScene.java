@@ -1,13 +1,13 @@
-package app.client.net.protocol.request.sdk.vo;
+package app.client.vo;
 
 /**
  * Created by zh on 2018/3/10.
  */
-public class UpdateDeviceBindArea {
+public class UpdateDeviceBindScene {
 
     private String deviceId;
 
-    private String areaId;
+    private String sceneId;
 
     public String getDeviceId() {
         return deviceId;
@@ -17,11 +17,11 @@ public class UpdateDeviceBindArea {
         this.deviceId = deviceId;
     }
 
-    public String getAreaId() {
-        return areaId;
+    public String getSceneId() {
+        return sceneId;
     }
 
-    public void setAreaId(String areaId) {
-        this.areaId = areaId;
+    public void setSceneId(String sceneId) {
+        this.sceneId = sceneId;
     }
 }

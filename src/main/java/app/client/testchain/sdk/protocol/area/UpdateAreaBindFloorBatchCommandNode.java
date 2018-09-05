@@ -2,7 +2,7 @@ package app.client.testchain.sdk.protocol.area;
 
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.request.sdk.batch.area.C_UPDATE_AREA_BIND_FLOOR_BATCH;
-import app.client.net.protocol.request.sdk.vo.UpdateAreaBindFloor;
+import app.client.vo.UpdateAreaBindFloor;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
 

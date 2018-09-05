@@ -1,5 +1,6 @@
 package app.client.testchain;
 
+import app.client.data.DbConnecter;
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.request.C_DOCKER_LOGIN;
 import app.client.net.protocol.request.C_XB_HEART_BEAT;
@@ -26,28 +27,9 @@ import java.util.concurrent.TimeUnit;
 public class XbChainNodeManager {
 
     private static XbChainNodeManager chainNodeManager = new XbChainNodeManager();
-    private static Connection con;
 
     private XbChainNodeManager() {
 
-    }
-
-    static {
-        String urlstr = SdkTestConst.DB_URL;
-        String sql = "";
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (java.lang.ClassNotFoundException e) {
-            System.err.print("classnotfoundexception :");
-            System.err.print(e.getMessage());
-        }
-        try {
-            con = DriverManager.getConnection(urlstr, "root", "123456");
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            System.err.println("sqlexception :" + ex.getMessage());
-            System.err.println("sql :" + sql);
-        }
     }
 
     /**
@@ -63,7 +45,7 @@ public class XbChainNodeManager {
 
         // 数据库任务
         startingChainNode = new BaseDbInfoInsertNode();
-        startingChainNode.setVar(userSession, con);
+        startingChainNode.setVar(userSession, DbConnecter.getRobotDbConncetion());
 
         // 登录指令
         //    94:a1:a2:c0:47:c8
@@ -98,7 +80,7 @@ public class XbChainNodeManager {
         CommonUtil.threadPause(2000);
 
         //全量数据
-        startingChainNode.addLastNext(new AddHomeBatchCommandNode());
+//        startingChainNode.addLastNext(new AddHomeBatchCommandNode());
 //        startingChainNode.addLastNext(new AddFloorBatchCommandNode());
 //        startingChainNode.addLastNext(new AddAreaBatchCommandNode());
 //        startingChainNode.addLastNext(new SdkAddDeviceBatchCommandNode());

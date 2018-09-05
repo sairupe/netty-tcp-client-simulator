@@ -11,10 +11,11 @@ import java.sql.SQLException;
  */
 public class DbConnecter {
 
-    private static Connection con;
+    private static Connection robotDbConncetion;
+
+    private static Connection passportDbConnection;
 
     static {
-        String urlstr = SdkTestConst.DB_URL;
         String sql = "";
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -23,7 +24,8 @@ public class DbConnecter {
             System.err.print(e.getMessage());
         }
         try {
-            con = DriverManager.getConnection(urlstr, "root", "123456");
+            robotDbConncetion = DriverManager.getConnection(SdkTestConst.ROBOT_DB_URL, "root", "123456");
+            passportDbConnection = DriverManager.getConnection(SdkTestConst.PASSPORT_DB_URL, "root", "123456");
         } catch (SQLException ex) {
             ex.printStackTrace();
             System.err.println("sqlexception :" + ex.getMessage());
@@ -31,7 +33,11 @@ public class DbConnecter {
         }
     }
 
-    public static Connection getCon() {
-        return con;
+    public static Connection getRobotDbConncetion() {
+        return robotDbConncetion;
+    }
+
+    public static Connection getPassportDbConnection() {
+        return passportDbConnection;
     }
 }

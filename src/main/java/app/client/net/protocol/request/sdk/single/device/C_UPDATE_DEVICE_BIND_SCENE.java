@@ -3,7 +3,7 @@ package app.client.net.protocol.request.sdk.single.device;
 import app.client.net.annotation.Protocol;
 import app.client.net.protocol.ProtocolType;
 import app.client.net.protocol.RequestProtocol;
-import app.client.net.protocol.request.sdk.vo.UpdateDeviceBindScene;
+import app.client.vo.UpdateDeviceBindScene;
 import com.gowild.core.util.StringUtil;
 import com.gowild.sdk.metadata.pb.Sdk2TcpMsgProto;
 import com.gowild.sdk.protocol.Device2TcpProtocol;

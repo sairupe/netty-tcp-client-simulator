@@ -2,7 +2,7 @@ package app.client.testchain.sdk.protocol.area;
 
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.request.sdk.batch.area.C_SYNC_AREA;
-import app.client.net.protocol.request.sdk.vo.AddAreaInfoVo;
+import app.client.vo.AddAreaInfoVo;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
 
