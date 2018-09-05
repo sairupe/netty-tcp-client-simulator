@@ -15,6 +15,8 @@ public class QuickStarter {
 
     public static void main(String[] args) throws Exception {
 
+        // 初始化NIO
+        Class.forName("app.client.net.socket.EventLoopHolder");
         // 初始化协议原型加载
         Class.forName("app.client.net.protocol.ProtocolFactory");
         // 初始化协议加载
@@ -26,13 +28,13 @@ public class QuickStarter {
         // 初始化线程池
         TaskManager.getInstance().init();
 
-        if(false){
+        if(true){
             Thread appStarter = new Thread(new AppStartTask());
             appStarter.start();
             LogUtil.debug("启动APP");
         }
 
-        if(true){
+        if(false){
             Thread xbStarter = new Thread(new XbStartTask());
             xbStarter.start();
             LogUtil.debug("启动XB完毕");
@@ -52,7 +54,7 @@ public class QuickStarter {
 
         @Override
         public void run() {
-            for(int i = 0 ; i < 1; i++){
+            for(int i = 0 ; i < 5000; i++){
                 CommonUtil.threadPause(50);
                 Thread thread = new Thread(new Runnable() {
                     @Override

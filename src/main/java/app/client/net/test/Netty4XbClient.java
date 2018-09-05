@@ -1,6 +1,7 @@
 package app.client.net.test;
 
 import app.client.net.dispacher.DispacherManager;
+import app.client.net.socket.EventLoopHolder;
 import app.client.net.socket.GowildDecoder;
 import app.client.net.socket.GowildEncoder;
 import app.client.net.socket.GowildHandler;
@@ -47,10 +48,9 @@ public class Netty4XbClient implements Closeable{
 
 
     public void start() throws Exception{
-        EventLoopGroup group = new NioEventLoopGroup();
         try {
             Bootstrap b = new Bootstrap();
-            b.group(group);
+            b.group(EventLoopHolder.getGroup());
             b.channel(NioSocketChannel.class);
             b.remoteAddress(new InetSocketAddress(HOST, PORT));
             b.handler(new ChannelInitializer<SocketChannel>() {
@@ -69,7 +69,7 @@ public class Netty4XbClient implements Closeable{
             ChannelFuture f = b.connect().sync();
             f.channel().closeFuture().sync();
         } finally {
-            group.shutdownGracefully().sync();
+//            EventLoopHolder.getGroup().shutdownGracefully().sync();
         }
     }
 

@@ -44,14 +44,10 @@ public class AppChainNodeManager {
         String account70 = "18617166985";
         doAppLogin(userSession, account70);
 
-        CommonUtil.threadPause(3000);
-
-//        startingChainNode.addLastNext(new AppQueryRobotCollaCommandNode(103));
-
         // 心跳协议
         C_APP_HEART_BEAT heartBeat = ProtocolFactory.createRequestProtocol(C_APP_HEART_BEAT.class, userSession.getCtx());
         AppHeartBeatTask task = new AppHeartBeatTask(userSession.getCtx(), heartBeat);
-        TaskManager.getInstance().addTickTask(task, 2, 40, TimeUnit.SECONDS);
+        TaskManager.getInstance().addTickTask(task, 2, 50, TimeUnit.SECONDS);
 
         startingChainNode.start();
     }
