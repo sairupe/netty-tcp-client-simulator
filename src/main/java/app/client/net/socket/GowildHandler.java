@@ -36,7 +36,6 @@ import java.util.concurrent.Executors;
  *
  * @author Dream.xie
  */
-@ChannelHandler.Sharable
 public final class GowildHandler extends ChannelInboundHandlerAdapter {
 
     @Resource

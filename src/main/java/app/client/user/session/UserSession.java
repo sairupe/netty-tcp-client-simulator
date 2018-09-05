@@ -32,13 +32,12 @@ public class UserSession {
 		return uid;
 	}
 
-	private boolean logined;
+	// 账号
+	private String account;
 
-	
-//	public void addResponseToQueue(ResponseProtocol response){
-//		TaskManager.getInstance().addResponse2Queue(response);
-//	}
-	
+	// 机器MAC
+	private String mac;
+
     public void sendMsg(RequestProtocol request){
 		TaskManager.getInstance().addRequest2Queue(request);
 	}
@@ -63,14 +62,6 @@ public class UserSession {
 		this.uid = uid;
 	}
 
-	public Future<?> getTickTaskFuture() {
-		return tickTaskFuture;
-	}
-
-	public void setTickTaskFuture(Future<?> tickTaskFuture) {
-		this.tickTaskFuture = tickTaskFuture;
-	}
-	
     /**
     * 取消心跳包的定时任务
     */
@@ -80,11 +71,19 @@ public class UserSession {
 		}
 	}
 
-	public void setLogined(boolean logined) {
-		this.logined = logined;
+	public void setAccount(String account) {
+		this.account = account;
 	}
 
-	public boolean getLogined(){
-		return this.logined;
+	public void setMac(String mac) {
+		this.mac = mac;
+	}
+
+	public String getAccount() {
+		return account;
+	}
+
+	public String getMac() {
+		return mac;
 	}
 }

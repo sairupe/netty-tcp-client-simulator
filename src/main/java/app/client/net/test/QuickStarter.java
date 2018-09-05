@@ -71,6 +71,7 @@ public class QuickStarter {
                     @Override
                     public void run() {
                         Netty4AppClient appClient = new Netty4AppClient();
+                        appClient.setAccount(entry.getValue().getUserName());
                         try {
                             System.out.println("===================>>>>啓動APP CLIENT綫程，目前CLIENT數量為：" + StatisticHolder.getAppCount());
                             appClient.init();
@@ -94,12 +95,13 @@ public class QuickStarter {
         @Override
         public void run() {
             int startCount = 0;
-            int maxCount = 1;
+            int maxCount = 5;
             Map<Integer, RobotVo> id2RotbotVoMap = RobotDataHolder.getId2RotbotVoMap();
             for(Map.Entry<Integer, RobotVo> entry : id2RotbotVoMap.entrySet()){
                 CommonUtil.threadPause(50);
                 startCount++;
                 Netty4XbClient xbClient = new Netty4XbClient();
+                xbClient.setMac(entry.getValue().getMac());
                 Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {

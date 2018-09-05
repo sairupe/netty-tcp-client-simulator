@@ -46,8 +46,8 @@ public class Netty4SdkClient implements Closeable{
             b.handler(new ChannelInitializer<SocketChannel>() {
 
                 public void initChannel(SocketChannel ch) throws Exception {
-                    ch.pipeline().addLast(new GowildEncoder());
-                    ch.pipeline().addLast(new GowildDecoder());
+                    ch.pipeline().addLast(GowildEncoder.getGowildEncoder());
+                    ch.pipeline().addLast(GowildDecoder.getGowildDecoder());
                     ch.pipeline().addLast(new GowildHandler());
 
                 }

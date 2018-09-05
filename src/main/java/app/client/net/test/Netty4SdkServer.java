@@ -41,8 +41,8 @@ public class Netty4SdkServer {
                 //ChannelPipeline和ChannelHandler的：ChannelPipeline是ChannelHandler的容器。
                 //添加ChannelHandler到ChannelPipeline里面。
                 ChannelPipeline pipeline = ch.pipeline();
-                pipeline.addLast(new GowildDecoder());
-                pipeline.addLast(new GowildEncoder());
+                pipeline.addLast(GowildDecoder.getGowildDecoder());
+                pipeline.addLast(GowildEncoder.getGowildEncoder());
                 pipeline.addLast(new GowildHandler());
             }
         });

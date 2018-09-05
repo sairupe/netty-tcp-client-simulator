@@ -12,7 +12,8 @@ public class XbChainNodeTask implements Runnable{
 
     @Override
     public void run() {
-        XbChainNodeManager.getInstance().start(userSession);
+        XbChainNodeManager xbChainNodeManager = new XbChainNodeManager();
+        xbChainNodeManager.start(userSession);
     }
 
     public void setUserSession(UserSession userSession) {

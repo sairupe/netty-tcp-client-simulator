@@ -41,8 +41,11 @@ public class AppChainNodeManager {
 
         // 登录指令
         //    94:a1:a2:c0:47:c8
-        String account70 = "18617166985";
-        doAppLogin(userSession, account70);
+//        String account70 = "18617166985";
+//        doAppLogin(userSession, account70);
+
+        String account = userSession.getAccount();
+        doAppLogin(userSession, account);
 
         // 心跳协议
         C_APP_HEART_BEAT heartBeat = ProtocolFactory.createRequestProtocol(C_APP_HEART_BEAT.class, userSession.getCtx());

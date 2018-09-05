@@ -16,9 +16,6 @@ import app.client.testchain.sdk.protocol.home.AddHomeBatchCommandNode;
 import app.client.user.session.UserSession;
 import app.client.utils.CommonUtil;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -26,20 +23,10 @@ import java.util.concurrent.TimeUnit;
  */
 public class XbChainNodeManager {
 
-    private static XbChainNodeManager chainNodeManager = new XbChainNodeManager();
-
-    private XbChainNodeManager() {
-
-    }
-
     /**
      * 开始执行的任务节点
      */
     public IChainNode startingChainNode;
-
-    public static XbChainNodeManager getInstance() {
-        return chainNodeManager;
-    }
 
     public void start(UserSession userSession) {
 
@@ -74,10 +61,13 @@ public class XbChainNodeManager {
 
         // 2308  94:a1:a2:bd:93:d2 老友粉(XB)
         String mac2308 = "94:a1:a2:bd:93:d2";
-        doXbOrDockerLogin(userSession, mac2308);
+//        doXbOrDockerLogin(userSession, mac2308);
+
+        String mac = userSession.getMac();
+        doXbOrDockerLogin(userSession, mac);
 
         // 预留defaultclient 转换为xbclient的时间
-        CommonUtil.threadPause(2000);
+//        CommonUtil.threadPause(2000);
 
         //全量数据
 //        startingChainNode.addLastNext(new AddHomeBatchCommandNode());

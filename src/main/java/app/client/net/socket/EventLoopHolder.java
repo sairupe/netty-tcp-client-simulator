@@ -10,6 +10,10 @@ public class EventLoopHolder {
 
     private final static EventLoopGroup group = new NioEventLoopGroup();
 
+    private EventLoopHolder(){
+
+    }
+
     public static EventLoopGroup getGroup() {
         return group;
     }

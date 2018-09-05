@@ -33,6 +33,8 @@ import java.util.concurrent.Executors;
  */
 public final class GowildAppHandler extends ChannelInboundHandlerAdapter {
 
+    private String account;
+
     public GowildAppHandler() {
         ServiceManager.injectionReceiver(this);
     }
@@ -107,5 +109,9 @@ public final class GowildAppHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelReadComplete(final ChannelHandlerContext ctx) throws Exception {
         ctx.flush();
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
     }
 }

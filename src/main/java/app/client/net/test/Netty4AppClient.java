@@ -30,7 +30,7 @@ public class Netty4AppClient implements Closeable{
     private static final Logger logger = LoggerFactory
             .getLogger(Netty4AppClient.class);
 
-    private static final int DEFAULT_MSG_SIZE_LIMIT = 1200;
+    private String account;
 
 //    public static int PORT = 6030;
 //    public static final String HOST = "172.27.1.41";
@@ -54,9 +54,11 @@ public class Netty4AppClient implements Closeable{
             b.handler(new ChannelInitializer<SocketChannel>() {
 
                 public void initChannel(SocketChannel ch) throws Exception {
-                    ch.pipeline().addLast(new GowildDecoder());
-                    ch.pipeline().addLast(new GowildEncoder());
-                    ch.pipeline().addLast(new GowildAppHandler());
+                    ch.pipeline().addLast(GowildDecoder.getGowildDecoder());
+                    ch.pipeline().addLast(GowildEncoder.getGowildEncoder());
+                    GowildAppHandler gowildAppHandler = new GowildAppHandler();
+                    gowildAppHandler.setAccount(account);
+                    ch.pipeline().addLast(gowildAppHandler);
 
                 }
             });
@@ -80,5 +82,9 @@ public class Netty4AppClient implements Closeable{
         Netty4AppClient appClient = new Netty4AppClient();
         appClient.init();
         appClient.start();
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
     }
 }
