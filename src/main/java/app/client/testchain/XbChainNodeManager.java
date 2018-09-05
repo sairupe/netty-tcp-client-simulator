@@ -6,34 +6,12 @@ import app.client.net.protocol.request.C_XB_HEART_BEAT;
 import app.client.net.task.sdk.SdkDeviceHeartBeatTask;
 import app.client.net.task.TaskManager;
 import app.client.testchain.sdk.SdkTestConst;
-import app.client.testchain.sdk.db.BaseDbInfoInsertNode;
+import app.client.testchain.db.BaseDbInfoInsertNode;
 import app.client.testchain.sdk.protocol.area.AddAreaBatchCommandNode;
-import app.client.testchain.sdk.protocol.area.DeleteAreaCommandNode;
-import app.client.testchain.sdk.protocol.area.SyncAreaCommandNode;
-import app.client.testchain.sdk.protocol.area.UpdateAreaBatchCommandNode;
-import app.client.testchain.sdk.protocol.area.UpdateAreaBindFloorBatchCommandNode;
 import app.client.testchain.sdk.protocol.device.SdkAddDeviceBatchCommandNode;
-import app.client.testchain.sdk.protocol.device.SdkDeleteDeviceCommandNode;
 import app.client.testchain.sdk.protocol.device.SdkSyncDeviceCommandNode;
-import app.client.testchain.sdk.protocol.device.SdkUpdateDeviceBatchCommandNode;
-import app.client.testchain.sdk.protocol.device.SdkUpdateDeviceBindAreaBatchCommandNode;
-import app.client.testchain.sdk.protocol.device.SdkUpdateDeviceBindSceneBatchCommandNode;
-import app.client.testchain.sdk.protocol.docker.Docker2LoginCommandNode;
-import app.client.testchain.sdk.protocol.docker.DockerLoginCommandNode;
 import app.client.testchain.sdk.protocol.floor.AddFloorBatchCommandNode;
-import app.client.testchain.sdk.protocol.floor.DeleteFloorCommandNode;
-import app.client.testchain.sdk.protocol.floor.SyncFloorCommandNode;
-import app.client.testchain.sdk.protocol.floor.UpdateFloorBatchCommandNode;
-import app.client.testchain.sdk.protocol.floor.UpdateFloorBindHomeBatchCommandNode;
 import app.client.testchain.sdk.protocol.home.AddHomeBatchCommandNode;
-import app.client.testchain.sdk.protocol.home.DeleteHomeCommandNode;
-import app.client.testchain.sdk.protocol.home.SyncHomeCommandNode;
-import app.client.testchain.sdk.protocol.home.UpdateHomeBatchCommandNode;
-import app.client.testchain.sdk.protocol.scene.AddSceneBatchCommandNode;
-import app.client.testchain.sdk.protocol.scene.DeleteSceneCommandNode;
-import app.client.testchain.sdk.protocol.scene.SyncSceneCommandNode;
-import app.client.testchain.sdk.protocol.scene.UpdateSceneBatchCommandNode;
-import app.client.testchain.sdk.protocol.xb.XbLoginCommandNode;
 import app.client.user.session.UserSession;
 import app.client.utils.CommonUtil;
 
@@ -117,11 +95,10 @@ public class XbChainNodeManager {
         doXbOrDockerLogin(userSession, mac2308);
 
         // 预留defaultclient 转换为xbclient的时间
-        CommonUtil.threadPause(10);
-
+        CommonUtil.threadPause(2000);
 
         //全量数据
-//        startingChainNode.addLastNext(new AddHomeBatchCommandNode());
+        startingChainNode.addLastNext(new AddHomeBatchCommandNode());
 //        startingChainNode.addLastNext(new AddFloorBatchCommandNode());
 //        startingChainNode.addLastNext(new AddAreaBatchCommandNode());
 //        startingChainNode.addLastNext(new SdkAddDeviceBatchCommandNode());

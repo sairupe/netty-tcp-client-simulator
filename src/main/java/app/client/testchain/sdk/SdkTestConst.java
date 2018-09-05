@@ -6,8 +6,8 @@ package app.client.testchain.sdk;
 public class SdkTestConst {
 
 //    public static final String DB_URL = "jdbc:mysql://localhost:3306/jarvis_device_db";
-    public static final String DB_URL = "jdbc:mysql://172.27.1.81:3306/jarvis_device_db";
-//    public static final String DB_URL = "jdbc:mysql://172.27.1.73:3306/jarvis_device_db";
+//    public static final String DB_URL = "jdbc:mysql://172.27.1.81:3306/jarvis_device_db";
+    public static final String DB_URL = "jdbc:mysql://172.27.1.73:3306/jarvis_device_db";
 
     public static final String FIRST_DEVICE_UID = "12315-1";
     public static final String SECOND_DEVICE_UID = "12315-2";

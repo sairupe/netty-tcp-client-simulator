@@ -1,4 +1,4 @@
-package app.client.testchain.sdk.db;
+package app.client.testchain.db;
 
 import app.client.testchain.DbDataInitialNode;
 

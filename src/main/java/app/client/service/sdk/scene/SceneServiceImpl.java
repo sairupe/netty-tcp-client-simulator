@@ -1,4 +1,4 @@
-package app.client.service.scene;
+package app.client.service.sdk.scene;
 
 import app.client.net.annotation.Receiver;
 import app.client.net.protocol.response.sdk.batch.scene.S_ADD_SCENE_BATCH;

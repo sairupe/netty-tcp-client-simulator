@@ -1,4 +1,4 @@
-package app.client.service.floor;
+package app.client.service.sdk.floor;
 
 import app.client.net.annotation.Receiver;
 import app.client.net.protocol.response.sdk.batch.floor.S_ADD_FLOOR_BATCH;

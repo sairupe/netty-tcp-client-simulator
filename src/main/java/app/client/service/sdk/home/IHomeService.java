@@ -1,4 +1,4 @@
-package app.client.service.home;
+package app.client.service.sdk.home;
 
 import app.client.net.protocol.response.sdk.batch.home.S_ADD_HOME_BATCH;
 import app.client.net.protocol.response.sdk.batch.home.S_DELETE_HOME;

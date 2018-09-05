@@ -1,4 +1,4 @@
-package app.client.service.area;
+package app.client.service.sdk.area;
 
 import app.client.net.annotation.Receiver;
 import app.client.net.protocol.response.sdk.batch.area.S_ADD_AREA_BATCH;

@@ -1,34 +1,14 @@
 package app.client.service.user;
 
-import app.client.net.annotation.Handler;
 import app.client.net.annotation.Receiver;
-import app.client.net.protocol.ProtocolFactory;
-import app.client.net.protocol.ResponseProtocol;
-import app.client.net.protocol.request.*;
-import app.client.net.protocol.request.sdk.batch.device.C_DEVICE_HEART_BEAT;
-import app.client.net.protocol.request.sdk.batch.device.C_DEVICE_LOGIN;
 import app.client.net.protocol.response.S_APP_HEART_BEAT;
 import app.client.net.protocol.response.S_APP_LOGIN;
 import app.client.net.protocol.response.S_XB_CHAT;
 import app.client.net.protocol.response.S_XB_HEART_BEAT;
 import app.client.net.protocol.response.S_XB_LOGIN;
-import app.client.net.task.app.AppHeartBeatTask;
-import app.client.net.task.sdk.SdkDeviceHeartBeatTask;
-import app.client.net.task.TaskManager;
-import app.client.net.task.xb.XbHeartBeatTask;
 import app.client.service.AbstractServiceImpl;
-import app.client.service.device.DeviceServiceImpl;
-import app.client.user.session.UserSession;
-import com.gowild.core.util.HttpUtil;
-import com.gowild.sdk.protocol.SdkMsgType;
 import com.gowild.xb.tcp.proto.ChatMsgProto;
 import com.gowild.xbtcp.metadata.pb.BaseBothMsgProto;
-import org.json.JSONObject;
-
-import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author syriana.zh

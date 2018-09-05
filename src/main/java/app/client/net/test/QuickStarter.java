@@ -1,6 +1,5 @@
 package app.client.net.test;
 
-import app.client.data.DbConnecter;
 import app.client.data.StatisticHolder;
 import app.client.net.dispacher.DispacherManager;
 import app.client.net.task.TaskManager;
@@ -27,13 +26,13 @@ public class QuickStarter {
         // 初始化线程池
         TaskManager.getInstance().init();
 
-        if(true){
+        if(false){
             Thread appStarter = new Thread(new AppStartTask());
             appStarter.start();
             LogUtil.debug("启动APP");
         }
 
-        if(false){
+        if(true){
             Thread xbStarter = new Thread(new XbStartTask());
             xbStarter.start();
             LogUtil.debug("启动XB完毕");
@@ -53,7 +52,7 @@ public class QuickStarter {
 
         @Override
         public void run() {
-            for(int i = 0 ; i < 5000; i++){
+            for(int i = 0 ; i < 1; i++){
                 CommonUtil.threadPause(50);
                 Thread thread = new Thread(new Runnable() {
                     @Override

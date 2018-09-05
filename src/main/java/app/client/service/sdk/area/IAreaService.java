@@ -1,4 +1,4 @@
-package app.client.service.area;
+package app.client.service.sdk.area;
 
 import app.client.net.protocol.response.sdk.batch.area.S_ADD_AREA_BATCH;
 import app.client.net.protocol.response.sdk.batch.area.S_DELETE_AREA;
@@ -8,7 +8,6 @@ import app.client.net.protocol.response.sdk.batch.area.S_UPDATE_AREA_BIND_FLOOR_
 import app.client.net.protocol.response.sdk.single.area.S_ADD_AREA;
 import app.client.net.protocol.response.sdk.single.area.S_UPDATE_AREA;
 import app.client.net.protocol.response.sdk.single.area.S_UPDATE_AREA_BIND_FLOOR;
-import app.client.service.IService;
 
 /**
  * 

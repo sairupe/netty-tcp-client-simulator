@@ -1,4 +1,4 @@
-package app.client.service.floor;
+package app.client.service.sdk.floor;
 
 import app.client.net.protocol.response.sdk.batch.floor.S_ADD_FLOOR_BATCH;
 import app.client.net.protocol.response.sdk.batch.floor.S_DELETE_FLOOR;
@@ -8,7 +8,6 @@ import app.client.net.protocol.response.sdk.batch.floor.S_UPDATE_FLOOR_BIND_HOME
 import app.client.net.protocol.response.sdk.single.floor.S_ADD_FLOOR;
 import app.client.net.protocol.response.sdk.single.floor.S_UPDATE_FLOOR;
 import app.client.net.protocol.response.sdk.single.floor.S_UPDATE_FLOOR_BIND_HOME;
-import app.client.service.IService;
 
 /**
  * 

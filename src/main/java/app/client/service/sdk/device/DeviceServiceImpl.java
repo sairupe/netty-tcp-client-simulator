@@ -1,4 +1,4 @@
-package app.client.service.device;
+package app.client.service.sdk.device;
 
 import app.client.net.annotation.Handler;
 import app.client.net.annotation.Receiver;

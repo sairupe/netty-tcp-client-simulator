@@ -4,19 +4,13 @@ import app.client.data.DbConnecter;
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.request.C_APP_HEART_BEAT;
 import app.client.net.protocol.request.C_APP_LOGIN;
-import app.client.net.protocol.request.C_DOCKER_LOGIN;
-import app.client.net.protocol.request.C_XB_HEART_BEAT;
 import app.client.net.task.TaskManager;
 import app.client.net.task.app.AppHeartBeatTask;
-import app.client.net.task.sdk.SdkDeviceHeartBeatTask;
-import app.client.testchain.sdk.SdkTestConst;
-import app.client.testchain.sdk.db.BaseDbInfoInsertNode;
+import app.client.testchain.db.BaseDbInfoInsertNode;
+import app.client.testchain.smarthome.AppQueryRobotCollaCommandNode;
 import app.client.user.session.UserSession;
 import app.client.utils.CommonUtil;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -50,12 +44,14 @@ public class AppChainNodeManager {
         String account70 = "18617166985";
         doAppLogin(userSession, account70);
 
-        CommonUtil.threadPause(10);
+        CommonUtil.threadPause(3000);
+
+//        startingChainNode.addLastNext(new AppQueryRobotCollaCommandNode(103));
 
         // 心跳协议
         C_APP_HEART_BEAT heartBeat = ProtocolFactory.createRequestProtocol(C_APP_HEART_BEAT.class, userSession.getCtx());
         AppHeartBeatTask task = new AppHeartBeatTask(userSession.getCtx(), heartBeat);
-        TaskManager.getInstance().addTickTask(task, 2, 5, TimeUnit.SECONDS);
+        TaskManager.getInstance().addTickTask(task, 2, 40, TimeUnit.SECONDS);
 
         startingChainNode.start();
     }

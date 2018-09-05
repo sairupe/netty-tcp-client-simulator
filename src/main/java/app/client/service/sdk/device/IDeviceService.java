@@ -1,4 +1,4 @@
-package app.client.service.device;
+package app.client.service.sdk.device;
 
 import app.client.net.protocol.response.sdk.S_DOCKER_SPEAK;
 import app.client.net.protocol.response.sdk.batch.device.S_ADD_DEVICE_BATCH;
@@ -15,7 +15,6 @@ import app.client.net.protocol.response.sdk.single.device.S_ADD_DEVICE;
 import app.client.net.protocol.response.sdk.single.device.S_UPDATE_DEVICE;
 import app.client.net.protocol.response.sdk.single.device.S_UPDATE_DEVICE_BIND_AREA;
 import app.client.net.protocol.response.sdk.single.device.S_UPDATE_DEVICE_BIND_SCENE;
-import app.client.service.IService;
 import app.client.user.session.UserSession;
 
 /**
