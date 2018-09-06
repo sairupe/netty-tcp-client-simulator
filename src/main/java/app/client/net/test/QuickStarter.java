@@ -10,7 +10,6 @@ import app.client.vo.RobotVo;
 import app.client.vo.UserVo;
 import com.gowild.core.util.LogUtil;
 
-import java.sql.Connection;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
@@ -36,6 +35,8 @@ public class QuickStarter {
         DispacherManager.getInstance().init();
         // 初始化线程池
         TaskManager.getInstance().init();
+        // 初始化统计任务打印
+        TaskManager.getInstance().initStatiscTask();
 
         if(false){
             Thread appStarter = new Thread(new AppStartTask());
@@ -68,7 +69,6 @@ public class QuickStarter {
             CountDownLatch latch = new CountDownLatch(1);
             Map<Integer, UserVo> id2UserVoMap = AppDataHolder.getId2UserVoMap();
             for(Map.Entry<Integer, UserVo> entry : id2UserVoMap.entrySet()){
-                CommonUtil.threadPause(50);
                 Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -87,7 +87,7 @@ public class QuickStarter {
                     }
                 });
                 thread.start();
-//                latch.countDown();
+                latch.countDown();
                 if(startCount >= maxCount){
                     break;
                 }
@@ -104,7 +104,6 @@ public class QuickStarter {
             final CountDownLatch latch = new CountDownLatch(1);
             Map<Integer, RobotVo> id2RotbotVoMap = RobotDataHolder.getId2RotbotVoMap();
             for(Map.Entry<Integer, RobotVo> entry : id2RotbotVoMap.entrySet()){
-                CommonUtil.threadPause(10);
                 startCount++;
                 Netty4XbClient xbClient = new Netty4XbClient();
                 xbClient.setMac(entry.getValue().getMac());

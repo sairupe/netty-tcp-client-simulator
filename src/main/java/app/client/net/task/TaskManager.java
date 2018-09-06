@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 import app.client.common.Const;
 import app.client.net.protocol.RequestProtocol;
 import app.client.net.protocol.ResponseProtocol;
+import app.client.net.task.statistic.StatisticPrintTask;
 
 /**
  * 
@@ -55,7 +56,6 @@ public class TaskManager {
 				for (;;) {
 					ResponseProtocol response = null;
 					try {
-                        // TODO 分发到具体的业务逻辑
                         response = responseQueueTmp.take();
                         ResponseTaskImpl task = new ResponseTaskImpl(response);
                         responseThreadPool.submit(task);
@@ -72,6 +72,11 @@ public class TaskManager {
 		responseThread.start();
 		status = TaskManagerStatus.RUNNING;
 	}
+
+	public void initStatiscTask(){
+		StatisticPrintTask task = new StatisticPrintTask();
+		miscThreadPool.scheduleAtFixedRate(task, 0, 1, TimeUnit.SECONDS);
+	}
 	
 	
 	private LinkedBlockingQueue<RequestProtocol> requestQueue = new LinkedBlockingQueue<RequestProtocol>();
@@ -84,7 +89,7 @@ public class TaskManager {
 
 	private ScheduledExecutorService tickThreadPool = Executors.newScheduledThreadPool(5);
 	
-	private ScheduledExecutorService connectThreadPool = Executors.newScheduledThreadPool(5);
+	private ScheduledExecutorService miscThreadPool = Executors.newScheduledThreadPool(5);
 	
     /**
     * 把请求协议放入队列
@@ -122,10 +127,10 @@ public class TaskManager {
     /**
     * 加入重连任务
     */
-	public Future<?> addConnectTask(Runnable scheduleTask, long delay, long period, TimeUnit timeUnit){
-		return connectThreadPool.scheduleAtFixedRate(scheduleTask, delay, period, timeUnit);
+	public Future<?> addMiscTask(Runnable scheduleTask, long delay, long period, TimeUnit timeUnit){
+		return miscThreadPool.scheduleAtFixedRate(scheduleTask, delay, period, timeUnit);
 	}
-	
+
 	public void shutDown(){
 		status = TaskManagerStatus.SHUTDOWN;
 		requestThreadPool.shutdown();

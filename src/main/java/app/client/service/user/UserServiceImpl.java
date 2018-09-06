@@ -1,5 +1,6 @@
 package app.client.service.user;
 
+import app.client.data.StatisticHolder;
 import app.client.net.annotation.Receiver;
 import app.client.net.protocol.response.S_APP_HEART_BEAT;
 import app.client.net.protocol.response.S_APP_LOGIN;
@@ -20,11 +21,13 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
 
     @Override
     public void receivedAppHeartBeatResponse(S_APP_HEART_BEAT response) {
+        StatisticHolder.incAppHeartBeatCount();
         System.out.println("====== >>> APP设备收到返回时间====");
     }
 
     @Override
     public void receivedXbHeartBeatResponse(S_XB_HEART_BEAT response) {
+        StatisticHolder.incRobotHeartBeatCount();
         System.out.println("====== >>> XB设备收到返回时间====");
     }
 

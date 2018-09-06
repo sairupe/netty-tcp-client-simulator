@@ -5,8 +5,10 @@
  */
 package app.client.net.socket;
 
+import app.client.data.StatisticHolder;
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.RequestProtocol;
+import com.gowild.sdk.protocol.SdkMsgType;
 import com.gowild.tcp.core.manager.socket.Message;
 import com.gowild.tcp.core.manager.socket.SocketUtil;
 import com.gowild.tcp.core.manager.socket.netty.NettyStrictCodecFactory;
@@ -43,6 +45,15 @@ public class GowildEncoder extends MessageToByteEncoder<RequestProtocol> {
         byte[] cipherText = SocketUtil.encode(plainText, encryptKey);
 //        System.out.println("cipherText | " + Arrays.toString(cipherText));
         out.writeBytes(cipherText);
+        // 记录登录
+        if (requestProtocol.getSequenceId() == 151) {
+            int moduleId = requestProtocol.getModuleId();
+            if (moduleId == SdkMsgType.APP_CLIENT_TYPE) {
+                StatisticHolder.incAppLoginCount();
+            } else if (moduleId == SdkMsgType.XB_CLIENT_TYPE) {
+                StatisticHolder.incRobotLoginCount();
+            }
+        }
     }
 
     /**

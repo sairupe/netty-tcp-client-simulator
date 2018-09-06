@@ -5,6 +5,7 @@
  */
 package app.client.net.socket;
 
+import app.client.data.StatisticHolder;
 import app.client.net.dispacher.DispacherManager;
 import app.client.net.dispacher.ServiceManager;
 import app.client.net.protocol.ProtocolFactory;
@@ -43,6 +44,7 @@ public final class GowildAppHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        StatisticHolder.incAppHandShakeCount();
         long channelId = System.currentTimeMillis();
         UserSession userSession = new UserSession(ctx);
         userSession.setConnectStatus(ConnectStatus.CONNECTING);
