@@ -10,6 +10,7 @@ import app.client.testchain.db.BaseDbInfoInsertNode;
 import app.client.testchain.smarthome.AppQueryRobotCollaCommandNode;
 import app.client.user.session.UserSession;
 import app.client.utils.CommonUtil;
+import app.client.utils.TokenUtil;
 
 import java.util.concurrent.TimeUnit;
 
@@ -42,10 +43,11 @@ public class AppChainNodeManager {
         // 登录指令
         //    94:a1:a2:c0:47:c8
 //        String account70 = "18617166985";
-//        doAppLogin(userSession, account70);
+//        String token70 = TokenUtil.getAppToken(account70);
+//        doAppLogin(userSession, token70);
 
-        String account = userSession.getAccount();
-        doAppLogin(userSession, account);
+        String token = userSession.getAppToken();
+        doAppLogin(userSession, token);
 
         // 心跳协议
         C_APP_HEART_BEAT heartBeat = ProtocolFactory.createRequestProtocol(C_APP_HEART_BEAT.class, userSession.getCtx());
@@ -56,10 +58,10 @@ public class AppChainNodeManager {
     }
 
     // APP登陆
-    private void doAppLogin(UserSession userSession, String account){
+    private void doAppLogin(UserSession userSession, String token){
         C_APP_LOGIN loginCmd = ProtocolFactory.createRequestProtocol(C_APP_LOGIN.class,
                 userSession.getCtx());
-        loginCmd.setMobile(account);
+        loginCmd.setToken(token);
         userSession.sendMsg(loginCmd);
     }
 }

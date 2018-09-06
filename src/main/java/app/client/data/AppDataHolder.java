@@ -1,6 +1,5 @@
 package app.client.data;
 
-import app.client.vo.RobotVo;
 import app.client.vo.UserVo;
 
 import java.sql.Connection;

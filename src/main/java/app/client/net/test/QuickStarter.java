@@ -5,10 +5,11 @@ import app.client.data.RobotDataHolder;
 import app.client.data.StatisticHolder;
 import app.client.net.dispacher.DispacherManager;
 import app.client.net.task.TaskManager;
-import app.client.utils.CommonUtil;
+import app.client.utils.TokenUtil;
 import app.client.vo.RobotVo;
 import app.client.vo.UserVo;
 import com.gowild.core.util.LogUtil;
+import jdk.nashorn.internal.parser.Token;
 
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
@@ -37,6 +38,11 @@ public class QuickStarter {
         TaskManager.getInstance().init();
         // 初始化统计任务打印
         TaskManager.getInstance().initStatiscTask();
+        // 初始化所有TOKEN
+        long tokenStart = System.currentTimeMillis();
+        TokenUtil.initialAllRobotToken();
+//        TokenUtil.initialAllAppToken();
+        System.out.println("=====>>>>>>初始化TOKEN使用了: " + (System.currentTimeMillis() - tokenStart) + " ms");
 
         if(false){
             Thread appStarter = new Thread(new AppStartTask());
@@ -74,6 +80,7 @@ public class QuickStarter {
                     public void run() {
                         Netty4AppClient appClient = new Netty4AppClient();
                         appClient.setAccount(entry.getValue().getUserName());
+                        appClient.setToken(entry.getValue().getToken());
                         try {
 
                             System.out.println("===================>>>>啓動APP CLIENT綫程，目前CLIENT數量為：" + StatisticHolder.getAppCount());
@@ -105,12 +112,13 @@ public class QuickStarter {
             Map<Integer, RobotVo> id2RotbotVoMap = RobotDataHolder.getId2RotbotVoMap();
             for(Map.Entry<Integer, RobotVo> entry : id2RotbotVoMap.entrySet()){
                 startCount++;
-                Netty4XbClient xbClient = new Netty4XbClient();
-                xbClient.setMac(entry.getValue().getMac());
                 Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        Netty4XbClient xbClient = new Netty4XbClient();
                         try {
+                            xbClient.setMac(entry.getValue().getMac());
+                            xbClient.setToken(entry.getValue().getToken());
                             System.out.println("===================>>>>啓動XB CLIENT綫程，目前CLIENT數量為：" + StatisticHolder.getRobotCount());
                             latch.await();
                             xbClient.init();

@@ -1,5 +1,6 @@
 package app.client.net.task;
 
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -83,14 +84,14 @@ public class TaskManager {
 
 	private LinkedBlockingQueue<ResponseProtocol> responseQueue = new LinkedBlockingQueue<ResponseProtocol>();
 	
-	private ScheduledExecutorService requestThreadPool = Executors.newScheduledThreadPool(5);
+	private ScheduledExecutorService requestThreadPool = Executors.newScheduledThreadPool(10);
 	
-	private ScheduledExecutorService responseThreadPool = Executors.newScheduledThreadPool(5);
+	private ScheduledExecutorService responseThreadPool = Executors.newScheduledThreadPool(1);
 
 	private ScheduledExecutorService tickThreadPool = Executors.newScheduledThreadPool(5);
 	
 	private ScheduledExecutorService miscThreadPool = Executors.newScheduledThreadPool(5);
-	
+
     /**
     * 把请求协议放入队列
     * @param request

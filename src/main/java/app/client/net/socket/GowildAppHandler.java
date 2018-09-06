@@ -36,6 +36,8 @@ public final class GowildAppHandler extends ChannelInboundHandlerAdapter {
 
     private String account;
 
+    private String token;
+
     public GowildAppHandler() {
         ServiceManager.injectionReceiver(this);
     }
@@ -50,6 +52,7 @@ public final class GowildAppHandler extends ChannelInboundHandlerAdapter {
         userSession.setConnectStatus(ConnectStatus.CONNECTING);
         userSession.setUid(channelId);
         userSession.setAccount(account);
+        userSession.setAppToken(token);
         NioSocketChannel nioSocketChannel = (NioSocketChannel) ctx.channel();
         nioSocketChannel.attr(GowildHandler.USER_SESSION).set(userSession);
         UserSessionManager.getInstance().addUserSession(channelId, userSession);
@@ -116,5 +119,9 @@ public final class GowildAppHandler extends ChannelInboundHandlerAdapter {
 
     public void setAccount(String account) {
         this.account = account;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

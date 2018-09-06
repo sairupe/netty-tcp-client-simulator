@@ -33,64 +33,67 @@ import java.util.List;
 @Protocol(moduleId = SdkMsgType.XB_CLIENT_TYPE, sequenceId =  151, type = ProtocolType.REQUSET)
 public class C_DOCKER_LOGIN extends RequestProtocol{
 
-    private String mac;
-
+    private String token;
 
     @Override
     public void writeBinaryData(){
+//        String token = "";
+//        try {
+//            String tokenUrl = Netty4XbClient.TOKEN_URL;
+//            CloseableHttpClient httpclient = HttpClientBuilder.create().build();
+//            HttpPost request = new HttpPost(tokenUrl);
+//
+//            List<NameValuePair> list = new ArrayList<NameValuePair>();
+//            NameValuePair macParam = new BasicNameValuePair("mac", mac);
+//            NameValuePair snParam = new BasicNameValuePair("serial_no", mac);
+//            NameValuePair clientIdParam = new BasicNameValuePair("client_id", "e3383afbf2d444cdba823c1a8f25ec12");
+//            list.add(macParam);
+//            list.add(snParam);
+//            list.add(clientIdParam);
+//
+//            CloseableHttpResponse response = null;
+//            try {
+//                request.setEntity(new UrlEncodedFormEntity(list));
+//                response = httpclient.execute(request);
+//            } catch (UnsupportedEncodingException e1) {
+//                e1.printStackTrace();
+//            } catch (ClientProtocolException e) {
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//            token = EntityUtils.toString(response.getEntity(), "utf8");
+//            httpclient.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            LogUtil.error(e);
+//        }
+//
+//        JSONObject result = new JSONObject(token);
+//        int code = result.getInt("code");
+//        if(10100100 == code){
+//            JSONObject data = result.getJSONObject("data");
+//            token = data.getString("access_token");
+//            AccountBothMsgProto.AuthInfo.Builder builder = AccountBothMsgProto.AuthInfo.newBuilder();
+//            builder.setToken(token);
+//            byte[] array = builder.build().toByteArray();
+//            for(byte b : array){
+//                writeByte(b);
+//            }
+//        }
 
-        String token = "";
-        try {
-            String tokenUrl = Netty4XbClient.TOKEN_URL;
-            CloseableHttpClient httpclient = HttpClientBuilder.create().build();
-            HttpPost request = new HttpPost(tokenUrl);
-
-            List<NameValuePair> list = new ArrayList<NameValuePair>();
-            NameValuePair macParam = new BasicNameValuePair("mac", mac);
-            NameValuePair snParam = new BasicNameValuePair("serial_no", mac);
-            NameValuePair clientIdParam = new BasicNameValuePair("client_id", "e3383afbf2d444cdba823c1a8f25ec12");
-            list.add(macParam);
-            list.add(snParam);
-            list.add(clientIdParam);
-
-            CloseableHttpResponse response = null;
-            try {
-                request.setEntity(new UrlEncodedFormEntity(list));
-                response = httpclient.execute(request);
-            } catch (UnsupportedEncodingException e1) {
-                e1.printStackTrace();
-            } catch (ClientProtocolException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            token = EntityUtils.toString(response.getEntity(), "utf8");
-            httpclient.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-            LogUtil.error(e);
-        }
-
-        JSONObject result = new JSONObject(token);
-        int code = result.getInt("code");
-        if(10100100 == code){
-            JSONObject data = result.getJSONObject("data");
-            token = data.getString("access_token");
-            AccountBothMsgProto.AuthInfo.Builder builder = AccountBothMsgProto.AuthInfo.newBuilder();
-            builder.setToken(token);
-            byte[] array = builder.build().toByteArray();
-            for(byte b : array){
-                writeByte(b);
-            }
-        }
+        AccountBothMsgProto.AuthInfo.Builder builder = AccountBothMsgProto.AuthInfo.newBuilder();
+        builder.setToken(token);
+        byte[] array = builder.build().toByteArray();
+        writeBytes(array);
     }
 
-    public String getMac() {
-        return mac;
+    public String getToken() {
+        return token;
     }
 
-    public void setMac(String mac) {
-        this.mac = mac;
+    public void setToken(String token) {
+        this.token = token;
     }
 }

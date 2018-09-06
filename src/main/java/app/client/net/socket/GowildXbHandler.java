@@ -36,6 +36,8 @@ public final class GowildXbHandler extends ChannelInboundHandlerAdapter {
 
     private String mac;
 
+    private String token;
+
     public GowildXbHandler() {
         ServiceManager.injectionReceiver(this);
     }
@@ -50,6 +52,7 @@ public final class GowildXbHandler extends ChannelInboundHandlerAdapter {
         userSession.setConnectStatus(ConnectStatus.CONNECTING);
         userSession.setUid(channelId);
         userSession.setMac(mac);
+        userSession.setRobotToken(token);
         NioSocketChannel nioSocketChannel = (NioSocketChannel) ctx.channel();
         nioSocketChannel.attr(GowildHandler.USER_SESSION).set(userSession);
         UserSessionManager.getInstance().addUserSession(channelId, userSession);
@@ -116,5 +119,9 @@ public final class GowildXbHandler extends ChannelInboundHandlerAdapter {
 
     public void setMac(String mac) {
         this.mac = mac;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

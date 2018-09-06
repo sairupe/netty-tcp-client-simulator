@@ -10,10 +10,10 @@ import app.client.testchain.ProtocolListenNode;
  */
 public class DockerLoginCommandNode extends ProtocolListenNode {
 
-    private String mac;
+    private String token;
 
-    public DockerLoginCommandNode(String mac){
-        this.mac = mac;
+    public DockerLoginCommandNode(String token){
+        this.token = token;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class DockerLoginCommandNode extends ProtocolListenNode {
         //2969
 //        dockerLogin.setMac("94:a1:a2:c0:37:2c");
 
-        dockerLogin.setMac(mac);
+        dockerLogin.setToken(token);
         userSession.sendMsg(dockerLogin);
     }
 

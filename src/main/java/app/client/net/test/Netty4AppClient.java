@@ -31,6 +31,7 @@ public class Netty4AppClient implements Closeable{
             .getLogger(Netty4AppClient.class);
 
     private String account;
+    private String token;
 
 //    public static int PORT = 6030;
 //    public static final String HOST = "172.27.1.41";
@@ -58,6 +59,7 @@ public class Netty4AppClient implements Closeable{
                     ch.pipeline().addLast(new GowildEncoder());
                     GowildAppHandler gowildAppHandler = new GowildAppHandler();
                     gowildAppHandler.setAccount(account);
+                    gowildAppHandler.setToken(token);
                     ch.pipeline().addLast(gowildAppHandler);
 
                 }
@@ -87,5 +89,9 @@ public class Netty4AppClient implements Closeable{
 
     public void setAccount(String account) {
         this.account = account;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

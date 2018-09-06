@@ -1,5 +1,6 @@
 package app.client.net.protocol.request;
 
+import app.client.data.StatisticHolder;
 import app.client.net.annotation.Protocol;
 import app.client.net.protocol.ProtocolType;
 import app.client.net.protocol.RequestProtocol;
@@ -46,9 +47,8 @@ public class C_XB_LOGIN extends RequestProtocol{
 
         loginForXBCMsg.setMachineInfo(builder.build());
         byte[] array = loginForXBCMsg.build().toByteArray();
-        for(byte b : array){
-            writeByte(b);
-        }
+        writeBytes(array);
+//        StatisticHolder.incRobotCreateLogin();
     }
 
     public void setMac(String mac) {

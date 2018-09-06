@@ -11,11 +11,15 @@ public class StatisticHolder {
     private static AtomicInteger robotHearBeatTickCount = new AtomicInteger(0);
     private static AtomicInteger robotHandShakeCount = new AtomicInteger(0);
     private static AtomicInteger robotLoginCount = new AtomicInteger(0);
+    private static AtomicInteger robotCreateLoginCount = new AtomicInteger(0);
+    private static AtomicInteger robotGetTokenCount = new AtomicInteger(0);
 
     private static AtomicInteger appClientCount = new AtomicInteger(0);
     private static AtomicInteger appHearBeatTickCount = new AtomicInteger(0);
     private static AtomicInteger appHandShakeCount = new AtomicInteger(0);
     private static AtomicInteger appLoginCount = new AtomicInteger(0);
+    private static AtomicInteger appCreateLoginCount = new AtomicInteger(0);
+    private static AtomicInteger appGetTokenCount = new AtomicInteger(0);
 
     public static int incRobotClient(){ return robotClientCount.incrementAndGet();}
     public static int incRobotHeartBeatCount(){
@@ -23,6 +27,8 @@ public class StatisticHolder {
     }
     public static int incRobotHandShakeCount(){ return robotHandShakeCount.incrementAndGet();}
     public static int incRobotLoginCount(){ return  robotLoginCount.incrementAndGet(); }
+    public static int incRobotCreateLogin(){return robotCreateLoginCount.incrementAndGet(); }
+    public static int incRobotGetToken(){return robotGetTokenCount.incrementAndGet(); }
 
 
     public static int incAppClient(){
@@ -33,6 +39,8 @@ public class StatisticHolder {
     }
     public static int incAppHandShakeCount(){ return appHandShakeCount.incrementAndGet();}
     public static int incAppLoginCount(){ return appLoginCount.incrementAndGet(); }
+    public static int incAppCreateLogin(){return appCreateLoginCount.incrementAndGet(); }
+    public static int incAppGetToken(){return appGetTokenCount.incrementAndGet(); }
 
 
     public static int decRobot(){ return robotClientCount.decrementAndGet();}
@@ -58,6 +66,10 @@ public class StatisticHolder {
         sb.append("appHearBeatTickCount='").append(appHearBeatTickCount.get()).append('\n');
         sb.append("appHandShakeCount='").append(appHandShakeCount.get()).append('\n');
         sb.append("appLoginCount='").append(appLoginCount.get()).append('\n');
+        sb.append("robotCreateLoginCount='").append(robotCreateLoginCount.get()).append('\n');
+        sb.append("appCreateLoginCount='").append(appCreateLoginCount.get()).append('\n');
+        sb.append("robotGetTokenCount='").append(robotGetTokenCount.get()).append('\n');
+        sb.append("appGetTokenCount='").append(appGetTokenCount.get()).append('\n');
         sb.append('}');
         System.out.println(sb.toString());
     }

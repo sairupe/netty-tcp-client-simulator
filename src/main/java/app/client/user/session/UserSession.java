@@ -38,6 +38,12 @@ public class UserSession {
 	// 机器MAC
 	private String mac;
 
+	// APP TOKEN
+	private String appToken;
+
+	// ROBOT TOKEN
+	private String robotToken;
+
     public void sendMsg(RequestProtocol request){
 		TaskManager.getInstance().addRequest2Queue(request);
 	}
@@ -85,5 +91,21 @@ public class UserSession {
 
 	public String getMac() {
 		return mac;
+	}
+
+	public String getAppToken() {
+		return appToken;
+	}
+
+	public void setAppToken(String appToken) {
+		this.appToken = appToken;
+	}
+
+	public String getRobotToken() {
+		return robotToken;
+	}
+
+	public void setRobotToken(String robotToken) {
+		this.robotToken = robotToken;
 	}
 }

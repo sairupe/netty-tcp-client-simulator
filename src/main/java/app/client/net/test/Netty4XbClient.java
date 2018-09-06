@@ -33,6 +33,7 @@ public class Netty4XbClient implements Closeable{
     private static final int DEFAULT_MSG_SIZE_LIMIT = 1200;
 
     private String mac;
+    private String token;
 
 //    private final int PORT = 6100;
 //    private final String HOST = "tcp01.xb.test01.gowild.top";
@@ -67,6 +68,7 @@ public class Netty4XbClient implements Closeable{
                     ch.pipeline().addLast(new GowildEncoder());
                     GowildXbHandler gowildXbHandler = new GowildXbHandler();
                     gowildXbHandler.setMac(mac);
+                    gowildXbHandler.setToken(token);
                     ch.pipeline().addLast(gowildXbHandler);
                 }
             });
@@ -94,5 +96,9 @@ public class Netty4XbClient implements Closeable{
 
     public void setMac(String mac) {
         this.mac = mac;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

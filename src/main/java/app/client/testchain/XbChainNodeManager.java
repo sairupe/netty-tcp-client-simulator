@@ -15,6 +15,7 @@ import app.client.testchain.sdk.protocol.floor.AddFloorBatchCommandNode;
 import app.client.testchain.sdk.protocol.home.AddHomeBatchCommandNode;
 import app.client.user.session.UserSession;
 import app.client.utils.CommonUtil;
+import app.client.utils.TokenUtil;
 
 import java.util.concurrent.TimeUnit;
 
@@ -61,10 +62,11 @@ public class XbChainNodeManager {
 
         // 2308  94:a1:a2:bd:93:d2 老友粉(XB)
         String mac2308 = "94:a1:a2:bd:93:d2";
-//        doXbOrDockerLogin(userSession, mac2308);
+        String token2308 = TokenUtil.getRobotToken(mac2308);
+//        doXbOrDockerLogin(userSession, token2308);
 
-        String mac = userSession.getMac();
-        doXbOrDockerLogin(userSession, mac);
+        String token = userSession.getRobotToken();
+        doXbOrDockerLogin(userSession, token);
 
         // 预留defaultclient 转换为xbclient的时间
 //        CommonUtil.threadPause(2000);
@@ -150,10 +152,10 @@ public class XbChainNodeManager {
     }
 
     // 小白或者DOCKER登陆
-    private void doXbOrDockerLogin(UserSession userSession, String mac){
+    private void doXbOrDockerLogin(UserSession userSession, String token){
         C_DOCKER_LOGIN loginCmd = ProtocolFactory.createRequestProtocol(C_DOCKER_LOGIN.class,
                 userSession.getCtx());
-        loginCmd.setMac(mac);
+        loginCmd.setToken(token);
         userSession.sendMsg(loginCmd);
     }
 
