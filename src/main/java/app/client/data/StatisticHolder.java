@@ -26,4 +26,12 @@ public class StatisticHolder {
     public static int incApp(){
         return appClientCount.incrementAndGet();
     }
+
+    public static int decRobot(){
+        return robotClientCount.decrementAndGet();
+    }
+
+    public static int decApp(){
+        return appClientCount.decrementAndGet();
+    }
 }

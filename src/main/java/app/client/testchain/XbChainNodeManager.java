@@ -156,4 +156,5 @@ public class XbChainNodeManager {
         loginCmd.setMac(mac);
         userSession.sendMsg(loginCmd);
     }
+
 }

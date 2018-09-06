@@ -47,6 +47,7 @@ public final class GowildXbHandler extends ChannelInboundHandlerAdapter {
         UserSession userSession = new UserSession(ctx);
         userSession.setConnectStatus(ConnectStatus.CONNECTING);
         userSession.setUid(channelId);
+        userSession.setMac(mac);
         NioSocketChannel nioSocketChannel = (NioSocketChannel) ctx.channel();
         nioSocketChannel.attr(GowildHandler.USER_SESSION).set(userSession);
         UserSessionManager.getInstance().addUserSession(channelId, userSession);

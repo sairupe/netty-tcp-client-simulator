@@ -12,6 +12,7 @@ import com.gowild.core.util.LogUtil;
 
 import java.sql.Connection;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Created by zh on 2017/10/27.
@@ -64,6 +65,7 @@ public class QuickStarter {
         public void run() {
             int startCount = 0;
             int maxCount = 10000;
+            CountDownLatch latch = new CountDownLatch(1);
             Map<Integer, UserVo> id2UserVoMap = AppDataHolder.getId2UserVoMap();
             for(Map.Entry<Integer, UserVo> entry : id2UserVoMap.entrySet()){
                 CommonUtil.threadPause(50);
@@ -73,7 +75,9 @@ public class QuickStarter {
                         Netty4AppClient appClient = new Netty4AppClient();
                         appClient.setAccount(entry.getValue().getUserName());
                         try {
+
                             System.out.println("===================>>>>啓動APP CLIENT綫程，目前CLIENT數量為：" + StatisticHolder.getAppCount());
+                            latch.await();
                             appClient.init();
                             appClient.start();
                         } catch (Exception e) {
@@ -83,6 +87,7 @@ public class QuickStarter {
                     }
                 });
                 thread.start();
+//                latch.countDown();
                 if(startCount >= maxCount){
                     break;
                 }
@@ -95,10 +100,11 @@ public class QuickStarter {
         @Override
         public void run() {
             int startCount = 0;
-            int maxCount = 5;
+            int maxCount = 1000;
+            final CountDownLatch latch = new CountDownLatch(1);
             Map<Integer, RobotVo> id2RotbotVoMap = RobotDataHolder.getId2RotbotVoMap();
             for(Map.Entry<Integer, RobotVo> entry : id2RotbotVoMap.entrySet()){
-                CommonUtil.threadPause(50);
+                CommonUtil.threadPause(10);
                 startCount++;
                 Netty4XbClient xbClient = new Netty4XbClient();
                 xbClient.setMac(entry.getValue().getMac());
@@ -107,6 +113,7 @@ public class QuickStarter {
                     public void run() {
                         try {
                             System.out.println("===================>>>>啓動XB CLIENT綫程，目前CLIENT數量為：" + StatisticHolder.getRobotCount());
+                            latch.await();
                             xbClient.init();
                             xbClient.start();
                         } catch (Exception e) {
@@ -120,6 +127,7 @@ public class QuickStarter {
                     break;
                 }
             }
+            latch.countDown();
         }
     }
 

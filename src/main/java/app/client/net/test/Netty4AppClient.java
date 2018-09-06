@@ -54,8 +54,8 @@ public class Netty4AppClient implements Closeable{
             b.handler(new ChannelInitializer<SocketChannel>() {
 
                 public void initChannel(SocketChannel ch) throws Exception {
-                    ch.pipeline().addLast(GowildDecoder.getGowildDecoder());
-                    ch.pipeline().addLast(GowildEncoder.getGowildEncoder());
+                    ch.pipeline().addLast(new GowildDecoder());
+                    ch.pipeline().addLast(new GowildEncoder());
                     GowildAppHandler gowildAppHandler = new GowildAppHandler();
                     gowildAppHandler.setAccount(account);
                     ch.pipeline().addLast(gowildAppHandler);
@@ -69,6 +69,7 @@ public class Netty4AppClient implements Closeable{
         } finally {
 //            EventLoopHolder.getGroup().shutdownGracefully().sync();
         }
+        StatisticHolder.decApp();
     }
 
     @Override

@@ -63,8 +63,8 @@ public class Netty4XbClient implements Closeable{
 //                    ch.pipeline().addLast(new GowildEncoder());
 //                    ch.pipeline().addLast(new GowildDecoder());
 
-                    ch.pipeline().addLast(GowildDecoder.getGowildDecoder());
-                    ch.pipeline().addLast(GowildEncoder.getGowildEncoder());
+                    ch.pipeline().addLast(new GowildDecoder());
+                    ch.pipeline().addLast(new GowildEncoder());
                     GowildXbHandler gowildXbHandler = new GowildXbHandler();
                     gowildXbHandler.setMac(mac);
                     ch.pipeline().addLast(gowildXbHandler);
@@ -76,6 +76,7 @@ public class Netty4XbClient implements Closeable{
         } finally {
 //            EventLoopHolder.getGroup().shutdownGracefully().sync();
         }
+        StatisticHolder.decRobot();
     }
 
     @Override

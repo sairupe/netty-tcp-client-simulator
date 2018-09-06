@@ -23,12 +23,6 @@ import java.util.List;
  */
 public class GowildDecoder extends ByteToMessageDecoder {
 
-    private static GowildDecoder gowildDecoder = new GowildDecoder();
-
-    private GowildDecoder(){
-
-    }
-
     /**
      * 解密
      */
@@ -99,9 +93,5 @@ public class GowildDecoder extends ByteToMessageDecoder {
      */
     private static int[] getKey(final ChannelHandlerContext ctx) {
         return ctx.channel().attr(GowildHandler.DECRYPTION_KEY).get();
-    }
-
-    public static GowildDecoder getGowildDecoder() {
-        return gowildDecoder;
     }
 }

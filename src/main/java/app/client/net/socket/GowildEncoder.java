@@ -24,12 +24,6 @@ import java.util.Arrays;
  */
 public class GowildEncoder extends MessageToByteEncoder<RequestProtocol> {
 
-    private static GowildEncoder gowildEncoder = new GowildEncoder();
-
-    private GowildEncoder(){
-
-    }
-
     @Override
     protected void encode(final ChannelHandlerContext ctx, final RequestProtocol requestProtocol, final ByteBuf out) throws Exception {
         // 写入数据长度
@@ -58,9 +52,5 @@ public class GowildEncoder extends MessageToByteEncoder<RequestProtocol> {
      */
     private static int[] getKey(final ChannelHandlerContext ctx) {
         return ctx.channel().attr(GowildHandler.ENCRYPTION_KEY).get();
-    }
-
-    public static GowildEncoder getGowildEncoder() {
-        return gowildEncoder;
     }
 }
