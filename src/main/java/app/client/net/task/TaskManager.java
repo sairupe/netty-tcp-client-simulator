@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 import app.client.common.Const;
 import app.client.net.protocol.RequestProtocol;
 import app.client.net.protocol.ResponseProtocol;
-import app.client.net.task.statistic.StatisticPrintTask;
+import app.client.net.task.misc.StatisticPrintTask;
 
 /**
  * 
@@ -76,7 +76,7 @@ public class TaskManager {
 
 	public void initStatiscTask(){
 		StatisticPrintTask task = new StatisticPrintTask();
-		miscThreadPool.scheduleAtFixedRate(task, 0, 1, TimeUnit.SECONDS);
+		tickThreadPool.scheduleAtFixedRate(task, 0, 1, TimeUnit.SECONDS);
 	}
 	
 	
@@ -84,13 +84,13 @@ public class TaskManager {
 
 	private LinkedBlockingQueue<ResponseProtocol> responseQueue = new LinkedBlockingQueue<ResponseProtocol>();
 	
-	private ScheduledExecutorService requestThreadPool = Executors.newScheduledThreadPool(10);
+	private ScheduledExecutorService requestThreadPool = Executors.newScheduledThreadPool(2);
 	
-	private ScheduledExecutorService responseThreadPool = Executors.newScheduledThreadPool(1);
+	private ScheduledExecutorService responseThreadPool = Executors.newScheduledThreadPool(2);
 
 	private ScheduledExecutorService tickThreadPool = Executors.newScheduledThreadPool(5);
 	
-	private ScheduledExecutorService miscThreadPool = Executors.newScheduledThreadPool(5);
+	private ExecutorService miscThreadPool = Executors.newFixedThreadPool(20);
 
     /**
     * 把请求协议放入队列
@@ -124,12 +124,14 @@ public class TaskManager {
 	public Future<?> addDelayTask(Runnable scheduleTask, long delay, TimeUnit timeUnit){
 		return tickThreadPool.schedule(scheduleTask, delay, timeUnit);
 	}
-	
-    /**
-    * 加入重连任务
-    */
-	public Future<?> addMiscTask(Runnable scheduleTask, long delay, long period, TimeUnit timeUnit){
-		return miscThreadPool.scheduleAtFixedRate(scheduleTask, delay, period, timeUnit);
+
+
+	public void addMiscTask(Runnable scheduleTask){
+		miscThreadPool.execute(scheduleTask);
+	}
+
+	public void shutDownMisc(){
+		miscThreadPool.shutdown();
 	}
 
 	public void shutDown(){

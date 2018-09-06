@@ -4,6 +4,7 @@ import app.client.data.AppDataHolder;
 import app.client.data.RobotDataHolder;
 import app.client.data.StatisticHolder;
 import app.client.net.task.TaskManager;
+import app.client.net.task.misc.HttpRobotGetTokenTask;
 import app.client.net.test.Netty4AppClient;
 import app.client.net.test.Netty4XbClient;
 import app.client.vo.RobotVo;
@@ -12,7 +13,6 @@ import com.gowild.core.util.HttpUtil;
 import com.gowild.core.util.LogUtil;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -58,9 +58,9 @@ public class TokenUtil {
 
             CloseableHttpResponse response = null;
             request.setEntity(new UrlEncodedFormEntity(list));
-//            long start = System.currentTimeMillis();
-            response = httpclient.execute(request);
-//            System.out.println("=====>>> time " + (System.currentTimeMillis() - start));
+            long start = System.currentTimeMillis();
+            response = HttpClientBuilder.create().build().execute(request);
+            System.out.println("=====>>> time " + (System.currentTimeMillis() - start));
 
             token = EntityUtils.toString(response.getEntity(), "utf8");
         } catch (IOException e) {
@@ -99,6 +99,33 @@ public class TokenUtil {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String otherHttpTest() {
+        try {
+            String tokenUrl = Netty4XbClient.TOKEN_URL;
+            HttpPost request = new HttpPost(tokenUrl);
+
+            List<NameValuePair> list = new ArrayList<NameValuePair>();
+            NameValuePair macParam = new BasicNameValuePair("accountId", "71");
+            NameValuePair snParam = new BasicNameValuePair("brandId", "5");
+            NameValuePair clientIdParam = new BasicNameValuePair("types", "DEVICE,MASTER");
+            list.add(macParam);
+            list.add(snParam);
+            list.add(clientIdParam);
+
+            CloseableHttpResponse response = null;
+            request.setEntity(new UrlEncodedFormEntity(list));
+            long start = System.currentTimeMillis();
+            response = httpclient.execute(request);
+            System.out.println("=====>>> time " + (System.currentTimeMillis() - start));
+            StatisticHolder.incRobotGetToken();
+            String result = EntityUtils.toString(response.getEntity(), "utf8");
+        } catch (IOException e) {
+            e.printStackTrace();
+            LogUtil.error(e);
         }
         return null;
     }
@@ -194,8 +221,8 @@ public class TokenUtil {
 //            String mac = entry.getValue().getMac();
 //            String token = getRobotToken(mac);
 //            entry.getValue().setToken(token);
-            // 异步
-            syncGetRobotToken(entry.getValue());
+            HttpRobotGetTokenTask robotGetTokenTask = new HttpRobotGetTokenTask(entry.getValue());
+            TaskManager.getInstance().addMiscTask(robotGetTokenTask);
         }
     }
 
@@ -206,5 +233,9 @@ public class TokenUtil {
             String token = getAppToken(userName);
             entry.getValue().setToken(token);
         }
+    }
+
+    public static CloseableHttpClient getHttpclient() {
+        return httpclient;
     }
 }

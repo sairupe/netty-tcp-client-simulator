@@ -5,6 +5,7 @@ import app.client.data.RobotDataHolder;
 import app.client.data.StatisticHolder;
 import app.client.net.dispacher.DispacherManager;
 import app.client.net.task.TaskManager;
+import app.client.utils.CommonUtil;
 import app.client.utils.TokenUtil;
 import app.client.vo.RobotVo;
 import app.client.vo.UserVo;
@@ -43,6 +44,7 @@ public class QuickStarter {
         TokenUtil.initialAllRobotToken();
 //        TokenUtil.initialAllAppToken();
         System.out.println("=====>>>>>>初始化TOKEN使用了: " + (System.currentTimeMillis() - tokenStart) + " ms");
+
 
         if(false){
             Thread appStarter = new Thread(new AppStartTask());

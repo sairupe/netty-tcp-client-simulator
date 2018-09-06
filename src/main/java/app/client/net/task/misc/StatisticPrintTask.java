@@ -1,4 +1,4 @@
-package app.client.net.task.statistic;
+package app.client.net.task.misc;
 
 import app.client.data.StatisticHolder;
 
