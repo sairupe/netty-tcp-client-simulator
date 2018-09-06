@@ -1,5 +1,7 @@
 package app.client.net.task.misc;
 
+import app.client.data.RobotDataHolder;
+import app.client.data.TokenDataHolder;
 import app.client.utils.TokenUtil;
 import app.client.vo.RobotVo;
 
@@ -16,8 +18,10 @@ public class HttpRobotGetTokenTask implements Runnable {
 
     @Override
     public void run() {
-        String robotToken = TokenUtil.getRobotToken(robotVo.getMac());
+        String mac = robotVo.getMac();
+        String robotToken = TokenUtil.getRobotToken(mac);
         robotVo.setToken(robotToken);
-//        TokenUtil.otherHttpTest();
+        TokenDataHolder.updateToken(mac, robotToken);
+        RobotDataHolder.getRobotLatch().countDown();
     }
 }

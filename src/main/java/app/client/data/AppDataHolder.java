@@ -8,26 +8,33 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Created by zh on 2018/9/4.
  */
 public class AppDataHolder {
 
+    public static final int appClientCount = 1000;
+
+    private static final CountDownLatch appLatch = new CountDownLatch(appClientCount);
+
     private static final Map<Integer, UserVo> id2UserVoMap = new HashMap<>();
+
+    private static final Map<String, UserVo> account2UserVoMap = new HashMap<>();
 
     static {
         Connection con = DbConnecter.getPassportDbConnection();
-        String sql = "show tables";
-        System.out.println("====== >>> 以下是gowild_passport_db的表");
-        try(Statement stmt = con.createStatement();
-            ResultSet rs0 = stmt.executeQuery(sql)) {
-            while (rs0.next()) {
-                System.out.println(rs0.getString(1));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+//        String sql = "show tables";
+//        System.out.println("====== >>> 以下是gowild_passport_db的表");
+//        try(Statement stmt = con.createStatement();
+//            ResultSet rs0 = stmt.executeQuery(sql)) {
+//            while (rs0.next()) {
+//                System.out.println(rs0.getString(1));
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
 
         String queryAccount = "SELECT id, username, password FROM account";
         try(Statement stmt = con.createStatement();
@@ -38,6 +45,7 @@ public class AppDataHolder {
                 UserVo userVo = new UserVo();
                 userVo.setUserName(userName);
                 id2UserVoMap.put(id, userVo);
+                account2UserVoMap.put(userName, userVo);
             }
         } catch (SQLException e) {
             e.printStackTrace();

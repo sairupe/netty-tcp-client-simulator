@@ -15,6 +15,8 @@ public class DbConnecter {
 
     private static Connection passportDbConnection;
 
+    private static Connection tokenDbConnection;
+
     static {
         String sql = "";
         try {
@@ -26,6 +28,7 @@ public class DbConnecter {
         try {
             robotDbConncetion = DriverManager.getConnection(SdkTestConst.ROBOT_DB_URL, "root", "123456");
             passportDbConnection = DriverManager.getConnection(SdkTestConst.PASSPORT_DB_URL, "root", "123456");
+            tokenDbConnection = DriverManager.getConnection(SdkTestConst.TOKEN_DB_URL, "root", "123456");
         } catch (SQLException ex) {
             ex.printStackTrace();
             System.err.println("sqlexception :" + ex.getMessage());
@@ -40,4 +43,6 @@ public class DbConnecter {
     public static Connection getPassportDbConnection() {
         return passportDbConnection;
     }
+
+    public static Connection getTokenDbConnection(){ return tokenDbConnection; }
 }

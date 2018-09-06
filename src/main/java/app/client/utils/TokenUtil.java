@@ -58,9 +58,9 @@ public class TokenUtil {
 
             CloseableHttpResponse response = null;
             request.setEntity(new UrlEncodedFormEntity(list));
-            long start = System.currentTimeMillis();
+//            long start = System.currentTimeMillis();
             response = HttpClientBuilder.create().build().execute(request);
-            System.out.println("=====>>> time " + (System.currentTimeMillis() - start));
+//            System.out.println("=====>>> time " + (System.currentTimeMillis() - start));
 
             token = EntityUtils.toString(response.getEntity(), "utf8");
         } catch (IOException e) {
@@ -214,16 +214,15 @@ public class TokenUtil {
     }
 
 
-    public static void initialAllRobotToken() {
+    public static void initialAllRobotToken() throws InterruptedException {
+        long tokenStart = System.currentTimeMillis();
         Map<Integer, RobotVo> id2RotbotVoMap = RobotDataHolder.getId2RotbotVoMap();
         for (Map.Entry<Integer, RobotVo> entry : id2RotbotVoMap.entrySet()) {
-//            // 同步
-//            String mac = entry.getValue().getMac();
-//            String token = getRobotToken(mac);
-//            entry.getValue().setToken(token);
             HttpRobotGetTokenTask robotGetTokenTask = new HttpRobotGetTokenTask(entry.getValue());
             TaskManager.getInstance().addMiscTask(robotGetTokenTask);
         }
+        RobotDataHolder.getRobotLatch().await();
+        System.out.println("=====>>>>>>初始化TOKEN使用了: " + (System.currentTimeMillis() - tokenStart) + " ms");
     }
 
     public static void initialAllAppToken() {

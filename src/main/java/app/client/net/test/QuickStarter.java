@@ -3,14 +3,13 @@ package app.client.net.test;
 import app.client.data.AppDataHolder;
 import app.client.data.RobotDataHolder;
 import app.client.data.StatisticHolder;
+import app.client.data.TokenDataHolder;
 import app.client.net.dispacher.DispacherManager;
 import app.client.net.task.TaskManager;
-import app.client.utils.CommonUtil;
 import app.client.utils.TokenUtil;
 import app.client.vo.RobotVo;
 import app.client.vo.UserVo;
 import com.gowild.core.util.LogUtil;
-import jdk.nashorn.internal.parser.Token;
 
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
@@ -21,7 +20,6 @@ import java.util.concurrent.CountDownLatch;
 public class QuickStarter {
 
     public static void main(String[] args) throws Exception {
-
         // 初始化NIO
         Class.forName("app.client.net.socket.EventLoopHolder");
         // 初始化协议原型加载
@@ -39,12 +37,11 @@ public class QuickStarter {
         TaskManager.getInstance().init();
         // 初始化统计任务打印
         TaskManager.getInstance().initStatiscTask();
-        // 初始化所有TOKEN
-        long tokenStart = System.currentTimeMillis();
-        TokenUtil.initialAllRobotToken();
-//        TokenUtil.initialAllAppToken();
-        System.out.println("=====>>>>>>初始化TOKEN使用了: " + (System.currentTimeMillis() - tokenStart) + " ms");
 
+        // 初始化机器TOKEN
+//        TokenUtil.initialAllRobotToken();
+        // 加载所有机器的Token
+        TokenDataHolder.loadAllRobotToken();;
 
         if(false){
             Thread appStarter = new Thread(new AppStartTask());
@@ -73,7 +70,7 @@ public class QuickStarter {
         @Override
         public void run() {
             int startCount = 0;
-            int maxCount = 10000;
+            int maxCount = AppDataHolder.appClientCount;
             CountDownLatch latch = new CountDownLatch(1);
             Map<Integer, UserVo> id2UserVoMap = AppDataHolder.getId2UserVoMap();
             for(Map.Entry<Integer, UserVo> entry : id2UserVoMap.entrySet()){
@@ -81,8 +78,10 @@ public class QuickStarter {
                     @Override
                     public void run() {
                         Netty4AppClient appClient = new Netty4AppClient();
-                        appClient.setAccount(entry.getValue().getUserName());
-                        appClient.setToken(entry.getValue().getToken());
+                        String userName = entry.getValue().getUserName();
+                        appClient.setAccount(userName);
+                        String token = TokenDataHolder.getIdentifyToken(userName);
+                        appClient.setToken(token);
                         try {
 
                             System.out.println("===================>>>>啓動APP CLIENT綫程，目前CLIENT數量為：" + StatisticHolder.getAppCount());
@@ -109,7 +108,7 @@ public class QuickStarter {
         @Override
         public void run() {
             int startCount = 0;
-            int maxCount = 1000;
+            int maxCount = RobotDataHolder.robotClientCount;
             final CountDownLatch latch = new CountDownLatch(1);
             Map<Integer, RobotVo> id2RotbotVoMap = RobotDataHolder.getId2RotbotVoMap();
             for(Map.Entry<Integer, RobotVo> entry : id2RotbotVoMap.entrySet()){
@@ -119,8 +118,10 @@ public class QuickStarter {
                     public void run() {
                         Netty4XbClient xbClient = new Netty4XbClient();
                         try {
-                            xbClient.setMac(entry.getValue().getMac());
-                            xbClient.setToken(entry.getValue().getToken());
+                            String mac = entry.getValue().getMac();
+                            xbClient.setMac(mac);
+                            String token = TokenDataHolder.getIdentifyToken(mac);
+                            xbClient.setToken(token);
                             System.out.println("===================>>>>啓動XB CLIENT綫程，目前CLIENT數量為：" + StatisticHolder.getRobotCount());
                             latch.await();
                             xbClient.init();

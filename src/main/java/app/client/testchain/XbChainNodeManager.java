@@ -62,7 +62,7 @@ public class XbChainNodeManager {
 
         // 2308  94:a1:a2:bd:93:d2 老友粉(XB)
         String mac2308 = "94:a1:a2:bd:93:d2";
-        String token2308 = TokenUtil.getRobotToken(mac2308);
+//        String token2308 = TokenUtil.getRobotToken(mac2308);
 //        doXbOrDockerLogin(userSession, token2308);
 
         String token = userSession.getRobotToken();
