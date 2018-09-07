@@ -1,5 +1,6 @@
 package app.client.service.sdk.device;
 
+import app.client.data.RobotDataHolder;
 import app.client.net.annotation.Handler;
 import app.client.net.annotation.Receiver;
 import app.client.net.protocol.ProtocolFactory;
@@ -20,6 +21,7 @@ import app.client.net.protocol.response.sdk.single.device.S_UPDATE_DEVICE;
 import app.client.net.protocol.response.sdk.single.device.S_UPDATE_DEVICE_BIND_AREA;
 import app.client.net.protocol.response.sdk.single.device.S_UPDATE_DEVICE_BIND_SCENE;
 import app.client.service.AbstractServiceImpl;
+import app.client.service.sdk.area.AreaServiceImpl;
 import app.client.testchain.sdk.SdkTestConst;
 import app.client.user.session.UserSession;
 import com.gowild.sdk.metadata.pb.BaseBothMsgProto;
@@ -29,6 +31,8 @@ import com.gowild.sdk.metadata.pb.SdkBothMsgProto;
 import com.gowild.sdk.metadata.pb.Tcp2SdkMsgProto;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -36,7 +40,9 @@ import java.util.List;
  * Created by zh on 2017/11/8.
  */
 @Receiver
-public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceService{
+public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceService {
+
+    private static final Logger logger = LoggerFactory.getLogger(DeviceServiceImpl.class);
 
     @Override
     public void sendSimularCmd(UserSession userSession) {
@@ -85,10 +91,10 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
     //@Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Tcp2DeviceProtocol.SDK_PUSH_STATE_COMMAND_S)
 //    @Handler(moduleId = 1, sequenceId = 2752)
     public void receiveStateCommand(S_DEVICE_STATE_COMMAND response) {
-        System.out.println("=============>> 收到状态控制指令");
+        logger.info("=============>> 收到状态控制指令");
         Tcp2SdkMsgProto.PushCommonCommandMsg pushCommonCommandMsg = response.getPushCommonCommandMsg();
-        List<SdkBothMsgProto.SdkCommandWrapperMsg> sdkCommandWrapperMsgList =  pushCommonCommandMsg.getCmdWrappersList();
-        for(SdkBothMsgProto.SdkCommandWrapperMsg sdkCommandWrapperMsg : sdkCommandWrapperMsgList){
+        List<SdkBothMsgProto.SdkCommandWrapperMsg> sdkCommandWrapperMsgList = pushCommonCommandMsg.getCmdWrappersList();
+        for (SdkBothMsgProto.SdkCommandWrapperMsg sdkCommandWrapperMsg : sdkCommandWrapperMsgList) {
 
             SdkBothMsgProto.SdkNewCommandStructMsg new_control = sdkCommandWrapperMsg.getNewControl();
 
@@ -99,7 +105,7 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
             sb.append("=========================NEW CONTROL ==============================" + "\n");
             sb.append("deviceType:  " + deviceType + "\n");
             sb.append("deviceInfos:  " + "\n");
-            for(SdkBothMsgProto.SdkNewControlDeviceInfoMsg device : device_list){
+            for (SdkBothMsgProto.SdkNewControlDeviceInfoMsg device : device_list) {
                 sb.append(device.getDeviceId() + "|" + device.getDeviceName() + "\n");
             }
 
@@ -136,7 +142,7 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
             List<SdkBothMsgProto.SdkOldControlDeviceInfoMsg> old_device_list = type_device_old.getDeviceListList();
             sb.append("deviceType:  " + old_deviceType + "|" + "\n");
             sb.append("deviceInfos:  " + "\n");
-            for(SdkBothMsgProto.SdkOldControlDeviceInfoMsg device : old_device_list){
+            for (SdkBothMsgProto.SdkOldControlDeviceInfoMsg device : old_device_list) {
                 sb.append(device.getDeviceId() + "|" + device.getDeviceName() + "\n");
             }
 
@@ -150,8 +156,8 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
             sb.append("old_action :" + old_action_code + " | old_attr:" + old_attribute_code + "| "
                     + " | old_attrValue:" + old_attribute_value_code + " | old_mode:" + old_mode_code + " | old_state:" + old_state_code + "\n");
 
-            System.out.print(sb.toString());
-            System.out.println("====================华丽的分割线======================" + "\n");
+            logger.info(sb.toString());
+            logger.info("====================华丽的分割线======================" + "\n");
         }
     }
 
@@ -159,10 +165,10 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
     //@Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Tcp2DeviceProtocol.SDK_PUSH_ATTR_COMMAND_S)
 //    @Handler(moduleId = 1, sequenceId = 2756)
     public void receiveAttrCommand(S_DEVICE_ATTR_COMMAND response) {
-        System.out.println("=============>> 收到属性制指令");
+        logger.info("=============>> 收到属性制指令");
         Tcp2SdkMsgProto.PushCommonCommandMsg pushCommonCommandMsg = response.getPushCommonCommandMsg();
-        List<SdkBothMsgProto.SdkCommandWrapperMsg> sdkCommandWrapperMsgList =  pushCommonCommandMsg.getCmdWrappersList();
-        for(SdkBothMsgProto.SdkCommandWrapperMsg sdkCommandWrapperMsg : sdkCommandWrapperMsgList){
+        List<SdkBothMsgProto.SdkCommandWrapperMsg> sdkCommandWrapperMsgList = pushCommonCommandMsg.getCmdWrappersList();
+        for (SdkBothMsgProto.SdkCommandWrapperMsg sdkCommandWrapperMsg : sdkCommandWrapperMsgList) {
 
             SdkBothMsgProto.SdkNewCommandStructMsg new_control = sdkCommandWrapperMsg.getNewControl();
 
@@ -173,7 +179,7 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
             sb.append("=========================NEW CONTROL ==============================" + "\n");
             sb.append("deviceType:  " + deviceType + "\n");
             sb.append("deviceInfos:  " + "\n");
-            for(SdkBothMsgProto.SdkNewControlDeviceInfoMsg device : device_list){
+            for (SdkBothMsgProto.SdkNewControlDeviceInfoMsg device : device_list) {
                 sb.append(device.getDeviceId() + "|" + device.getDeviceName() + "\n");
             }
 
@@ -210,7 +216,7 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
             List<SdkBothMsgProto.SdkOldControlDeviceInfoMsg> old_device_list = type_device_old.getDeviceListList();
             sb.append("deviceType:  " + old_deviceType + "|" + "\n");
             sb.append("deviceInfos:  " + "\n");
-            for(SdkBothMsgProto.SdkOldControlDeviceInfoMsg device : old_device_list){
+            for (SdkBothMsgProto.SdkOldControlDeviceInfoMsg device : old_device_list) {
                 sb.append(device.getDeviceId() + "|" + device.getDeviceName() + "\n");
             }
 
@@ -224,17 +230,17 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
             sb.append("old_action :" + old_action_code + " | old_attr:" + old_attribute_code + "| "
                     + " | old_attrValue:" + old_attribute_value_code + " | old_mode:" + old_mode_code + " | old_state:" + old_state_code + "\n");
 
-            System.out.print(sb.toString());
-            System.out.println("====================华丽的分割线======================" + "\n");
+            logger.info(sb.toString());
+            logger.info("====================华丽的分割线======================" + "\n");
         }
     }
 
     @Override
     public void receiveModeCommand(S_DEVICE_MODE_COMMAND response) {
-        System.out.println("=============>> 收到模式控制指令");
+        logger.info("=============>> 收到模式控制指令");
         Tcp2SdkMsgProto.PushCommonCommandMsg pushCommonCommandMsg = response.getPushCommonCommandMsg();
-        List<SdkBothMsgProto.SdkCommandWrapperMsg> sdkCommandWrapperMsgList =  pushCommonCommandMsg.getCmdWrappersList();
-        for(SdkBothMsgProto.SdkCommandWrapperMsg sdkCommandWrapperMsg : sdkCommandWrapperMsgList){
+        List<SdkBothMsgProto.SdkCommandWrapperMsg> sdkCommandWrapperMsgList = pushCommonCommandMsg.getCmdWrappersList();
+        for (SdkBothMsgProto.SdkCommandWrapperMsg sdkCommandWrapperMsg : sdkCommandWrapperMsgList) {
 
             SdkBothMsgProto.SdkNewCommandStructMsg new_control = sdkCommandWrapperMsg.getNewControl();
 
@@ -245,7 +251,7 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
             sb.append("=========================NEW CONTROL ==============================" + "\n");
             sb.append("deviceType:  " + deviceType + "\n");
             sb.append("deviceInfos:  " + "\n");
-            for(SdkBothMsgProto.SdkNewControlDeviceInfoMsg device : device_list){
+            for (SdkBothMsgProto.SdkNewControlDeviceInfoMsg device : device_list) {
                 sb.append(device.getDeviceId() + "|" + device.getDeviceName() + "\n");
             }
 
@@ -282,7 +288,7 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
             List<SdkBothMsgProto.SdkOldControlDeviceInfoMsg> old_device_list = type_device_old.getDeviceListList();
             sb.append("deviceType:  " + old_deviceType + "|" + "\n");
             sb.append("deviceInfos:  " + "\n");
-            for(SdkBothMsgProto.SdkOldControlDeviceInfoMsg device : old_device_list){
+            for (SdkBothMsgProto.SdkOldControlDeviceInfoMsg device : old_device_list) {
                 sb.append(device.getDeviceId() + "|" + device.getDeviceName() + "\n");
             }
 
@@ -296,22 +302,22 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
             sb.append("old_action :" + old_action_code + " | old_attr:" + old_attribute_code + "| "
                     + " | old_attrValue:" + old_attribute_value_code + " | old_mode:" + old_mode_code + " | old_state:" + old_state_code + "\n");
 
-            System.out.print(sb.toString());
-            System.out.println("====================华丽的分割线======================" + "\n");
+            logger.info(sb.toString());
+            logger.info("====================华丽的分割线======================" + "\n");
         }
 
     }
 
     @Override
     public void receiveSceneCommand(S_SCENE_COMMAND response) {
-        System.out.println("=============>> 收到场景控制指令");
+        logger.info("=============>> 收到场景控制指令");
         StringBuilder sb = new StringBuilder();
 
         Tcp2SdkMsgProto.SdkSceneCommandMsg sdkSceneCommandMsg = response.getSdkSceneCommandMsg();
 
         // scenelist
         List<Tcp2SdkMsgProto.SceneTidWithName> sceneListList = sdkSceneCommandMsg.getSceneListList();
-        for(Tcp2SdkMsgProto.SceneTidWithName scene : sceneListList){
+        for (Tcp2SdkMsgProto.SceneTidWithName scene : sceneListList) {
             sb.append("sceneTid:" + scene.getSceneTid() + " | sceneName" + scene.getSceneName() + "\n");
         }
 
@@ -334,8 +340,8 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
         // speak
         sb.append("speak text : " + sdkSceneCommandMsg.getSpeakText() + "\n");
 
-        System.out.print(sb.toString());
-        System.out.println("====================华丽的分割线======================" + "\n");
+        logger.info(sb.toString());
+        logger.info("====================华丽的分割线======================" + "\n");
 
     }
 
@@ -343,72 +349,68 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
     @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Tcp2DeviceProtocol.SDK_MASTER_BIND_DEVICES_RESULT_S)
     public void receiveAddDeviceResult(S_ADD_DEVICE response) {
         SdkBothMsgProto.SdkCommonResponseMsg msg = response.getCommonResponseMsg();
-        System.out.println("====== >>> SDK【增加】主机绑定设备返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
+        logger.info("====== >>> SDK【增加】主机绑定设备返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
     }
 
     @Override
     @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Tcp2DeviceProtocol.SDK_DELETE_MASTER_BIND_DEVICE_RESULT_S)
     public void receiveDeleteDeviceResult(S_DELETE_DEVICE response) {
         SdkBothMsgProto.SdkCommonResponseMsg msg = response.getCommonResponseMsg();
-        System.out.println("====== >>> SDK【删除】主机绑定设备返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
+        logger.info("====== >>> SDK【删除】主机绑定设备返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
     }
 
     @Override
     @Handler(moduleId = SdkMsgType.SDK_DEVICE_CLIENT_TYPE, sequenceId = Tcp2DeviceProtocol.SDK_SYNC_DEVICE_RESULT_S)
     public void receiveSyncDeviceResult(S_SYNC_DEVICE response) {
         SdkBothMsgProto.SdkCommonResponseMsg msg = response.getCommonResponseMsg();
-        System.out.println("====== >>> SDK【同步】主机绑定设备返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
+        logger.info("====== >>> SDK【同步】主机绑定设备返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
     }
 
     @Override
     public void receiveUpdateDeviceResult(S_UPDATE_DEVICE response) {
         SdkBothMsgProto.SdkCommonResponseMsg msg = response.getCommonResponseMsg();
-        System.out.println("====== >>> SDK【更新】主机绑定设备返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
+        logger.info("====== >>> SDK【更新】主机绑定设备返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
     }
 
     @Override
     public void receiveUpdateDeviceBindAreaResult(S_UPDATE_DEVICE_BIND_AREA response) {
         SdkBothMsgProto.SdkCommonResponseMsg msg = response.getCommonResponseMsg();
-        System.out.println("====== >>> SDK【更新】设备绑定区域返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
+        logger.info("====== >>> SDK【更新】设备绑定区域返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
     }
 
     @Override
     public void receiveUpdateDeviceBindSceneResult(S_UPDATE_DEVICE_BIND_SCENE response) {
         SdkBothMsgProto.SdkCommonResponseMsg msg = response.getCommonResponseMsg();
-        System.out.println("====== >>> SDK【更新】设备绑定场景返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
+        logger.info("====== >>> SDK【更新】设备绑定场景返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
     }
 
     @Override
     public void receiveAddDeviceBatchResult(S_ADD_DEVICE_BATCH response) {
         SdkBothMsgProto.SdkCommonResponseMsg msg = response.getCommonResponseMsg();
-        System.out.println("====== >>> SDK【批量增加】主机绑定设备返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
-
+        logger.info("====== >>> SDK【批量增加】主机绑定设备返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
     }
 
     @Override
     public void receiveUpdateDeviceBatchResult(S_UPDATE_DEVICE_BATCH response) {
         SdkBothMsgProto.SdkCommonResponseMsg msg = response.getCommonResponseMsg();
-        System.out.println("====== >>> SDK【批量更新】主机绑定设备返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
-
+        logger.info("====== >>> SDK【批量更新】主机绑定设备返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
     }
 
     @Override
     public void receiveUpdateDeviceBindAreaBatchResult(S_UPDATE_DEVICE_BIND_AREA_BATCH response) {
         SdkBothMsgProto.SdkCommonResponseMsg msg = response.getCommonResponseMsg();
-        System.out.println("====== >>> SDK【批量更新】设备绑定区域返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
-
+        logger.info("====== >>> SDK【批量更新】设备绑定区域返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
     }
 
     @Override
     public void receiveUpdateDeviceBindSceneBatchResult(S_UPDATE_DEVICE_BIND_SCENE_BATCH response) {
         SdkBothMsgProto.SdkCommonResponseMsg msg = response.getCommonResponseMsg();
-        System.out.println("====== >>> SDK【批量更新】设备绑定场景返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
-
+        logger.info("====== >>> SDK【批量更新】设备绑定场景返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
     }
 
     @Override
     public void receiveDockerSpeak(S_DOCKER_SPEAK reponse) {
         BaseBothMsgProto.StringMsg stringMsg = reponse.getStringMsg();
-        System.out.println("====== >>> 设备间通信【DOCKER】讲话是 : " + stringMsg.getValue());
+        logger.info("====== >>> 设备间通信【DOCKER】讲话是 : " + stringMsg.getValue());
     }
 }

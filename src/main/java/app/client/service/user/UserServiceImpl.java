@@ -10,6 +10,8 @@ import app.client.net.protocol.response.S_XB_LOGIN;
 import app.client.service.AbstractServiceImpl;
 import com.gowild.xb.tcp.proto.ChatMsgProto;
 import com.gowild.xbtcp.metadata.pb.BaseBothMsgProto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author syriana.zh
@@ -19,16 +21,18 @@ import com.gowild.xbtcp.metadata.pb.BaseBothMsgProto;
 @Receiver
 public class UserServiceImpl extends AbstractServiceImpl implements IUserService {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
     @Override
     public void receivedAppHeartBeatResponse(S_APP_HEART_BEAT response) {
         StatisticHolder.incAppHeartBeatCount();
-        System.out.println("====== >>> APP设备收到返回时间====");
+        logger.info("====== >>> APP设备收到返回时间====");
     }
 
     @Override
     public void receivedXbHeartBeatResponse(S_XB_HEART_BEAT response) {
         StatisticHolder.incRobotHeartBeatCount();
-//        System.out.println("====== >>> XB设备收到返回时间====");
+//        logger.info("====== >>> XB设备收到返回时间====");
     }
 
     @Override
@@ -37,7 +41,7 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
         String text = chatMsg.getReply();
         String expression = chatMsg.getExpression();
         String mood = chatMsg.getMood();
-        System.out.println("====== >>> XB收到闲聊，text:" + text + " | expression: " + expression + " | mood: " + mood);
+        logger.info("====== >>> XB收到闲聊，text:" + text + " | expression: " + expression + " | mood: " + mood);
     }
 
     @Override
@@ -46,7 +50,7 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
         int code = loginResult.getCode();
         String desc = loginResult.getDesc();
         StatisticHolder.incRobotRecvLoginCount();
-//        System.out.println("====== >>> XB登陆结果，code:" + code + " | desc: " + desc);
+//        logger.info("====== >>> XB登陆结果，code:" + code + " | desc: " + desc);
     }
 
     @Override
@@ -55,6 +59,6 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
         int code = loginResult.getCode();
         String desc = loginResult.getDesc();
         StatisticHolder.incAppRecvLoginCount();
-        System.out.println("====== >>> APP登陆结果，code:" + code + " | desc: " + desc);
+        logger.info("====== >>> APP登陆结果，code:" + code + " | desc: " + desc);
     }
 }

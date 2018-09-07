@@ -2,6 +2,8 @@ package app.client.data;
 
 
 import app.client.net.test.QuickStarter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -15,6 +17,8 @@ import java.util.Map;
  */
 public class TokenDataHolder {
 
+    private static Logger logger = LoggerFactory.getLogger(TokenDataHolder.class);
+    
     private static final Map<String, String> identify2TokenMap = new HashMap<>();
 
     public static void loadAllRobotToken() {
@@ -40,7 +44,7 @@ public class TokenDataHolder {
         String updateToken = "INSERT INTO token (identify, token) VALUES ('"
                 + identify + "', '"
                 + token + "') ON DUPLICATE KEY UPDATE token='" + token + "'";
-        System.out.println(updateToken);
+        logger.info(updateToken);
         try (Statement stmt = con.createStatement();) {
             stmt.executeUpdate(updateToken);
         } catch (SQLException e) {

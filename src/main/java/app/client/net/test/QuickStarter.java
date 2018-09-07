@@ -28,7 +28,7 @@ public class QuickStarter {
     public static void main(String[] args) throws Exception {
 
         if(true){
-            System.out.println("开始测试123123");
+            logger.info("开始测试123123");
             logger.info("===>>>>>>>>>>>>> info..");
             logger.error("===>>>>>>>>>>>>> error..");
             logger.debug("===>>>>>>>>>>>>> debug..");
@@ -106,7 +106,7 @@ public class QuickStarter {
                         appClient.setToken(token);
                         try {
 
-//                            System.out.println("===================>>>>啓動APP CLIENT綫程，目前CLIENT數量為：" + StatisticHolder.getAppCount());
+//                            logger.info("===================>>>>啓動APP CLIENT綫程，目前CLIENT數量為：" + StatisticHolder.getAppCount());
                             latch.await();
                             appClient.init();
                             appClient.start();
@@ -143,7 +143,7 @@ public class QuickStarter {
                             xbClient.setMac(mac);
                             String token = TokenDataHolder.getIdentifyToken(mac);
                             xbClient.setToken(token);
-//                            System.out.println("===================>>>>啓動XB CLIENT綫程，目前CLIENT數量為：" + StatisticHolder.getRobotCount());
+//                            logger.info("===================>>>>啓動XB CLIENT綫程，目前CLIENT數量為：" + StatisticHolder.getRobotCount());
                             latch.await();
                             xbClient.init();
                             xbClient.start();

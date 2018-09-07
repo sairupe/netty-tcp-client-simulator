@@ -39,7 +39,7 @@ public class RequestTaskImpl implements IRequestTask{
 				request.writeBinaryData();
 				if (ctx.channel().isActive()){
 					if(!QuickStarter.PRESS_TEST){
-						System.out.println("发送=====>>>>moduleId:【" + request.getModuleId() + "】, sequenceId:【" + request.getSequenceId() + "】..");
+						logger.info("发送=====>>>>moduleId:【" + request.getModuleId() + "】, sequenceId:【" + request.getSequenceId() + "】..");
 					}
 					ctx.channel().writeAndFlush(request);
 				}

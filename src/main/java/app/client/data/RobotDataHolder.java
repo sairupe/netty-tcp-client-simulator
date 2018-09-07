@@ -1,6 +1,8 @@
 package app.client.data;
 
 import app.client.vo.RobotVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -15,6 +17,8 @@ import java.util.concurrent.CountDownLatch;
  */
 public class RobotDataHolder {
 
+    private static final Logger logger = LoggerFactory.getLogger(RobotDataHolder.class);
+
     public static final int robotClientCount = 5000;
 
     private static final CountDownLatch robotLatch = new CountDownLatch(robotClientCount);
@@ -25,12 +29,12 @@ public class RobotDataHolder {
 
     static {
         Connection con = DbConnecter.getRobotDbConncetion();
-//        System.out.println("====== >>> 以下是jarvis_device_db的表");
+//        logger.info("====== >>> 以下是jarvis_device_db的表");
 //        String showTableTest = "show tables";
 //        try(Statement stmt = con.createStatement();
 //            ResultSet rs0 = stmt.executeQuery(showTableTest)) {
 //            while (rs0.next()) {
-//                System.out.println(rs0.getString(1));
+//                logger.info(rs0.getString(1));
 //            }
 //        } catch (SQLException e) {
 //            e.printStackTrace();
@@ -51,7 +55,7 @@ public class RobotDataHolder {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println("====== >>> 机器数据初始化完毕");
+        logger.info("====== >>> 机器数据初始化完毕");
     }
 
     public static Map<Integer, RobotVo> getId2RotbotVoMap(){

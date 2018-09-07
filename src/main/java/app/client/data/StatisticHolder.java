@@ -1,6 +1,9 @@
 package app.client.data;
 
 import app.client.net.task.TaskManager;
+import app.client.service.sdk.area.AreaServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -8,6 +11,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Created by zh on 2018/9/4.
  */
 public class StatisticHolder {
+
+    private static final Logger logger = LoggerFactory.getLogger(StatisticHolder.class);
 
     private static AtomicInteger robotClientCount = new AtomicInteger(0);
     private static AtomicInteger robotHearBeatTickCount = new AtomicInteger(0);
@@ -79,7 +84,7 @@ public class StatisticHolder {
         sb.append("responseQueueCount='").append(TaskManager.getInstance().getResponseQueueSize()).append('\n');
 
         sb.append('}');
-        System.out.println(sb.toString());
+        logger.info(sb.toString());
     }
 
 }

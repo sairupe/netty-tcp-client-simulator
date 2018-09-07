@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import app.client.net.test.ChannelHandlerContextStatusStask;
 import app.client.net.test.QuickStarter;
 import com.gowild.sdk.basic.constant.SdkConstant;
 import com.gowild.sdk.protocol.SdkMsgType;
@@ -26,7 +27,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ProtocolFactory {
 
-    private static Logger logger = LoggerFactory.getLogger(ProtocolFactory.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProtocolFactory.class);
 
 	private static Map<Integer, RequestProtocol> requestPrototypeMap = new ConcurrentHashMap<Integer, RequestProtocol>();
 
@@ -61,7 +62,6 @@ public class ProtocolFactory {
 					}
 				}
 			}
-            System.out.println();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -142,7 +142,7 @@ public class ProtocolFactory {
                     clientType = " APP ";
                 }
                 if(!QuickStarter.PRESS_TEST){
-                System.out.println(
+                logger.info(
                         "======================================" +
                         "========================================【" +
                         clientType + "】收到protoclId 空: moduleId:{" + moduleId + "}, sequenceId:{" + sequenceId + "}");

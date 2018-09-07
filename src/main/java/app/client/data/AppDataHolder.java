@@ -1,6 +1,9 @@
 package app.client.data;
 
+import app.client.service.user.UserServiceImpl;
 import app.client.vo.UserVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -15,6 +18,8 @@ import java.util.concurrent.CountDownLatch;
  */
 public class AppDataHolder {
 
+    private static final Logger logger = LoggerFactory.getLogger(AppDataHolder.class);
+
     public static final int appClientCount = 5000;
 
     private static final CountDownLatch appLatch = new CountDownLatch(appClientCount);
@@ -26,11 +31,11 @@ public class AppDataHolder {
     static {
         Connection con = DbConnecter.getPassportDbConnection();
 //        String sql = "show tables";
-//        System.out.println("====== >>> 以下是gowild_passport_db的表");
+//        logger.info("====== >>> 以下是gowild_passport_db的表");
 //        try(Statement stmt = con.createStatement();
 //            ResultSet rs0 = stmt.executeQuery(sql)) {
 //            while (rs0.next()) {
-//                System.out.println(rs0.getString(1));
+//                logger.info(rs0.getString(1));
 //            }
 //        } catch (SQLException e) {
 //            e.printStackTrace();
@@ -50,7 +55,7 @@ public class AppDataHolder {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println("====== >>> 用户数据初始化完毕");
+        logger.info("====== >>> 用户数据初始化完毕");
     }
 
     public static Map<Integer, UserVo> getId2UserVoMap() {

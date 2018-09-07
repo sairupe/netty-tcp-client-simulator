@@ -88,7 +88,6 @@ public class DispacherManager {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println();
 	}
 	
     public void dispatch(int moduleId, int sequenceId,

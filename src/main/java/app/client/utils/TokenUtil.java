@@ -20,6 +20,8 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,6 +32,8 @@ import java.util.Map;
  * Created by zh on 2018/9/6.
  */
 public class TokenUtil {
+
+    private static final Logger logger = LoggerFactory.getLogger(TokenUtil.class);
 
     private static CloseableHttpClient httpclient = HttpClientBuilder.create().build();
 
@@ -51,7 +55,7 @@ public class TokenUtil {
             request.setEntity(new UrlEncodedFormEntity(list));
 //            long start = System.currentTimeMillis();
             response = HttpClientBuilder.create().build().execute(request);
-//            System.out.println("=====>>> time " + (System.currentTimeMillis() - start));
+//            logger.info("=====>>> time " + (System.currentTimeMillis() - start));
             token = EntityUtils.toString(response.getEntity(), "utf8");
         } catch (IOException e) {
             e.printStackTrace();
@@ -85,7 +89,7 @@ public class TokenUtil {
             request.setEntity(new UrlEncodedFormEntity(list));
 //            long start = System.currentTimeMillis();
             response = HttpClientBuilder.create().build().execute(request);
-//            System.out.println("=====>>> time " + (System.currentTimeMillis() - start));
+//            logger.info("=====>>> time " + (System.currentTimeMillis() - start));
             token = EntityUtils.toString(response.getEntity(), "utf8");
         } catch (IOException e) {
             e.printStackTrace();
@@ -119,7 +123,7 @@ public class TokenUtil {
             request.setEntity(new UrlEncodedFormEntity(list));
             long start = System.currentTimeMillis();
             response = httpclient.execute(request);
-            System.out.println("=====>>> time " + (System.currentTimeMillis() - start));
+            logger.info("=====>>> time " + (System.currentTimeMillis() - start));
             String result = EntityUtils.toString(response.getEntity(), "utf8");
         } catch (IOException e) {
             e.printStackTrace();
@@ -139,7 +143,7 @@ public class TokenUtil {
             }
             RobotDataHolder.getRobotLatch().await();
             TaskManager.getInstance().shutDownMisc();
-            System.out.println("=====>>>>>>初始化TOKEN使用了: " + (System.currentTimeMillis() - tokenStart) + " ms");
+            logger.info("=====>>>>>>初始化TOKEN使用了: " + (System.currentTimeMillis() - tokenStart) + " ms");
         }
     }
 
