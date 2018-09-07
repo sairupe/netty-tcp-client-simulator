@@ -15,19 +15,14 @@ import app.client.user.session.ConnectStatus;
 import app.client.user.session.UserSession;
 import app.client.user.session.UserSessionManager;
 import com.gowild.core.util.LogUtil;
-import com.gowild.tcp.core.manager.socket.Message;
-import com.gowild.tcp.core.manager.socket.SocketUtil;
-import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.AttributeKey;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
-import org.jboss.netty.buffer.DynamicChannelBuffer;
 
 import javax.annotation.Resource;
-import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

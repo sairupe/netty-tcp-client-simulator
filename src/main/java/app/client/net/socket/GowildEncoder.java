@@ -9,15 +9,11 @@ import app.client.data.StatisticHolder;
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.RequestProtocol;
 import com.gowild.sdk.protocol.SdkMsgType;
-import com.gowild.tcp.core.manager.socket.Message;
-import com.gowild.tcp.core.manager.socket.SocketUtil;
-import com.gowild.tcp.core.manager.socket.netty.NettyStrictCodecFactory;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 import org.jboss.netty.buffer.ChannelBuffer;
 
-import java.util.Arrays;
 
 /**
  * Netty编码器-密文.
