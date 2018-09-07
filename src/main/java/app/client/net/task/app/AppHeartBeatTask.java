@@ -2,6 +2,7 @@ package app.client.net.task.app;
 
 import app.client.net.protocol.RequestProtocol;
 import app.client.net.task.RequestTaskImpl;
+import app.client.net.test.QuickStarter;
 import io.netty.channel.ChannelHandlerContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,9 +27,11 @@ public class AppHeartBeatTask extends RequestTaskImpl {
 		try {
             request.writeBinaryData();
             if (ctx.channel().isActive()){
-                logger.info(
-                        "=================>>>> 发送协议,  moduleId:【{}】, sequenceId:【{}】",
-                        request.getModuleId(), request.getSequenceId());
+            	if(!QuickStarter.PRESS_TEST){
+					logger.info(
+							"=================>>>> 发送协议,  moduleId:【{}】, sequenceId:【{}】",
+							request.getModuleId(), request.getSequenceId());
+				}
                 ctx.channel().writeAndFlush(request);
 				request.getBuffer().readerIndex(0);
 			}

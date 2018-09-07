@@ -27,14 +27,6 @@ public class QuickStarter {
 
     public static void main(String[] args) throws Exception {
 
-        if(true){
-            logger.info("开始测试123123");
-            logger.info("===>>>>>>>>>>>>> info..");
-            logger.error("===>>>>>>>>>>>>> error..");
-            logger.debug("===>>>>>>>>>>>>> debug..");
-            return ;
-        }
-
         // 初始化NIO
         Class.forName("app.client.net.socket.EventLoopHolder");
         // 初始化协议原型加载
