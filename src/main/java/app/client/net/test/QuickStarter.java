@@ -9,6 +9,8 @@ import app.client.utils.TokenUtil;
 import app.client.vo.RobotVo;
 import app.client.vo.UserVo;
 import com.gowild.core.util.LogUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
@@ -18,10 +20,21 @@ import java.util.concurrent.CountDownLatch;
  */
 public class QuickStarter {
 
+    private static Logger logger = LoggerFactory.getLogger(QuickStarter.class);
+
     public static final boolean PRESS_TEST = true;
     public static final boolean INIT_TOKEN = false;
 
     public static void main(String[] args) throws Exception {
+
+        if(true){
+            System.out.println("开始测试123123");
+            logger.info("===>>>>>>>>>>>>> info..");
+            logger.error("===>>>>>>>>>>>>> error..");
+            logger.debug("===>>>>>>>>>>>>> debug..");
+            return ;
+        }
+
         // 初始化NIO
         Class.forName("app.client.net.socket.EventLoopHolder");
         // 初始化协议原型加载
