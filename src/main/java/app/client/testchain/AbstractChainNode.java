@@ -52,7 +52,6 @@ public abstract class AbstractChainNode implements IChainNode {
 
     @Override
     public void end() {
-        LogUtil.debug("==================>>>>>>>>>>>>> NODE CHAIN END");
     }
 
     @Override

@@ -21,11 +21,31 @@ import java.util.concurrent.CountDownLatch;
 public class QuickStarter {
 
     private static Logger logger = LoggerFactory.getLogger(QuickStarter.class);
+    private static final String tips = "参数格式不对，请输入【robot ID范围(闭区间)】【app ID范围（闭区间）】,如1-3000 1-3000";
 
     public static final boolean PRESS_TEST = true;
     public static final boolean INIT_TOKEN = false;
 
+    private static int robotStart = 0;
+    private static int robotEnd = 0;
+    private static int appStart = 0;
+    private static int appEnd = 0;
+
     public static void main(String[] args) throws Exception {
+
+        if(args == null || args.length < 2){
+            logger.error(tips);
+        }
+
+        String robotIdRange = args[0];
+        String appIdRange = args[1];
+
+        String[] robotRange = robotIdRange.split("-");
+        String[] appRange = appIdRange.split("-");
+        robotStart = Integer.parseInt(robotRange[0]);
+        robotEnd = Integer.parseInt(robotRange[1]);
+        appStart = Integer.parseInt(appRange[0]);
+        appEnd = Integer.parseInt(appRange[1]);
 
         // 初始化NIO
         Class.forName("app.client.net.socket.EventLoopHolder");
@@ -88,6 +108,12 @@ public class QuickStarter {
             CountDownLatch latch = new CountDownLatch(1);
             Map<Integer, UserVo> id2UserVoMap = AppDataHolder.getId2UserVoMap();
             for(Map.Entry<Integer, UserVo> entry : id2UserVoMap.entrySet()){
+                startCount++;
+
+                if(entry.getKey() < appStart || entry.getKey() > appEnd){
+                    continue;
+                }
+
                 Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -97,7 +123,6 @@ public class QuickStarter {
                         String token = TokenDataHolder.getIdentifyToken(userName);
                         appClient.setToken(token);
                         try {
-
 //                            logger.info("===================>>>>啓動APP CLIENT綫程，目前CLIENT數量為：" + StatisticHolder.getAppCount());
                             latch.await();
                             appClient.init();
@@ -109,11 +134,11 @@ public class QuickStarter {
                     }
                 });
                 thread.start();
-                latch.countDown();
-                if(startCount >= maxCount){
-                    break;
-                }
+//                if(startCount >= maxCount){
+//                    break;
+//                }
             }
+            latch.countDown();
         }
     }
 
@@ -126,6 +151,11 @@ public class QuickStarter {
             Map<Integer, RobotVo> id2RotbotVoMap = RobotDataHolder.getId2RotbotVoMap();
             for(Map.Entry<Integer, RobotVo> entry : id2RotbotVoMap.entrySet()){
                 startCount++;
+
+                if(entry.getKey() < robotStart || entry.getKey() > robotEnd){
+                    continue;
+                }
+
                 Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -146,9 +176,9 @@ public class QuickStarter {
                     }
                 });
                 thread.start();
-                if(startCount >= maxCount){
-                    break;
-                }
+//                if(startCount >= maxCount){
+//                    break;
+//                }
             }
             latch.countDown();
         }

@@ -13,7 +13,7 @@ public class SdkTestConst {
 //    public static final String PASSPORT_DB_URL = "jdbc:mysql://172.27.1.81:3306/jarvis_device_db";
     public static final String PASSPORT_DB_URL = "jdbc:mysql://172.27.1.73:3306/gowild_passport_db";
 
-    public static final String TOKEN_DB_URL = "jdbc:mysql://localhost:3306/token_db";
+    public static final String TOKEN_DB_URL = "jdbc:mysql://172.27.1.49:3306/token_db";
 
     public static final String FIRST_DEVICE_UID = "12315-1";
     public static final String SECOND_DEVICE_UID = "12315-2";
