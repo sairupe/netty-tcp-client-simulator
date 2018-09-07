@@ -84,7 +84,7 @@ public class QuickStarter {
                         appClient.setToken(token);
                         try {
 
-                            System.out.println("===================>>>>啓動APP CLIENT綫程，目前CLIENT數量為：" + StatisticHolder.getAppCount());
+//                            System.out.println("===================>>>>啓動APP CLIENT綫程，目前CLIENT數量為：" + StatisticHolder.getAppCount());
                             latch.await();
                             appClient.init();
                             appClient.start();
@@ -122,7 +122,7 @@ public class QuickStarter {
                             xbClient.setMac(mac);
                             String token = TokenDataHolder.getIdentifyToken(mac);
                             xbClient.setToken(token);
-                            System.out.println("===================>>>>啓動XB CLIENT綫程，目前CLIENT數量為：" + StatisticHolder.getRobotCount());
+//                            System.out.println("===================>>>>啓動XB CLIENT綫程，目前CLIENT數量為：" + StatisticHolder.getRobotCount());
                             latch.await();
                             xbClient.init();
                             xbClient.start();

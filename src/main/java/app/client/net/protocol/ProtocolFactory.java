@@ -140,10 +140,10 @@ public class ProtocolFactory {
                 } else{
                     clientType = " APP ";
                 }
-                System.out.println(
-                        "======================================" +
-                        "========================================【" +
-                        clientType + "】收到protoclId 空: moduleId:{" + moduleId + "}, sequenceId:{" + sequenceId + "}");
+//                System.out.println(
+//                        "======================================" +
+//                        "========================================【" +
+//                        clientType + "】收到protoclId 空: moduleId:{" + moduleId + "}, sequenceId:{" + sequenceId + "}");
                 return null;
             }
             protype = reponsePrototypeMap.get(key).getClass()

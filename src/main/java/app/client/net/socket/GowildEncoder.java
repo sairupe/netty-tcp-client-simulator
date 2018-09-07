@@ -49,9 +49,9 @@ public class GowildEncoder extends MessageToByteEncoder<RequestProtocol> {
         if (requestProtocol.getSequenceId() == 151) {
             int moduleId = requestProtocol.getModuleId();
             if (moduleId == SdkMsgType.APP_CLIENT_TYPE) {
-                StatisticHolder.incAppLoginCount();
+                StatisticHolder.incAppSendLoginCount();
             } else if (moduleId == SdkMsgType.XB_CLIENT_TYPE) {
-                StatisticHolder.incRobotLoginCount();
+                StatisticHolder.incRobotSendLoginCount();
             }
         }
     }

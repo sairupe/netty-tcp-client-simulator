@@ -140,6 +140,14 @@ public class TaskManager {
 		responseThreadPool.shutdown();
 		tickThreadPool.shutdown();
 	}
+
+	public int getRequestQueueSize(){
+		return requestQueue.size();
+	}
+
+	public int getResponseQueueSize(){
+		return responseQueue.size();
+	}
 	
 	public static TaskManager getInstance(){
 		return instance;

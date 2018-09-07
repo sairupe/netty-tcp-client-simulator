@@ -28,7 +28,7 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
     @Override
     public void receivedXbHeartBeatResponse(S_XB_HEART_BEAT response) {
         StatisticHolder.incRobotHeartBeatCount();
-        System.out.println("====== >>> XB设备收到返回时间====");
+//        System.out.println("====== >>> XB设备收到返回时间====");
     }
 
     @Override
@@ -45,7 +45,8 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
         BaseBothMsgProto.BaseResponse loginResult = response.getLoginResult();
         int code = loginResult.getCode();
         String desc = loginResult.getDesc();
-        System.out.println("====== >>> XB登陆结果，code:" + code + " | desc: " + desc);
+        StatisticHolder.incRobotRecvLoginCount();
+//        System.out.println("====== >>> XB登陆结果，code:" + code + " | desc: " + desc);
     }
 
     @Override
@@ -53,6 +54,7 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
         BaseBothMsgProto.BaseResponse loginResult = response.getLoginResult();
         int code = loginResult.getCode();
         String desc = loginResult.getDesc();
+        StatisticHolder.incAppRecvLoginCount();
         System.out.println("====== >>> APP登陆结果，code:" + code + " | desc: " + desc);
     }
 }

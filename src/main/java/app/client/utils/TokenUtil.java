@@ -73,7 +73,7 @@ public class TokenUtil {
         if (10100100 == code) {
             JSONObject data = result.getJSONObject("data");
             token = data.getString("access_token");
-            StatisticHolder.incRobotGetToken();
+            StatisticHolder.incRobotGetTokenCount();
             return token;
         }
         return null;
@@ -94,7 +94,7 @@ public class TokenUtil {
             if (10100100 == code) {
                 JSONObject data = result.getJSONObject("data");
                 String loginToken = data.get("access_token").toString();
-                StatisticHolder.incAppGetToken();
+                StatisticHolder.incAppGetTokenCount();
                 return loginToken;
             }
         } catch (Exception e) {
@@ -121,7 +121,6 @@ public class TokenUtil {
             long start = System.currentTimeMillis();
             response = httpclient.execute(request);
             System.out.println("=====>>> time " + (System.currentTimeMillis() - start));
-            StatisticHolder.incRobotGetToken();
             String result = EntityUtils.toString(response.getEntity(), "utf8");
         } catch (IOException e) {
             e.printStackTrace();
@@ -130,6 +129,7 @@ public class TokenUtil {
         return null;
     }
 
+    @Deprecated
     public static void syncGetRobotToken(RobotVo robotVo) {
 
         String token = "";
@@ -162,7 +162,7 @@ public class TokenUtil {
                             JSONObject data = result.getJSONObject("data");
                             token = data.getString("access_token");
                             robotVo.setToken(token);
-                            StatisticHolder.incRobotGetToken();
+                            StatisticHolder.incRobotGetTokenCount();
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -188,6 +188,7 @@ public class TokenUtil {
         }
     }
 
+    @Deprecated
     public static String syncGetAppToken(UserVo userVo) {
         String account = userVo.getUserName();
         Map<String, String> header = new HashMap<>();
@@ -204,7 +205,7 @@ public class TokenUtil {
             if (10100100 == code) {
                 JSONObject data = result.getJSONObject("data");
                 String loginToken = data.get("access_token").toString();
-                StatisticHolder.incAppGetToken();
+                StatisticHolder.incAppGetTokenCount();
                 return loginToken;
             }
         } catch (Exception e) {
@@ -222,6 +223,7 @@ public class TokenUtil {
             TaskManager.getInstance().addMiscTask(robotGetTokenTask);
         }
         RobotDataHolder.getRobotLatch().await();
+        TaskManager.getInstance().shutDownMisc();
         System.out.println("=====>>>>>>初始化TOKEN使用了: " + (System.currentTimeMillis() - tokenStart) + " ms");
     }
 
