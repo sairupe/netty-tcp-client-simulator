@@ -1,6 +1,8 @@
 package app.client.data;
 
 
+import app.client.net.test.QuickStarter;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,18 +18,20 @@ public class TokenDataHolder {
     private static final Map<String, String> identify2TokenMap = new HashMap<>();
 
     public static void loadAllRobotToken() {
-        Connection con = DbConnecter.getTokenDbConnection();
-        String queryAccount = "SELECT id, identify, token FROM token";
-        try (Statement stmt = con.createStatement();
-             ResultSet rs0 = stmt.executeQuery(queryAccount)) {
-            while (rs0.next()) {
-                Integer id = rs0.getInt(1);
-                String identify = rs0.getString(2);
-                String userName = rs0.getString(3);
-                identify2TokenMap.put(identify, userName);
+        if(QuickStarter.PRESS_TEST){
+            Connection con = DbConnecter.getTokenDbConnection();
+            String queryAccount = "SELECT id, identify, token FROM token";
+            try (Statement stmt = con.createStatement();
+                 ResultSet rs0 = stmt.executeQuery(queryAccount)) {
+                while (rs0.next()) {
+                    Integer id = rs0.getInt(1);
+                    String identify = rs0.getString(2);
+                    String userName = rs0.getString(3);
+                    identify2TokenMap.put(identify, userName);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 

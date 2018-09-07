@@ -7,6 +7,7 @@ import app.client.net.task.TaskManager;
 import app.client.net.task.misc.HttpRobotGetTokenTask;
 import app.client.net.test.Netty4AppClient;
 import app.client.net.test.Netty4XbClient;
+import app.client.net.test.QuickStarter;
 import app.client.vo.RobotVo;
 import app.client.vo.UserVo;
 import com.gowild.core.util.HttpUtil;
@@ -42,7 +43,6 @@ public class TokenUtil {
     private static CloseableHttpAsyncClient syncHttpclient = HttpAsyncClients.createDefault();
 
     public static String getRobotToken(String mac) {
-
         String token = "";
         try {
             String tokenUrl = Netty4XbClient.TOKEN_URL;
@@ -61,13 +61,11 @@ public class TokenUtil {
 //            long start = System.currentTimeMillis();
             response = HttpClientBuilder.create().build().execute(request);
 //            System.out.println("=====>>> time " + (System.currentTimeMillis() - start));
-
             token = EntityUtils.toString(response.getEntity(), "utf8");
         } catch (IOException e) {
             e.printStackTrace();
             LogUtil.error(e);
         }
-
         JSONObject result = new JSONObject(token);
         int code = result.getInt("code");
         if (10100100 == code) {
@@ -80,25 +78,35 @@ public class TokenUtil {
     }
 
     public static String getAppToken(String account) {
-        Map<String, String> header = new HashMap<>();
-        Map<String, String> param = new HashMap<>();
-        param.put("mobile", account);
-        param.put("captcha", "8888");
-        param.put("client_id", "4403d3900fe74a3cb3df660d249ead0f");
-        String repsonse2 = null;
-        String url = Netty4AppClient.TOKEN_URL;
+        String token = "";
         try {
-            repsonse2 = HttpUtil.sendWebRequestByForm(null, url, header, param, null);
-            JSONObject result = new JSONObject(repsonse2);
-            int code = result.getInt("code");
-            if (10100100 == code) {
-                JSONObject data = result.getJSONObject("data");
-                String loginToken = data.get("access_token").toString();
-                StatisticHolder.incAppGetTokenCount();
-                return loginToken;
-            }
-        } catch (Exception e) {
+            String tokenUrl = Netty4AppClient.TOKEN_URL;
+            HttpPost request = new HttpPost(tokenUrl);
+            List<NameValuePair> list = new ArrayList<NameValuePair>();
+            NameValuePair macParam = new BasicNameValuePair("mobile", account);
+            NameValuePair snParam = new BasicNameValuePair("captcha", "8888");
+            NameValuePair clientIdParam = new BasicNameValuePair("client_id", "4403d3900fe74a3cb3df660d249ead0f");
+            list.add(macParam);
+            list.add(snParam);
+            list.add(clientIdParam);
+
+            CloseableHttpResponse response = null;
+            request.setEntity(new UrlEncodedFormEntity(list));
+//            long start = System.currentTimeMillis();
+            response = HttpClientBuilder.create().build().execute(request);
+//            System.out.println("=====>>> time " + (System.currentTimeMillis() - start));
+            token = EntityUtils.toString(response.getEntity(), "utf8");
+        } catch (IOException e) {
             e.printStackTrace();
+            LogUtil.error(e);
+        }
+        JSONObject result = new JSONObject(token);
+        int code = result.getInt("code");
+        if (10100100 == code) {
+            JSONObject data = result.getJSONObject("data");
+            token = data.getString("access_token");
+            StatisticHolder.incRobotGetTokenCount();
+            return token;
         }
         return null;
     }
@@ -216,23 +224,27 @@ public class TokenUtil {
 
 
     public static void initialAllRobotToken() throws InterruptedException {
-        long tokenStart = System.currentTimeMillis();
-        Map<Integer, RobotVo> id2RotbotVoMap = RobotDataHolder.getId2RotbotVoMap();
-        for (Map.Entry<Integer, RobotVo> entry : id2RotbotVoMap.entrySet()) {
-            HttpRobotGetTokenTask robotGetTokenTask = new HttpRobotGetTokenTask(entry.getValue());
-            TaskManager.getInstance().addMiscTask(robotGetTokenTask);
+        if(QuickStarter.PRESS_TEST && QuickStarter.INIT_TOKEN){
+            long tokenStart = System.currentTimeMillis();
+            Map<Integer, RobotVo> id2RotbotVoMap = RobotDataHolder.getId2RotbotVoMap();
+            for (Map.Entry<Integer, RobotVo> entry : id2RotbotVoMap.entrySet()) {
+                HttpRobotGetTokenTask robotGetTokenTask = new HttpRobotGetTokenTask(entry.getValue());
+                TaskManager.getInstance().addMiscTask(robotGetTokenTask);
+            }
+            RobotDataHolder.getRobotLatch().await();
+            TaskManager.getInstance().shutDownMisc();
+            System.out.println("=====>>>>>>初始化TOKEN使用了: " + (System.currentTimeMillis() - tokenStart) + " ms");
         }
-        RobotDataHolder.getRobotLatch().await();
-        TaskManager.getInstance().shutDownMisc();
-        System.out.println("=====>>>>>>初始化TOKEN使用了: " + (System.currentTimeMillis() - tokenStart) + " ms");
     }
 
     public static void initialAllAppToken() {
-        Map<Integer, UserVo> id2UserVoMap = AppDataHolder.getId2UserVoMap();
-        for (Map.Entry<Integer, UserVo> entry : id2UserVoMap.entrySet()) {
-            String userName = entry.getValue().getUserName();
-            String token = getAppToken(userName);
-            entry.getValue().setToken(token);
+        if(QuickStarter.PRESS_TEST){
+            Map<Integer, UserVo> id2UserVoMap = AppDataHolder.getId2UserVoMap();
+            for (Map.Entry<Integer, UserVo> entry : id2UserVoMap.entrySet()) {
+                String userName = entry.getValue().getUserName();
+                String token = getAppToken(userName);
+                entry.getValue().setToken(token);
+            }
         }
     }
 

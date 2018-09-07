@@ -46,6 +46,14 @@ public class AppChainNodeManager {
 //        String token70 = TokenUtil.getAppToken(account70);
 //        doAppLogin(userSession, token70);
 
+//        String account9 = "15814786286";
+//        String token9 = TokenUtil.getAppToken(account9);
+//        doAppLogin(userSession, token9);
+//        CommonUtil.threadPause(3000);
+//
+//        startingChainNode.addLastNext(new AppQueryRobotCollaCommandNode(17773));
+
+
         String token = userSession.getAppToken();
         doAppLogin(userSession, token);
 

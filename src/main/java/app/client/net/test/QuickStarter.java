@@ -2,7 +2,6 @@ package app.client.net.test;
 
 import app.client.data.AppDataHolder;
 import app.client.data.RobotDataHolder;
-import app.client.data.StatisticHolder;
 import app.client.data.TokenDataHolder;
 import app.client.net.dispacher.DispacherManager;
 import app.client.net.task.TaskManager;
@@ -18,6 +17,9 @@ import java.util.concurrent.CountDownLatch;
  * Created by zh on 2017/10/27.
  */
 public class QuickStarter {
+
+    public static final boolean PRESS_TEST = true;
+    public static final boolean INIT_TOKEN = false;
 
     public static void main(String[] args) throws Exception {
         // 初始化NIO
@@ -35,38 +37,45 @@ public class QuickStarter {
         DispacherManager.getInstance().init();
         // 初始化线程池
         TaskManager.getInstance().init();
+
         // 初始化统计任务打印
         TaskManager.getInstance().initStatiscTask();
-
         // 初始化机器TOKEN
-//        TokenUtil.initialAllRobotToken();
+        TokenUtil.initialAllRobotToken();
         // 加载所有机器的Token
         TokenDataHolder.loadAllRobotToken();;
 
         if(false){
-            Thread appStarter = new Thread(new AppStartTask());
+            Thread appStarter;
+            if(PRESS_TEST){
+                appStarter = new Thread(new AppPressTestStartTask());
+            } else{
+                appStarter = new Thread(new AppNormalStartTask());
+            }
             appStarter.start();
             LogUtil.debug("启动APP");
         }
 
         if(true){
-            Thread xbStarter = new Thread(new XbStartTask());
+            Thread xbStarter;
+            if(PRESS_TEST){
+                xbStarter = new Thread(new XbPressTestStartTask());
+            } else{
+                xbStarter = new Thread(new XbNormalStartTask());
+            }
             xbStarter.start();
             LogUtil.debug("启动XB完毕");
         }
 
         if(false){
             LogUtil.debug("暂停...");
-            //Thread.sleep(3000);
-
             LogUtil.debug("启动 SDK ...");
             Thread sdkStarter = new Thread(new SdkStartTask());
             sdkStarter.start();
         }
     }
 
-    static class AppStartTask implements Runnable{
-
+    static class AppPressTestStartTask implements Runnable{
         @Override
         public void run() {
             int startCount = 0;
@@ -103,8 +112,7 @@ public class QuickStarter {
         }
     }
 
-    static class XbStartTask implements Runnable{
-
+    static class XbPressTestStartTask implements Runnable{
         @Override
         public void run() {
             int startCount = 0;
@@ -138,6 +146,32 @@ public class QuickStarter {
                 }
             }
             latch.countDown();
+        }
+    }
+
+    static class AppNormalStartTask implements Runnable{
+        @Override
+        public void run() {
+            Netty4AppClient appClient = new Netty4AppClient();
+            try {
+                appClient.init();
+                appClient.start();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    static class XbNormalStartTask implements Runnable{
+        @Override
+        public void run() {
+            Netty4XbClient xbClient = new Netty4XbClient();
+            try {
+                xbClient.init();
+                xbClient.start();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

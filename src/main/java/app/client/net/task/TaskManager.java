@@ -11,6 +11,7 @@ import app.client.common.Const;
 import app.client.net.protocol.RequestProtocol;
 import app.client.net.protocol.ResponseProtocol;
 import app.client.net.task.misc.StatisticPrintTask;
+import app.client.net.test.QuickStarter;
 
 /**
  * 
@@ -75,8 +76,10 @@ public class TaskManager {
 	}
 
 	public void initStatiscTask(){
-		StatisticPrintTask task = new StatisticPrintTask();
-		tickThreadPool.scheduleAtFixedRate(task, 0, 1, TimeUnit.SECONDS);
+		if(QuickStarter.PRESS_TEST){
+			StatisticPrintTask task = new StatisticPrintTask();
+			tickThreadPool.scheduleAtFixedRate(task, 0, 1, TimeUnit.SECONDS);
+		}
 	}
 	
 	

@@ -15,7 +15,7 @@ import java.util.concurrent.CountDownLatch;
  */
 public class AppDataHolder {
 
-    public static final int appClientCount = 1000;
+    public static final int appClientCount = 5000;
 
     private static final CountDownLatch appLatch = new CountDownLatch(appClientCount);
 
