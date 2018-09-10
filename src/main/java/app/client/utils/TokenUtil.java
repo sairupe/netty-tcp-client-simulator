@@ -4,6 +4,7 @@ import app.client.data.AppDataHolder;
 import app.client.data.RobotDataHolder;
 import app.client.data.StatisticHolder;
 import app.client.net.task.TaskManager;
+import app.client.net.task.misc.HttpAppGetTokenTask;
 import app.client.net.task.misc.HttpRobotGetTokenTask;
 import app.client.net.test.Netty4AppClient;
 import app.client.net.test.Netty4XbClient;
@@ -66,7 +67,6 @@ public class TokenUtil {
         if (10100100 == code) {
             JSONObject data = result.getJSONObject("data");
             token = data.getString("access_token");
-            StatisticHolder.incRobotGetTokenCount();
             return token;
         }
         return null;
@@ -100,7 +100,6 @@ public class TokenUtil {
         if (10100100 == code) {
             JSONObject data = result.getJSONObject("data");
             token = data.getString("access_token");
-            StatisticHolder.incRobotGetTokenCount();
             return token;
         }
         return null;
@@ -133,8 +132,8 @@ public class TokenUtil {
     }
 
 
-    public static void initialAllRobotToken() throws InterruptedException {
-        if(QuickStarter.PRESS_TEST && QuickStarter.INIT_TOKEN){
+    public static void initialAllRobotToken(boolean initToken) throws InterruptedException {
+        if(QuickStarter.PRESS_TEST && initToken){
             long tokenStart = System.currentTimeMillis();
             Map<Integer, RobotVo> id2RotbotVoMap = RobotDataHolder.getId2RotbotVoMap();
             for (Map.Entry<Integer, RobotVo> entry : id2RotbotVoMap.entrySet()) {
@@ -142,19 +141,20 @@ public class TokenUtil {
                 TaskManager.getInstance().addMiscTask(robotGetTokenTask);
             }
             RobotDataHolder.getRobotLatch().await();
-            TaskManager.getInstance().shutDownMisc();
-            logger.info("=====>>>>>>初始化TOKEN使用了: " + (System.currentTimeMillis() - tokenStart) + " ms");
+            logger.info("=====>>>>>>初始化ROBOT TOKEN使用了: " + (System.currentTimeMillis() - tokenStart) + " ms");
         }
     }
 
-    public static void initialAllAppToken() {
-        if(QuickStarter.PRESS_TEST){
+    public static void initialAllAppToken(boolean initAppToken) throws InterruptedException {
+        if(QuickStarter.PRESS_TEST && initAppToken){
+            long tokenStart = System.currentTimeMillis();
             Map<Integer, UserVo> id2UserVoMap = AppDataHolder.getId2UserVoMap();
             for (Map.Entry<Integer, UserVo> entry : id2UserVoMap.entrySet()) {
-                String userName = entry.getValue().getUserName();
-                String token = getAppToken(userName);
-                entry.getValue().setToken(token);
+                HttpAppGetTokenTask appGetTokenTask = new HttpAppGetTokenTask(entry.getValue());
+                TaskManager.getInstance().addMiscTask(appGetTokenTask);
             }
+            AppDataHolder.getAppLatch().await();
+            logger.info("=====>>>>>>初始化CLIENT TOKEN使用了: " + (System.currentTimeMillis() - tokenStart) + " ms");
         }
     }
 }

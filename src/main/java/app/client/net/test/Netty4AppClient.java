@@ -66,7 +66,7 @@ public class Netty4AppClient implements Closeable{
             });
             ChannelFuture f = b.connect().sync();
             StatisticHolder.incAppClient();
-//            logger.info("===================>>>>啓動APP BOOTSTRAP，目前CLIENT數量為：" + StatisticHolder.incAppClient());
+            logger.info("===================>>>>啓動APP BOOTSTRAP，目前CLIENT數量為：" + StatisticHolder.getAppCount());
             f.channel().closeFuture().sync();
         } finally {
 //            EventLoopHolder.getGroup().shutdownGracefully().sync();

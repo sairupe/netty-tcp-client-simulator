@@ -30,7 +30,7 @@
         </RollingFile>
     </appenders>
     <Loggers>
-        <Root level="debug" additivity="true">
+        <Root level="info" additivity="true">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="root"/>
         </Root>
@@ -43,5 +43,7 @@
         <Logger name="errorLogger" level="error" additivity="true">
             <AppenderRef ref="errorAppender"/>
         </Logger>
+
+        <Logger name="io.netty" level="error"/>
     </Loggers>
 </configuration>

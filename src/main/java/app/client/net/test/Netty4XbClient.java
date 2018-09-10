@@ -73,7 +73,8 @@ public class Netty4XbClient implements Closeable{
                 }
             });
             ChannelFuture f = b.connect().sync();
-//            logger.info("===================>>>>啓動XB BOOTSTRAP，目前CLIENT數量為：" + StatisticHolder.incRobotClient());
+            StatisticHolder.incRobotClient();
+//            logger.info("===================>>>>啓動XB BOOTSTRAP，目前CLIENT數量為：" + StatisticHolder.getRobotCount());
             f.channel().closeFuture().sync();
         } finally {
 //            EventLoopHolder.getGroup().shutdownGracefully().sync();

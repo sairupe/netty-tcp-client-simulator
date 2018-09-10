@@ -148,7 +148,7 @@ public class XbChainNodeManager {
         // 心跳协议
         C_XB_HEART_BEAT heartBeat = ProtocolFactory.createRequestProtocol(C_XB_HEART_BEAT.class, userSession.getCtx());
         SdkDeviceHeartBeatTask task = new SdkDeviceHeartBeatTask(userSession.getCtx(), heartBeat);
-        TaskManager.getInstance().addTickTask(task, 2, 60, TimeUnit.SECONDS);
+        TaskManager.getInstance().addTickTask(task, 2, 10, TimeUnit.SECONDS);
     }
 
     // 小白或者DOCKER登陆

@@ -19,13 +19,11 @@ public class RobotDataHolder {
 
     private static final Logger logger = LoggerFactory.getLogger(RobotDataHolder.class);
 
-    public static final int robotClientCount = 5000;
+    public static int robotClientCount = 100;
 
-    private static final CountDownLatch robotLatch = new CountDownLatch(robotClientCount);
+    private static CountDownLatch robotLatch = new CountDownLatch(robotClientCount);
 
     private static final Map<Integer, RobotVo> id2RotbotVoMap = new HashMap<>();
-
-    private static final Map<String, RobotVo> mac2RobotVoMap = new HashMap<>();
 
     static {
         Connection con = DbConnecter.getRobotDbConncetion();
@@ -50,7 +48,6 @@ public class RobotDataHolder {
                 RobotVo robotVo = new RobotVo();
                 robotVo.setMac(mac);
                 id2RotbotVoMap.put(id, robotVo);
-                mac2RobotVoMap.put(mac, robotVo);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -64,5 +61,10 @@ public class RobotDataHolder {
 
     public static CountDownLatch getRobotLatch() {
         return robotLatch;
+    }
+
+    public static void setRobotClientCountAndUpdateLatch(int robotClientCount){
+        RobotDataHolder.robotClientCount = robotClientCount;
+        RobotDataHolder.robotLatch = new CountDownLatch(robotClientCount);
     }
 }

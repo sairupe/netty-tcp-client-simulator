@@ -71,7 +71,7 @@ public class StatisticHolder {
         sb.append("robotHandShakeCount='").append(robotHandShakeCount.get()).append('\n');
         sb.append("robotSendLoginCount='").append(robotSendLoginCount.get()).append('\n');
         sb.append("robotRecvLoginCount='").append(robotRecvLoginCount.get()).append('\n');
-        sb.append("appGetTokenCount='").append(appGetTokenCount.get()).append("\n\n");
+        sb.append("robotGetTokenCount='").append(robotGetTokenCount.get()).append("\n\n");
 
         sb.append("appClientCount='").append(appClientCount.get()).append('\n');
         sb.append("appHearBeatTickCount='").append(appHearBeatTickCount.get()).append('\n');

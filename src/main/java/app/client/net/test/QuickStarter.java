@@ -2,6 +2,7 @@ package app.client.net.test;
 
 import app.client.data.AppDataHolder;
 import app.client.data.RobotDataHolder;
+import app.client.data.StatisticHolder;
 import app.client.data.TokenDataHolder;
 import app.client.net.dispacher.DispacherManager;
 import app.client.net.task.TaskManager;
@@ -21,10 +22,10 @@ import java.util.concurrent.CountDownLatch;
 public class QuickStarter {
 
     private static Logger logger = LoggerFactory.getLogger(QuickStarter.class);
-    private static final String tips = "参数格式不对，请输入【robot ID范围(闭区间)】【app ID范围（闭区间）】,如1-3000 1-3000";
+    private static final String tips = "参数格式不对，请输入【robot ID范围(闭区间)】【app ID范围（闭区间）】" +
+            "【是否启动ROBOT】【是否更新ROBOT TOKEN】【是否启动APP】【是否更新APP TOKEN】,如1-3000 1-3000 true false true false";
 
     public static final boolean PRESS_TEST = true;
-    public static final boolean INIT_TOKEN = false;
 
     private static int robotStart = 0;
     private static int robotEnd = 0;
@@ -33,12 +34,17 @@ public class QuickStarter {
 
     public static void main(String[] args) throws Exception {
 
-        if(args == null || args.length < 2){
+        if(args == null || args.length < 6){
             logger.error(tips);
+            return;
         }
 
         String robotIdRange = args[0];
         String appIdRange = args[1];
+        boolean startRobot = Boolean.parseBoolean(args[2]);
+        boolean initRobotToken = Boolean.parseBoolean(args[3]);
+        boolean startApp = Boolean.parseBoolean(args[4]);
+        boolean initAppToken = Boolean.parseBoolean(args[5]);
 
         String[] robotRange = robotIdRange.split("-");
         String[] appRange = appIdRange.split("-");
@@ -46,6 +52,18 @@ public class QuickStarter {
         robotEnd = Integer.parseInt(robotRange[1]);
         appStart = Integer.parseInt(appRange[0]);
         appEnd = Integer.parseInt(appRange[1]);
+        int robotCount = robotEnd - robotStart + 1;
+        int appCount = appEnd - appStart + 1;
+
+        if(robotStart > robotEnd || robotEnd < robotStart){
+            logger.info(tips);
+            return;
+        }
+
+        if(appStart > appEnd || appEnd < appStart){
+            logger.info(tips);
+            return;
+        }
 
         // 初始化NIO
         Class.forName("app.client.net.socket.EventLoopHolder");
@@ -58,6 +76,9 @@ public class QuickStarter {
         // 初始化数据机器、用户数据装载
         Class.forName("app.client.data.AppDataHolder");
         Class.forName("app.client.data.RobotDataHolder");
+        // 设置robot和app的模拟端数量
+        RobotDataHolder.setRobotClientCountAndUpdateLatch(robotCount);
+        AppDataHolder.setAppClientCountAndUpdateLatch(appCount);
         // 初始化分发器
         DispacherManager.getInstance().init();
         // 初始化线程池
@@ -65,12 +86,15 @@ public class QuickStarter {
 
         // 初始化统计任务打印
         TaskManager.getInstance().initStatiscTask();
-        // 初始化机器TOKEN
-        TokenUtil.initialAllRobotToken();
+        // 初始化 机器 TOKEN
+        TokenUtil.initialAllRobotToken(initRobotToken);
+        // 初始化 APP TOKEN
+        TokenUtil.initialAllAppToken(initAppToken);
         // 加载所有机器的Token
         TokenDataHolder.loadAllRobotToken();;
 
-        if(false){
+        if(startApp){
+            LogUtil.debug("启动APP 压测");
             Thread appStarter;
             if(PRESS_TEST){
                 appStarter = new Thread(new AppPressTestStartTask());
@@ -78,10 +102,10 @@ public class QuickStarter {
                 appStarter = new Thread(new AppNormalStartTask());
             }
             appStarter.start();
-            LogUtil.debug("启动APP");
         }
 
-        if(true){
+        if(startRobot){
+            LogUtil.debug("启动ROBOT 压测");
             Thread xbStarter;
             if(PRESS_TEST){
                 xbStarter = new Thread(new XbPressTestStartTask());
@@ -89,7 +113,6 @@ public class QuickStarter {
                 xbStarter = new Thread(new XbNormalStartTask());
             }
             xbStarter.start();
-            LogUtil.debug("启动XB完毕");
         }
 
         if(false){
@@ -103,12 +126,9 @@ public class QuickStarter {
     static class AppPressTestStartTask implements Runnable{
         @Override
         public void run() {
-            int startCount = 0;
-            int maxCount = AppDataHolder.appClientCount;
             CountDownLatch latch = new CountDownLatch(1);
             Map<Integer, UserVo> id2UserVoMap = AppDataHolder.getId2UserVoMap();
             for(Map.Entry<Integer, UserVo> entry : id2UserVoMap.entrySet()){
-                startCount++;
 
                 if(entry.getKey() < appStart || entry.getKey() > appEnd){
                     continue;
@@ -134,9 +154,6 @@ public class QuickStarter {
                     }
                 });
                 thread.start();
-//                if(startCount >= maxCount){
-//                    break;
-//                }
             }
             latch.countDown();
         }
@@ -145,12 +162,9 @@ public class QuickStarter {
     static class XbPressTestStartTask implements Runnable{
         @Override
         public void run() {
-            int startCount = 0;
-            int maxCount = RobotDataHolder.robotClientCount;
             final CountDownLatch latch = new CountDownLatch(1);
             Map<Integer, RobotVo> id2RotbotVoMap = RobotDataHolder.getId2RotbotVoMap();
             for(Map.Entry<Integer, RobotVo> entry : id2RotbotVoMap.entrySet()){
-                startCount++;
 
                 if(entry.getKey() < robotStart || entry.getKey() > robotEnd){
                     continue;
@@ -176,9 +190,6 @@ public class QuickStarter {
                     }
                 });
                 thread.start();
-//                if(startCount >= maxCount){
-//                    break;
-//                }
             }
             latch.countDown();
         }

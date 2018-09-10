@@ -20,9 +20,9 @@ public class AppDataHolder {
 
     private static final Logger logger = LoggerFactory.getLogger(AppDataHolder.class);
 
-    public static final int appClientCount = 5000;
+    public static int appClientCount = 100;
 
-    private static final CountDownLatch appLatch = new CountDownLatch(appClientCount);
+    private static CountDownLatch appLatch = new CountDownLatch(appClientCount);
 
     private static final Map<Integer, UserVo> id2UserVoMap = new HashMap<>();
 
@@ -60,5 +60,14 @@ public class AppDataHolder {
 
     public static Map<Integer, UserVo> getId2UserVoMap() {
         return id2UserVoMap;
+    }
+
+    public static CountDownLatch getAppLatch() {
+        return appLatch;
+    }
+
+    public static void setAppClientCountAndUpdateLatch(int appClientCount){
+        AppDataHolder.appClientCount = appClientCount;
+        appLatch = new CountDownLatch(appClientCount);
     }
 }
