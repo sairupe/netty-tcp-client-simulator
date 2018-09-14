@@ -10,6 +10,8 @@ import app.client.utils.TokenUtil;
 import app.client.vo.RobotVo;
 import app.client.vo.UserVo;
 import com.gowild.core.util.LogUtil;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +27,7 @@ public class QuickStarter {
     private static final String tips = "参数格式不对，请输入【robot ID范围(闭区间)】【app ID范围（闭区间）】" +
             "【是否启动ROBOT】【是否更新ROBOT TOKEN】【是否启动APP】【是否更新APP TOKEN】,如1-3000 1-3000 true false true false";
 
-    public static final boolean PRESS_TEST = true;
+    public static final boolean PRESS_TEST = false;
 
     private static int robotStart = 0;
     private static int robotEnd = 0;
@@ -38,7 +40,6 @@ public class QuickStarter {
             logger.error(tips);
             return;
         }
-
         String robotIdRange = args[0];
         String appIdRange = args[1];
         boolean startRobot = Boolean.parseBoolean(args[2]);
