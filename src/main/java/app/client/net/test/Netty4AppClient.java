@@ -33,13 +33,13 @@ public class Netty4AppClient implements Closeable{
     private String account;
     private String token;
 
-//    public static int PORT = 6030;
-//    public static final String HOST = "172.27.1.41";
-//    public static String TOKEN_URL = "http://172.27.1.41:6130/oauth/mobile/token";
-
     public static int PORT = 6030;
-    public static final String HOST = "172.27.1.49";
-    public static String TOKEN_URL = "http://172.27.1.49:6130/oauth/mobile/token";
+    public static final String HOST = "172.27.1.41";
+    public static String TOKEN_URL = "http://172.27.1.41:6130/oauth/mobile/token";
+
+//    public static int PORT = 6030;
+//    public static final String HOST = "172.27.1.49";
+//    public static String TOKEN_URL = "http://172.27.1.49:6130/oauth/mobile/token";
 
 //    public static final int PORT = 6030;
 //    public static final String HOST = "172.27.1.73";

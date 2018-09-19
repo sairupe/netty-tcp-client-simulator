@@ -27,7 +27,7 @@ public class QuickStarter {
     private static final String tips = "参数格式不对，请输入【robot ID范围(闭区间)】【app ID范围（闭区间）】" +
             "【是否启动ROBOT】【是否更新ROBOT TOKEN】【是否启动APP】【是否更新APP TOKEN】,如1-3000 1-3000 true false true false";
 
-    public static final boolean PRESS_TEST = false;
+    public static final boolean PRESS_TEST = true;
 
     private static int robotStart = 0;
     private static int robotEnd = 0;

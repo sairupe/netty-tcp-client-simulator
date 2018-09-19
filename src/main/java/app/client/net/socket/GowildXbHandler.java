@@ -20,6 +20,8 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -30,6 +32,8 @@ import java.util.concurrent.Executors;
  * @author Dream.xie
  */
 public final class GowildXbHandler extends ChannelInboundHandlerAdapter {
+
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     private String mac;
 
@@ -103,9 +107,9 @@ public final class GowildXbHandler extends ChannelInboundHandlerAdapter {
      */
     @Override
     public void exceptionCaught(final ChannelHandlerContext ctx, final Throwable cause) throws Exception {
-        LogUtil.error("{}调用NettySocketHandler的exceptionCaught方法。");
+        logger.error("{}调用NettySocketHandler的exceptionCaught方法。", cause);
         for(StackTraceElement e : cause.getStackTrace()){
-            LogUtil.error(e.toString());
+            logger.error(e.toString());
         }
     }
 

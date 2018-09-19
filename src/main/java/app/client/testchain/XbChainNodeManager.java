@@ -62,21 +62,26 @@ public class XbChainNodeManager {
 //        doXbOrDockerLogin(userSession, mac2307);
 
         // 2308  94:a1:a2:bd:93:d2 老友粉(XB)
-        String mac2308 = "94:a1:a2:bd:93:d2";
-        String token2308 = TokenUtil.getRobotToken(mac2308);
-        doXbOrDockerLogin(userSession, token2308);
+//        String mac2308 = "94:a1:a2:bd:93:d2";
+//        String token2308 = TokenUtil.getRobotToken(mac2308);
+//        doXbOrDockerLogin(userSession, token2308);
 
-//        String token = userSession.getRobotToken();
-//        doXbOrDockerLogin(userSession, token);
+        // TEST
+//        String testMac = "ac:83:f3:29:c9:60";
+//        String testToken = TokenUtil.getRobotToken(testMac);
+//        doXbOrDockerLogin(userSession, testToken);
+
+        String token = userSession.getRobotToken();
+        doXbOrDockerLogin(userSession, token);
 
         // 预留defaultclient 转换为xbclient的时间
-        CommonUtil.threadPause(2000);
+//        CommonUtil.threadPause(2000);
 
         //全量数据
 //        startingChainNode.addLastNext(new AddHomeBatchCommandNode());
 //        startingChainNode.addLastNext(new AddFloorBatchCommandNode());
 //        startingChainNode.addLastNext(new AddAreaBatchCommandNode());
-        startingChainNode.addLastNext(new SdkAddDeviceBatchCommandNode());
+//        startingChainNode.addLastNext(new SdkAddDeviceBatchCommandNode());
 
         // 同步设备指令
 //        startingChainNode.addLastNext(new SdkSyncDeviceCommandNode());
@@ -147,9 +152,9 @@ public class XbChainNodeManager {
         startingChainNode.start();
 
         // 心跳协议
-//        C_XB_HEART_BEAT heartBeat = ProtocolFactory.createRequestProtocol(C_XB_HEART_BEAT.class, userSession.getCtx());
-//        SdkDeviceHeartBeatTask task = new SdkDeviceHeartBeatTask(userSession.getCtx(), heartBeat);
-//        TaskManager.getInstance().addTickTask(task, 2, 1, TimeUnit.SECONDS);
+        C_XB_HEART_BEAT heartBeat = ProtocolFactory.createRequestProtocol(C_XB_HEART_BEAT.class, userSession.getCtx());
+        SdkDeviceHeartBeatTask task = new SdkDeviceHeartBeatTask(userSession.getCtx(), heartBeat);
+        TaskManager.getInstance().addTickTask(task, 2, 50, TimeUnit.SECONDS);
     }
 
     // 小白或者DOCKER登陆

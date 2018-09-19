@@ -14,21 +14,34 @@ public class StatisticHolder {
 
     private static final Logger logger = LoggerFactory.getLogger(StatisticHolder.class);
 
-    private static AtomicInteger robotClientCount = new AtomicInteger(0);
+    private static AtomicInteger robotClientStartCount = new AtomicInteger(0);
+    private static AtomicInteger robotClientMaxCount = new AtomicInteger(0);
+    private static AtomicInteger robotClientCurrentCount = new AtomicInteger(0);
+    private static AtomicInteger robotClientShutDownCount = new AtomicInteger(0);
     private static AtomicInteger robotHearBeatTickCount = new AtomicInteger(0);
     private static AtomicInteger robotHandShakeCount = new AtomicInteger(0);
     private static AtomicInteger robotSendLoginCount = new AtomicInteger(0);
     private static AtomicInteger robotRecvLoginCount = new AtomicInteger(0);
     private static AtomicInteger robotGetTokenCount = new AtomicInteger(0);
 
-    private static AtomicInteger appClientCount = new AtomicInteger(0);
+    private static AtomicInteger appClientStartCount = new AtomicInteger(0);
+    private static AtomicInteger appClientMaxCount = new AtomicInteger(0);
+    private static AtomicInteger appClientCurrentCount = new AtomicInteger(0);
+    private static AtomicInteger appClientShutDownCount = new AtomicInteger(0);
     private static AtomicInteger appHearBeatTickCount = new AtomicInteger(0);
     private static AtomicInteger appHandShakeCount = new AtomicInteger(0);
     private static AtomicInteger appSendLoginCount = new AtomicInteger(0);
     private static AtomicInteger appRecvLoginCount = new AtomicInteger(0);
     private static AtomicInteger appGetTokenCount = new AtomicInteger(0);
 
-    public static int incRobotClient(){ return robotClientCount.incrementAndGet();}
+    public static int incRobotClient(){
+        robotClientStartCount.incrementAndGet();
+        int newCount = robotClientCurrentCount.incrementAndGet();
+        if(newCount > robotClientMaxCount.get()){
+            robotClientMaxCount.incrementAndGet();
+        }
+        return newCount;
+    }
     public static int incRobotHeartBeatCount(){
         return robotHearBeatTickCount.incrementAndGet();
     }
@@ -39,7 +52,12 @@ public class StatisticHolder {
 
 
     public static int incAppClient(){
-        return appClientCount.incrementAndGet();
+        appClientStartCount.incrementAndGet();
+        int newCount = appClientCurrentCount.incrementAndGet();
+        if(newCount > appClientMaxCount.get()){
+            appClientMaxCount.incrementAndGet();
+        }
+        return newCount;
     }
     public static int incAppHeartBeatCount(){
         return  appHearBeatTickCount.incrementAndGet();
@@ -50,30 +68,40 @@ public class StatisticHolder {
     public static int incAppGetTokenCount(){return appGetTokenCount.incrementAndGet(); }
 
 
-    public static int decRobot(){ return robotClientCount.decrementAndGet();}
+    public static int decRobot(){
+        robotClientShutDownCount.incrementAndGet();
+        return robotClientCurrentCount.decrementAndGet();
+    }
     public static int decApp(){
-        return appClientCount.decrementAndGet();
+        appClientShutDownCount.incrementAndGet();
+        return appClientCurrentCount.decrementAndGet();
     }
 
     public static int getRobotCount() {
-        return robotClientCount.get();
+        return robotClientCurrentCount.get();
     }
     public static int getAppCount() {
-        return appClientCount.get();
+        return appClientCurrentCount.get();
     }
 
 
     public static void print() {
         final StringBuilder sb = new StringBuilder("======================>>>>>StatisticHolder{\n");
 
-        sb.append("robotClientCount='").append(robotClientCount.get()).append('\n');
+        sb.append("robotClientStartCount='").append(robotClientStartCount.get()).append('\n');
+        sb.append("robotClientMaxCount='").append(robotClientMaxCount.get()).append('\n');
+        sb.append("robotClientCurrentCount='").append(robotClientCurrentCount.get()).append('\n');
+        sb.append("robotClientShutDownCount='").append(robotClientShutDownCount.get()).append('\n');
         sb.append("robotHearBeatTickCount='").append(robotHearBeatTickCount.get()).append('\n');
         sb.append("robotHandShakeCount='").append(robotHandShakeCount.get()).append('\n');
         sb.append("robotSendLoginCount='").append(robotSendLoginCount.get()).append('\n');
         sb.append("robotRecvLoginCount='").append(robotRecvLoginCount.get()).append('\n');
         sb.append("robotGetTokenCount='").append(robotGetTokenCount.get()).append("\n\n");
 
-        sb.append("appClientCount='").append(appClientCount.get()).append('\n');
+        sb.append("appClientStartCount='").append(appClientStartCount.get()).append('\n');
+        sb.append("appClientCurrentCount='").append(appClientCurrentCount.get()).append('\n');
+        sb.append("appClientMaxCount='").append(appClientCurrentCount.get()).append('\n');
+        sb.append("appClientShutDownCount='").append(appClientShutDownCount.get()).append('\n');
         sb.append("appHearBeatTickCount='").append(appHearBeatTickCount.get()).append('\n');
         sb.append("appHandShakeCount='").append(appHandShakeCount.get()).append('\n');
         sb.append("appSendLoginCount='").append(appSendLoginCount.get()).append('\n');

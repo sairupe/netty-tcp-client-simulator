@@ -12,6 +12,7 @@ import com.google.common.annotations.VisibleForTesting;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
@@ -51,12 +52,27 @@ public class Netty4XbClient implements Closeable{
 //    public static final String TOKEN_URL = "http://172.27.1.73:6130/oauth/robot/token";
 
 
+//    public static final int PORT = 6030;
+//    public static final String HOST = "172.27.1.151";
+//    public static final String TOKEN_URL = "http://172.27.1.151/oauth/robot/token";
+
+//    public static final int PORT = 6030;
+//    public static final String HOST = "172.27.1.166";
+//    public static final String TOKEN_URL = "http://172.27.1.166/oauth/robot/token";
+//
+//    public static final int PORT = 6030;
+//    public static final String HOST = "172.27.1.180";
+//    public static final String TOKEN_URL = "http://172.27.1.180/oauth/robot/token";
+
+
+
     public void start() throws Exception{
         try {
             Bootstrap b = new Bootstrap();
             b.group(EventLoopHolder.getGroup());
             b.channel(NioSocketChannel.class);
             b.remoteAddress(new InetSocketAddress(HOST, PORT));
+            b.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 60000);
             b.handler(new ChannelInitializer<SocketChannel>() {
 
                 public void initChannel(SocketChannel ch) throws Exception {
@@ -76,7 +92,10 @@ public class Netty4XbClient implements Closeable{
             StatisticHolder.incRobotClient();
 //            logger.info("===================>>>>啓動XB BOOTSTRAP，目前CLIENT數量為：" + StatisticHolder.getRobotCount());
             f.channel().closeFuture().sync();
-        } finally {
+        } catch (Exception e){
+            logger.error("启动error", e);
+        }
+        finally {
 //            EventLoopHolder.getGroup().shutdownGracefully().sync();
         }
         StatisticHolder.decRobot();
