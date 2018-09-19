@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
+import java.util.Scanner;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -122,12 +123,20 @@ public class QuickStarter {
             Thread sdkStarter = new Thread(new SdkStartTask());
             sdkStarter.start();
         }
+
+        Scanner input=new Scanner(System.in);
+        String str=null;
+        do {
+            System.out.print("请输入:#结束程序");
+            str=input.next();
+        } while (!str.equals("#"));
+        System.out.println("程序结束!");
     }
 
     static class AppPressTestStartTask implements Runnable{
         @Override
         public void run() {
-            CountDownLatch latch = new CountDownLatch(1);
+//            CountDownLatch latch = new CountDownLatch(1);
             Map<Integer, UserVo> id2UserVoMap = AppDataHolder.getId2UserVoMap();
             for(Map.Entry<Integer, UserVo> entry : id2UserVoMap.entrySet()){
 
@@ -135,35 +144,49 @@ public class QuickStarter {
                     continue;
                 }
 
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Netty4AppClient appClient = new Netty4AppClient();
-                        String userName = entry.getValue().getUserName();
-                        appClient.setAccount(userName);
-                        String token = TokenDataHolder.getIdentifyToken(userName);
-                        appClient.setToken(token);
-                        try {
-//                            logger.info("===================>>>>啓動APP CLIENT綫程，目前CLIENT數量為：" + StatisticHolder.getAppCount());
-                            latch.await();
-                            appClient.init();
-                            appClient.start();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            appClient.close();
-                        }
+//                Thread thread = new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Netty4AppClient appClient = new Netty4AppClient();
+//                        String userName = entry.getValue().getUserName();
+//                        appClient.setAccount(userName);
+//                        String token = TokenDataHolder.getIdentifyToken(userName);
+//                        appClient.setToken(token);
+//                        try {
+////                            logger.info("===================>>>>啓動APP CLIENT綫程，目前CLIENT數量為：" + StatisticHolder.getAppCount());
+////                            latch.await();
+//                            appClient.init();
+//                            appClient.start();
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                            appClient.close();
+//                        }
+//                    }
+//                });
+//                thread.start();
+                TaskManager.getInstance().addCreateRobotTask(() ->{
+                    Netty4AppClient appClient = new Netty4AppClient();
+                    String userName = entry.getValue().getUserName();
+                    appClient.setAccount(userName);
+                    String token = TokenDataHolder.getIdentifyToken(userName);
+                    appClient.setToken(token);
+                    try {
+                        appClient.init();
+                        appClient.start();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        appClient.close();
                     }
                 });
-                thread.start();
             }
-            latch.countDown();
+//            latch.countDown();
         }
     }
 
     static class XbPressTestStartTask implements Runnable{
         @Override
         public void run() {
-            final CountDownLatch latch = new CountDownLatch(1);
+//            final CountDownLatch latch = new CountDownLatch(1);
             Map<Integer, RobotVo> id2RotbotVoMap = RobotDataHolder.getId2RotbotVoMap();
             for(Map.Entry<Integer, RobotVo> entry : id2RotbotVoMap.entrySet()){
 
@@ -171,28 +194,42 @@ public class QuickStarter {
                     continue;
                 }
 
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Netty4XbClient xbClient = new Netty4XbClient();
-                        try {
-                            String mac = entry.getValue().getMac();
-                            xbClient.setMac(mac);
-                            String token = TokenDataHolder.getIdentifyToken(mac);
-                            xbClient.setToken(token);
-//                            logger.info("===================>>>>啓動XB CLIENT綫程，目前CLIENT數量為：" + StatisticHolder.getRobotCount());
-                            latch.await();
-                            xbClient.init();
-                            xbClient.start();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            xbClient.close();
-                        }
+//                Thread thread = new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Netty4XbClient xbClient = new Netty4XbClient();
+//                        try {
+//                            String mac = entry.getValue().getMac();
+//                            xbClient.setMac(mac);
+//                            String token = TokenDataHolder.getIdentifyToken(mac);
+//                            xbClient.setToken(token);
+////                            logger.info("===================>>>>啓動XB CLIENT綫程，目前CLIENT數量為：" + StatisticHolder.getRobotCount());
+////                            latch.await();
+//                            xbClient.init();
+//                            xbClient.start();
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                            xbClient.close();
+//                        }
+//                    }
+//                });
+//                thread.start();
+                TaskManager.getInstance().addCreateRobotTask(() -> {
+                    Netty4XbClient xbClient = new Netty4XbClient();
+                    try {
+                        String mac = entry.getValue().getMac();
+                        xbClient.setMac(mac);
+                        String token = TokenDataHolder.getIdentifyToken(mac);
+                        xbClient.setToken(token);
+                        xbClient.init();
+                        xbClient.start();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        xbClient.close();
                     }
                 });
-                thread.start();
             }
-            latch.countDown();
+//            latch.countDown();
         }
     }
 

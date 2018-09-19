@@ -43,9 +43,9 @@ public class Netty4XbClient implements Closeable{
 //    public static final String HOST = "172.27.1.41";
 //    public static final String TOKEN_URL = "http://172.27.1.41:6130/oauth/robot/token";
 
-    public static final int PORT = 6030;
-    public static final String HOST = "172.27.1.49";
-    public static final String TOKEN_URL = "http://172.27.1.49:6130/oauth/robot/token";
+//    public static final int PORT = 6030;
+//    public static final String HOST = "172.27.1.49";
+//    public static final String TOKEN_URL = "http://172.27.1.49:6130/oauth/robot/token";
 
 //    public static final int PORT = 6030;
 //    public static final String HOST = "172.27.1.73";
@@ -56,9 +56,9 @@ public class Netty4XbClient implements Closeable{
 //    public static final String HOST = "172.27.1.151";
 //    public static final String TOKEN_URL = "http://172.27.1.151/oauth/robot/token";
 
-//    public static final int PORT = 6030;
-//    public static final String HOST = "172.27.1.166";
-//    public static final String TOKEN_URL = "http://172.27.1.166/oauth/robot/token";
+    public static final int PORT = 6030;
+    public static final String HOST = "172.27.1.166";
+    public static final String TOKEN_URL = "http://172.27.1.166/oauth/robot/token";
 //
 //    public static final int PORT = 6030;
 //    public static final String HOST = "172.27.1.180";
@@ -91,7 +91,7 @@ public class Netty4XbClient implements Closeable{
             ChannelFuture f = b.connect().sync();
             StatisticHolder.incRobotClient();
 //            logger.info("===================>>>>啓動XB BOOTSTRAP，目前CLIENT數量為：" + StatisticHolder.getRobotCount());
-            f.channel().closeFuture().sync();
+//            f.channel().closeFuture().sync();
         } catch (Exception e){
             logger.error("启动error", e);
         }

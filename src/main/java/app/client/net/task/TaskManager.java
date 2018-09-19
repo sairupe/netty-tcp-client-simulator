@@ -93,7 +93,9 @@ public class TaskManager {
 
 	private ScheduledExecutorService tickThreadPool = Executors.newScheduledThreadPool(5);
 	
-	private ExecutorService miscThreadPool = Executors.newFixedThreadPool(20);
+	private ExecutorService miscThreadPool = Executors.newFixedThreadPool(10);
+
+	private ExecutorService createRobotThreadPool = Executors.newFixedThreadPool(10);
 
     /**
     * 把请求协议放入队列
@@ -131,6 +133,10 @@ public class TaskManager {
 
 	public void addMiscTask(Runnable scheduleTask){
 		miscThreadPool.execute(scheduleTask);
+	}
+
+	public void addCreateRobotTask(Runnable scheduleTask){
+		createRobotThreadPool.execute(scheduleTask);
 	}
 
 	public void shutDownMisc(){
