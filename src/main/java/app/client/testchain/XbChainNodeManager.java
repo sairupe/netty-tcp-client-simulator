@@ -6,6 +6,8 @@ import app.client.net.protocol.request.C_DOCKER_LOGIN;
 import app.client.net.protocol.request.C_XB_HEART_BEAT;
 import app.client.net.task.sdk.SdkDeviceHeartBeatTask;
 import app.client.net.task.TaskManager;
+import app.client.net.test.QuickStarter;
+import app.client.testchain.plugin.RobotNotifyPluginTimeExecuteCommandNode;
 import app.client.testchain.sdk.SdkTestConst;
 import app.client.testchain.db.BaseDbInfoInsertNode;
 import app.client.testchain.sdk.protocol.area.AddAreaBatchCommandNode;
@@ -66,16 +68,26 @@ public class XbChainNodeManager {
 //        String token2308 = TokenUtil.getRobotToken(mac2308);
 //        doXbOrDockerLogin(userSession, token2308);
 
-        // TEST
+        // TEST LOGIN
 //        String testMac = "ac:83:f3:29:c9:60";
 //        String testToken = TokenUtil.getRobotToken(testMac);
 //        doXbOrDockerLogin(userSession, testToken);
 
-        String token = userSession.getRobotToken();
-        doXbOrDockerLogin(userSession, token);
+        //正常压测登录
+        if(QuickStarter.PRESS_TEST){
+            String token = userSession.getRobotToken();
+            doXbOrDockerLogin(userSession, token);
+        }
 
         // 预留defaultclient 转换为xbclient的时间
-//        CommonUtil.threadPause(2000);
+        if(!QuickStarter.PRESS_TEST){
+            CommonUtil.threadPause(2000);
+        }
+
+        // 插座定时触发测试
+//        RobotNotifyPluginTimeExecuteCommandNode notifyPluginTimeExecuteCommandNode
+//                = new RobotNotifyPluginTimeExecuteCommandNode(1, mac2308);
+//        startingChainNode.addLastNext(notifyPluginTimeExecuteCommandNode);
 
         //全量数据
 //        startingChainNode.addLastNext(new AddHomeBatchCommandNode());
@@ -164,5 +176,4 @@ public class XbChainNodeManager {
         loginCmd.setToken(token);
         userSession.sendMsg(loginCmd);
     }
-
 }
