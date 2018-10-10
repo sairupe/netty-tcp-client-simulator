@@ -5,9 +5,9 @@ package app.client.vo;
  */
 public class UserVo {
 
-    private String userName;
+    private int accountId;
 
-    private String token;
+    private String userName;
 
     public String getUserName() {
         return userName;
@@ -17,11 +17,11 @@ public class UserVo {
         this.userName = userName;
     }
 
-    public String getToken() {
-        return token;
+    public int getAccountId() {
+        return accountId;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
     }
 }

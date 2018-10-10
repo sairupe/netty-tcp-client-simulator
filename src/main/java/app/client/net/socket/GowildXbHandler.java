@@ -14,7 +14,10 @@ import app.client.net.task.xb.XbChainNodeTask;
 import app.client.user.session.ConnectStatus;
 import app.client.user.session.UserSession;
 import app.client.user.session.UserSessionManager;
+import app.client.utils.ClientUtil;
 import com.gowild.core.util.LogUtil;
+import com.gowild.sdk.protocol.SdkMsgType;
+import com.gowild.sdk.util.SdkUtils;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.socket.nio.NioSocketChannel;
@@ -39,6 +42,8 @@ public final class GowildXbHandler extends ChannelInboundHandlerAdapter {
 
     private String token;
 
+    private int robotId;
+
     public GowildXbHandler() {
         ServiceManager.injectionReceiver(this);
     }
@@ -48,15 +53,15 @@ public final class GowildXbHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         StatisticHolder.incRobotHandShakeCount();
-        long channelId = System.currentTimeMillis();
+        long uid = ClientUtil.buildRobotClientSessionKey(robotId);
         UserSession userSession = new UserSession(ctx);
         userSession.setConnectStatus(ConnectStatus.CONNECTING);
-        userSession.setUid(channelId);
+        userSession.setUid(uid);
         userSession.setMac(mac);
         userSession.setRobotToken(token);
         NioSocketChannel nioSocketChannel = (NioSocketChannel) ctx.channel();
         nioSocketChannel.attr(GowildHandler.USER_SESSION).set(userSession);
-        UserSessionManager.getInstance().addUserSession(channelId, userSession);
+        UserSessionManager.getInstance().addUserSession(uid, userSession);
 //        userServiceImpl.xbLogin(userSession);
 
         XbChainNodeTask xbChainNodeTask = new XbChainNodeTask();
@@ -124,5 +129,9 @@ public final class GowildXbHandler extends ChannelInboundHandlerAdapter {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public void setRobotId(int robotId) {
+        this.robotId = robotId;
     }
 }

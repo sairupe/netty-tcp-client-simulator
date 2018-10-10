@@ -47,6 +47,7 @@ public class RobotDataHolder {
                 String mac = rs0.getString(2);
                 RobotVo robotVo = new RobotVo();
                 robotVo.setMac(mac);
+                robotVo.setRobotId(id);
                 id2RotbotVoMap.put(id, robotVo);
             }
         } catch (SQLException e) {

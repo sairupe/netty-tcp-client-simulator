@@ -5,9 +5,9 @@ package app.client.vo;
  */
 public class RobotVo {
 
-    private String mac;
+    private int robotId;
 
-    private String token;
+    private String mac;
 
     public String getMac() {
         return mac;
@@ -17,11 +17,11 @@ public class RobotVo {
         this.mac = mac;
     }
 
-    public String getToken() {
-        return token;
+    public int getRobotId() {
+        return robotId;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setRobotId(int robotId) {
+        this.robotId = robotId;
     }
 }

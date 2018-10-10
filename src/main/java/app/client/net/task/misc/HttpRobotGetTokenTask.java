@@ -27,7 +27,6 @@ public class HttpRobotGetTokenTask implements Runnable {
         String robotToken = TokenUtil.getRobotToken(mac);
         StatisticHolder.incRobotGetTokenCount();
         logger.info("====>>>>>获取机器 mac:【{}】的token：【{}】", mac, robotToken);
-        robotVo.setToken(robotToken);
         TokenDataHolder.updateToken(mac, robotToken);
         RobotDataHolder.getRobotLatch().countDown();
     }

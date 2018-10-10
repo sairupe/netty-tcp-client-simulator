@@ -49,6 +49,7 @@ public class AppDataHolder {
                 String userName = rs0.getString(2);
                 UserVo userVo = new UserVo();
                 userVo.setUserName(userName);
+                userVo.setAccountId(id);
                 id2UserVoMap.put(id, userVo);
                 account2UserVoMap.put(userName, userVo);
             }

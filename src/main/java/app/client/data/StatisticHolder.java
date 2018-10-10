@@ -2,6 +2,7 @@ package app.client.data;
 
 import app.client.net.task.TaskManager;
 import app.client.service.sdk.area.AreaServiceImpl;
+import app.client.user.session.UserSessionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -86,6 +87,8 @@ public class StatisticHolder {
 
 
     public static void print() {
+
+
         final StringBuilder sb = new StringBuilder("======================>>>>>StatisticHolder{\n");
 
         sb.append("robotClientStartCount='").append(robotClientStartCount.get()).append('\n');

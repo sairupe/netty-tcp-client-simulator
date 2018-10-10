@@ -14,6 +14,7 @@ import app.client.net.task.app.AppChainNodeTask;
 import app.client.user.session.ConnectStatus;
 import app.client.user.session.UserSession;
 import app.client.user.session.UserSessionManager;
+import app.client.utils.ClientUtil;
 import com.gowild.core.util.LogUtil;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -40,6 +41,8 @@ public final class GowildAppHandler extends ChannelInboundHandlerAdapter {
 
     private String token;
 
+    private int accountId;
+
     public GowildAppHandler() {
         ServiceManager.injectionReceiver(this);
     }
@@ -49,15 +52,15 @@ public final class GowildAppHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         StatisticHolder.incAppHandShakeCount();
-        long channelId = System.currentTimeMillis();
+        long uid = ClientUtil.buildAppClientSessionKey(accountId);
         UserSession userSession = new UserSession(ctx);
         userSession.setConnectStatus(ConnectStatus.CONNECTING);
-        userSession.setUid(channelId);
+        userSession.setUid(uid);
         userSession.setAccount(account);
         userSession.setAppToken(token);
         NioSocketChannel nioSocketChannel = (NioSocketChannel) ctx.channel();
         nioSocketChannel.attr(GowildHandler.USER_SESSION).set(userSession);
-        UserSessionManager.getInstance().addUserSession(channelId, userSession);
+        UserSessionManager.getInstance().addUserSession(uid, userSession);
 //        userServiceImpl.appLogin(userSession);
 
         AppChainNodeTask appChainNodeTask = new AppChainNodeTask();
@@ -125,5 +128,9 @@ public final class GowildAppHandler extends ChannelInboundHandlerAdapter {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
     }
 }

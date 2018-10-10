@@ -28,7 +28,7 @@ public class QuickStarter {
     private static final String tips = "参数格式不对，请输入【robot ID范围(闭区间)】【app ID范围（闭区间）】" +
             "【是否启动ROBOT】【是否更新ROBOT TOKEN】【是否启动APP】【是否更新APP TOKEN】,如1-3000 1-3000 true false true false";
 
-    public static final boolean PRESS_TEST = true;
+    public static final boolean PRESS_TEST = false;
 
     private static int robotStart = 0;
     private static int robotEnd = 0;
@@ -166,10 +166,12 @@ public class QuickStarter {
 //                thread.start();
                 TaskManager.getInstance().addCreateRobotTask(() ->{
                     Netty4AppClient appClient = new Netty4AppClient();
-                    String userName = entry.getValue().getUserName();
+                    UserVo userVo = entry.getValue();
+                    String userName = userVo.getUserName();
                     appClient.setAccount(userName);
                     String token = TokenDataHolder.getIdentifyToken(userName);
                     appClient.setToken(token);
+                    appClient.setAccountId(userVo.getAccountId());
                     try {
                         appClient.init();
                         appClient.start();
@@ -217,10 +219,12 @@ public class QuickStarter {
                 TaskManager.getInstance().addCreateRobotTask(() -> {
                     Netty4XbClient xbClient = new Netty4XbClient();
                     try {
-                        String mac = entry.getValue().getMac();
+                        RobotVo robotVo = entry.getValue();
+                        String mac = robotVo.getMac();
                         xbClient.setMac(mac);
                         String token = TokenDataHolder.getIdentifyToken(mac);
                         xbClient.setToken(token);
+                        xbClient.setRobotId(robotVo.getRobotId());
                         xbClient.init();
                         xbClient.start();
                     } catch (Exception e) {

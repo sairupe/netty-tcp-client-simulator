@@ -60,6 +60,7 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
         int code = loginResult.getCode();
         String desc = loginResult.getDesc();
         StatisticHolder.incRobotRecvLoginCount();
+        response.getUserSession().setReceivLoginResultTime(System.currentTimeMillis());
 //        logger.info("====== >>> XB登陆结果，code:" + code + " | desc: " + desc);
     }
 
@@ -69,6 +70,7 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
         int code = loginResult.getCode();
         String desc = loginResult.getDesc();
         StatisticHolder.incAppRecvLoginCount();
+        response.getUserSession().setReceivLoginResultTime(System.currentTimeMillis());
         logger.info("====== >>> APP登陆结果，code:" + code + " | desc: " + desc);
     }
 

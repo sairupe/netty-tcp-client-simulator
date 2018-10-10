@@ -31,10 +31,9 @@ public class Netty4XbClient implements Closeable{
     private static final Logger logger = LoggerFactory
             .getLogger(Netty4XbClient.class);
 
-    private static final int DEFAULT_MSG_SIZE_LIMIT = 1200;
-
     private String mac;
     private String token;
+    private int robotId;
 
 //    private final int PORT = 6100;
 //    private final String HOST = "tcp01.xb.test01.gowild.top";
@@ -50,9 +49,9 @@ public class Netty4XbClient implements Closeable{
 //    public static final String TOKEN_URL = "http://172.27.1.49:6130/web/oauth/robot/token";
 
 //    开发服
-//    public static final int PORT = 6030;
-//    public static final String HOST = "172.27.1.73";
-//    public static final String TOKEN_URL = "http://172.27.1.73:6130/oauth/robot/token";
+    public static final int PORT = 6030;
+    public static final String HOST = "172.27.1.73";
+    public static final String TOKEN_URL = "http://172.27.1.73:6130/oauth/robot/token";
 
 //    内网机子
 //    public static final int PORT = 6030;
@@ -68,9 +67,9 @@ public class Netty4XbClient implements Closeable{
 //    public static final String TOKEN_URL = "http://172.27.1.180/oauth/robot/token";
 
 //    外网4.0
-    public static final int PORT = 6030;
-    public static final String HOST = "jarvis-tcp.gowild.info";
-    public static final String TOKEN_URL = "http://jarvis-tcp.gowild.info/oauth/robot/token";
+//    public static final int PORT = 6030;
+//    public static final String HOST = "jarvis-tcp.gowild.info";
+//    public static final String TOKEN_URL = "http://jarvis-tcp.gowild.info/oauth/robot/token";
 
 
 
@@ -93,6 +92,7 @@ public class Netty4XbClient implements Closeable{
                     GowildXbHandler gowildXbHandler = new GowildXbHandler();
                     gowildXbHandler.setMac(mac);
                     gowildXbHandler.setToken(token);
+                    gowildXbHandler.setRobotId(robotId);
                     ch.pipeline().addLast(gowildXbHandler);
                 }
             });
@@ -128,5 +128,9 @@ public class Netty4XbClient implements Closeable{
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public void setRobotId(int robotId) {
+        this.robotId = robotId;
     }
 }

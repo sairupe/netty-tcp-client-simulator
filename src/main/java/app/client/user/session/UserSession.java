@@ -44,6 +44,12 @@ public class UserSession {
 	// ROBOT TOKEN
 	private String robotToken;
 
+	// 登陆时间
+	private long loginTime;
+
+	// 收到登陆相应时间
+	private long receivLoginResultTime;
+
     public void sendMsg(RequestProtocol request){
 		TaskManager.getInstance().addRequest2Queue(request);
 	}
@@ -107,5 +113,21 @@ public class UserSession {
 
 	public void setRobotToken(String robotToken) {
 		this.robotToken = robotToken;
+	}
+
+	public long getLoginTime() {
+		return loginTime;
+	}
+
+	public void setLoginTime(long loginTime) {
+		this.loginTime = loginTime;
+	}
+
+	public long getReceivLoginResultTime() {
+		return receivLoginResultTime;
+	}
+
+	public void setReceivLoginResultTime(long receivLoginResultTime) {
+		this.receivLoginResultTime = receivLoginResultTime;
 	}
 }
