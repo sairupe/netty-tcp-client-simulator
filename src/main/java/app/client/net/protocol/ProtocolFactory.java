@@ -130,7 +130,7 @@ public class ProtocolFactory {
 
 	@SuppressWarnings("unchecked")
     public static <T extends ResponseProtocol> T getResponseProtocol(
-            int moduleId, int sequenceId, ChannelBuffer buffer, long channelId){
+            int moduleId, int sequenceId, ChannelBuffer buffer, long uid){
 		ResponseProtocol protype = null;
         try{
             int key = ClientUtil.buildProtocolKey(moduleId, sequenceId);
@@ -154,7 +154,7 @@ public class ProtocolFactory {
             protype.setModuleIdAndSequenceId(moduleId, sequenceId,
                     ProtocolType.RESPONSE);
             protype.setUserSession(UserSessionManager.getInstance()
-                    .getUserSessionByChannelId(channelId));
+                    .getUserSessionByUid(uid));
             protype.setBuffer(buffer);
             protype.readBinaryData();
             return (T) protype;

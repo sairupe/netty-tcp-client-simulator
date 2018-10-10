@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * 游戏Socket处理
@@ -44,6 +45,8 @@ public final class GowildXbHandler extends ChannelInboundHandlerAdapter {
 
     private int robotId;
 
+    private Future<?> loginFuture;
+
     public GowildXbHandler() {
         ServiceManager.injectionReceiver(this);
     }
@@ -59,6 +62,8 @@ public final class GowildXbHandler extends ChannelInboundHandlerAdapter {
         userSession.setUid(uid);
         userSession.setMac(mac);
         userSession.setRobotToken(token);
+        userSession.setLoginFuture(loginFuture);
+        userSession.setClientType(SdkMsgType.XB_CLIENT_TYPE);
         NioSocketChannel nioSocketChannel = (NioSocketChannel) ctx.channel();
         nioSocketChannel.attr(GowildHandler.USER_SESSION).set(userSession);
         UserSessionManager.getInstance().addUserSession(uid, userSession);
@@ -133,5 +138,9 @@ public final class GowildXbHandler extends ChannelInboundHandlerAdapter {
 
     public void setRobotId(int robotId) {
         this.robotId = robotId;
+    }
+
+    public void setLoginFuture(Future<?> loginFuture) {
+        this.loginFuture = loginFuture;
     }
 }

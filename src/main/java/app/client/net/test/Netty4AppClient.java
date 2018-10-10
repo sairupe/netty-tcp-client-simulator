@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.Closeable;
 import java.net.InetSocketAddress;
+import java.util.concurrent.Future;
 
 /**
  * @author syriana.zh
@@ -33,6 +34,7 @@ public class Netty4AppClient implements Closeable{
     private String account;
     private String token;
     private int accountId;
+    private Future<?> loginFuture;
 
     public static int PORT = 6030;
     public static final String HOST = "172.27.1.41";
@@ -62,6 +64,7 @@ public class Netty4AppClient implements Closeable{
                     gowildAppHandler.setAccount(account);
                     gowildAppHandler.setToken(token);
                     gowildAppHandler.setAccountId(accountId);
+                    gowildAppHandler.setLoginFuture(loginFuture);
                     ch.pipeline().addLast(gowildAppHandler);
 
                 }
@@ -99,5 +102,9 @@ public class Netty4AppClient implements Closeable{
 
     public void setAccountId(int accountId) {
         this.accountId = accountId;
+    }
+
+    public void setLoginFuture(Future<?> loginFuture) {
+        this.loginFuture = loginFuture;
     }
 }

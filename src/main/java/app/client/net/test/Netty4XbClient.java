@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.Closeable;
 import java.net.InetSocketAddress;
+import java.util.concurrent.Future;
 
 /**
  * @author syriana.zh
@@ -34,6 +35,9 @@ public class Netty4XbClient implements Closeable{
     private String mac;
     private String token;
     private int robotId;
+
+    private Future<?> loginFuture;
+
 
 //    private final int PORT = 6100;
 //    private final String HOST = "tcp01.xb.test01.gowild.top";
@@ -93,6 +97,7 @@ public class Netty4XbClient implements Closeable{
                     gowildXbHandler.setMac(mac);
                     gowildXbHandler.setToken(token);
                     gowildXbHandler.setRobotId(robotId);
+                    gowildXbHandler.setLoginFuture(loginFuture);
                     ch.pipeline().addLast(gowildXbHandler);
                 }
             });
@@ -116,12 +121,6 @@ public class Netty4XbClient implements Closeable{
     public void init() throws Exception{
     }
 
-    public static void main(String[] args) throws Exception {
-        Netty4XbClient xbClient = new Netty4XbClient();
-        xbClient.init();
-        xbClient.start();
-    }
-
     public void setMac(String mac) {
         this.mac = mac;
     }
@@ -132,5 +131,9 @@ public class Netty4XbClient implements Closeable{
 
     public void setRobotId(int robotId) {
         this.robotId = robotId;
+    }
+
+    public void setLoginFuture(Future<?> loginFuture) {
+        this.loginFuture = loginFuture;
     }
 }

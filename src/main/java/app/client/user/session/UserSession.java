@@ -6,6 +6,7 @@ import java.util.concurrent.Future;
 
 import app.client.net.protocol.RequestProtocol;
 import app.client.net.task.TaskManager;
+import com.gowild.sdk.protocol.SdkMsgType;
 import io.netty.channel.ChannelHandlerContext;
 
 /**
@@ -15,14 +16,17 @@ import io.netty.channel.ChannelHandlerContext;
  * 2016年4月18日 上午9:57:04
  */
 public class UserSession {
-	
+
+	private byte clientType;
+
 	private ChannelHandlerContext ctx;
 	
 	private long uid;
 	
 	private ConnectStatus connectStatus;
-	
-	private Future<?> tickTaskFuture;
+
+	// 登陆的future
+	private Future<?> loginFuture;
 	
 	public UserSession(ChannelHandlerContext ctx){
 		this.ctx = ctx;
@@ -74,15 +78,6 @@ public class UserSession {
 		this.uid = uid;
 	}
 
-    /**
-    * 取消心跳包的定时任务
-    */
-	public void cancelTickTask(){
-		if(tickTaskFuture != null){
-			tickTaskFuture.cancel(true);
-		}
-	}
-
 	public void setAccount(String account) {
 		this.account = account;
 	}
@@ -129,5 +124,29 @@ public class UserSession {
 
 	public void setReceivLoginResultTime(long receivLoginResultTime) {
 		this.receivLoginResultTime = receivLoginResultTime;
+	}
+
+	public void setLoginFuture(Future<?> loginFuture) {
+		this.loginFuture = loginFuture;
+	}
+
+	public Future<?> getLoginFuture() {
+		return loginFuture;
+	}
+
+	public void setClientType(byte clientType) {
+		this.clientType = clientType;
+	}
+
+	public byte getClientType() {
+		return clientType;
+	}
+
+	public int getRobotId(){
+    	return (int) (uid >> 2);
+	}
+
+	public int getAccountId(){
+		return (int) (uid >> 2);
 	}
 }

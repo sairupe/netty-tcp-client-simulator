@@ -17,28 +17,32 @@ public class UserSessionManager {
 		
 	}
 	
-	private Map<Long, UserSession> channelId2SessionMap = new ConcurrentHashMap<Long, UserSession>();
+	private Map<Long, UserSession> uid2SessionMap = new ConcurrentHashMap<Long, UserSession>();
 	
 	
-	public void addUserSession(long channelId, UserSession userSession){
-		if(!channelId2SessionMap.containsKey(channelId)){
-			channelId2SessionMap.put(channelId, userSession);
+	public void addUserSession(long uid, UserSession userSession){
+		if(!uid2SessionMap.containsKey(uid)){
+			uid2SessionMap.put(uid, userSession);
 		}
 	}
 	
-	public void removeUserSessionByChannelId(long channelId){
-		if(channelId2SessionMap.containsKey(channelId)){
-			UserSession userSession = channelId2SessionMap.get(channelId);
-			userSession.cancelTickTask();
-			channelId2SessionMap.remove(channelId);
+	public void removeUserSessionByUid(long uid){
+		if(uid2SessionMap.containsKey(uid)){
+			UserSession userSession = uid2SessionMap.get(uid);
+			uid2SessionMap.remove(uid);
+			userSession.getCtx().close();
 		}
 	}
 	
-	public UserSession getUserSessionByChannelId(long channelId){
-		return channelId2SessionMap.get(channelId);
+	public UserSession getUserSessionByUid(long uid){
+		return uid2SessionMap.get(uid);
 	}
 	
 	public static UserSessionManager getInstance(){
 		return instance;
+	}
+
+	public Map<Long, UserSession> getUid2SessionMap() {
+		return uid2SessionMap;
 	}
 }

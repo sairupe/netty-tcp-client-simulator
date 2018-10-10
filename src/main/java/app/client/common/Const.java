@@ -15,9 +15,9 @@ public class Const {
     */
 	public static final long TICK_PERIOD = 20;
 	        /**
-    * 定时断线重连时间/秒
+    * 定时断线重连时间/ms
     */
-	public static final byte RECONNECT_PERIOD = 3; 
+	public static final long RECONNECT_PERIOD = 30000;
 	        /**
     * 断线重连次数
     */

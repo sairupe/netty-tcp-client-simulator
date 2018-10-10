@@ -16,6 +16,7 @@ import app.client.user.session.UserSession;
 import app.client.user.session.UserSessionManager;
 import app.client.utils.ClientUtil;
 import com.gowild.core.util.LogUtil;
+import com.gowild.sdk.protocol.SdkMsgType;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -27,6 +28,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * 游戏Socket处理
@@ -43,6 +45,8 @@ public final class GowildAppHandler extends ChannelInboundHandlerAdapter {
 
     private int accountId;
 
+    private Future<?> loginFuture;
+
     public GowildAppHandler() {
         ServiceManager.injectionReceiver(this);
     }
@@ -58,6 +62,8 @@ public final class GowildAppHandler extends ChannelInboundHandlerAdapter {
         userSession.setUid(uid);
         userSession.setAccount(account);
         userSession.setAppToken(token);
+        userSession.setLoginFuture(loginFuture);
+        userSession.setClientType(SdkMsgType.APP_CLIENT_TYPE);
         NioSocketChannel nioSocketChannel = (NioSocketChannel) ctx.channel();
         nioSocketChannel.attr(GowildHandler.USER_SESSION).set(userSession);
         UserSessionManager.getInstance().addUserSession(uid, userSession);
@@ -132,5 +138,9 @@ public final class GowildAppHandler extends ChannelInboundHandlerAdapter {
 
     public void setAccountId(int accountId) {
         this.accountId = accountId;
+    }
+
+    public void setLoginFuture(Future<?> loginFuture) {
+        this.loginFuture = loginFuture;
     }
 }

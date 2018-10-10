@@ -1,11 +1,18 @@
 package app.client.data;
 
+import app.client.common.Const;
 import app.client.net.task.TaskManager;
+import app.client.net.test.QuickStarter;
 import app.client.service.sdk.area.AreaServiceImpl;
+import app.client.user.session.UserSession;
 import app.client.user.session.UserSessionManager;
+import com.gowild.sdk.protocol.SdkMsgType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -88,8 +95,43 @@ public class StatisticHolder {
 
     public static void print() {
 
+        // 检测登陆超时
+        List<Long> loginOutTimeList = new ArrayList();
+        long totalTime = 0;
+        Map<Long, UserSession> channelId2SessionMap = UserSessionManager.getInstance().getUid2SessionMap();
+        for(Map.Entry<Long, UserSession> entry : channelId2SessionMap.entrySet()){
+            UserSession userSession = entry.getValue();
+            long loginTime = userSession.getLoginTime();
+            long receivLoginTime = userSession.getReceivLoginResultTime();
+            if(receivLoginTime > 0){
+                totalTime += (receivLoginTime - userSession.getLoginTime());
+            }
+            long fromTime = System.currentTimeMillis() - loginTime;
+            long differTime = receivLoginTime - loginTime;
+            if((fromTime > Const.RECONNECT_PERIOD && receivLoginTime == 0) || differTime > Const.RECONNECT_PERIOD){
+                loginOutTimeList.add(userSession.getUid());
+            }
+        }
+        for(Long uid : loginOutTimeList){
+            UserSession userSession = UserSessionManager.getInstance().getUserSessionByUid(uid);
+            UserSessionManager.getInstance().removeUserSessionByUid(uid);
+            logger.info("===>>>客户端重连####  mac:{} // account:{}, ", userSession.getMac(), userSession.getAccount());
+            if(userSession.getClientType() == SdkMsgType.XB_CLIENT_TYPE){
+                QuickStarter.quickStartRobot(userSession.getMac(), userSession.getRobotId());
+            } else if(userSession.getClientType() == SdkMsgType.APP_CLIENT_TYPE){
+                QuickStarter.quickStartApp(userSession.getAccount(), userSession.getAccountId());
+            }
+        }
 
-        final StringBuilder sb = new StringBuilder("======================>>>>>StatisticHolder{\n");
+
+        final StringBuilder sb = new StringBuilder("======================>>>>>StatisticHolder{\n\n");
+
+        // 计算平均登陆时间
+        float avgLoginTime = -1;
+        if(totalTime > 0){
+            avgLoginTime = totalTime * 1.0f / channelId2SessionMap.size();
+        }
+        sb.append("avgLoginTime='").append(avgLoginTime).append(" ms \n\n");
 
         sb.append("robotClientStartCount='").append(robotClientStartCount.get()).append('\n');
         sb.append("robotClientMaxCount='").append(robotClientMaxCount.get()).append('\n');

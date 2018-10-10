@@ -69,9 +69,9 @@ public class XbChainNodeManager {
 //        doXbOrDockerLogin(userSession, token2308);
 
         // TEST LOGIN
-        String testMac = "94:a1:a2:f4:5d:d5";
-        String testToken = TokenUtil.getRobotToken(testMac);
-        doXbOrDockerLogin(userSession, testToken);
+//        String testMac = "94:a1:a2:f4:5d:d5";
+//        String testToken = TokenUtil.getRobotToken(testMac);
+//        doXbOrDockerLogin(userSession, testToken);
 
         //正常压测登录
         if(QuickStarter.PRESS_TEST){

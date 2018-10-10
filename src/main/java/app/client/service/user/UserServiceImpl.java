@@ -10,6 +10,7 @@ import app.client.net.protocol.response.S_XB_HEART_BEAT;
 import app.client.net.protocol.response.S_XB_LOGIN;
 import app.client.net.protocol.response.S_XB_REV_KEDA;
 import app.client.net.protocol.response.S_XB_SEMANTIC_FINISH;
+import app.client.net.test.QuickStarter;
 import app.client.service.AbstractServiceImpl;
 import com.gowild.xb.tcp.proto.ChatMsgProto;
 import com.gowild.xbtcp.metadata.pb.BaseBothMsgProto;
@@ -61,7 +62,7 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
         String desc = loginResult.getDesc();
         StatisticHolder.incRobotRecvLoginCount();
         response.getUserSession().setReceivLoginResultTime(System.currentTimeMillis());
-//        logger.info("====== >>> XB登陆结果，code:" + code + " | desc: " + desc);
+        logger.info("====== >>> XB登陆结果，code:" + code + " | desc: " + desc);
     }
 
     @Override

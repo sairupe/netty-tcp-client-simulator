@@ -78,7 +78,7 @@ public class TaskManager {
 	public void initStatiscTask(){
 		if(QuickStarter.PRESS_TEST){
 			StatisticPrintTask task = new StatisticPrintTask();
-			tickThreadPool.scheduleAtFixedRate(task, 0, 1, TimeUnit.SECONDS);
+			tickThreadPool.scheduleAtFixedRate(task, 0, 3, TimeUnit.SECONDS);
 		}
 	}
 	
@@ -135,8 +135,9 @@ public class TaskManager {
 		miscThreadPool.execute(scheduleTask);
 	}
 
-	public void addCreateRobotTask(Runnable scheduleTask){
-		createRobotThreadPool.execute(scheduleTask);
+	public Future<?> addCreateRobotTask(Runnable scheduleTask){
+		Future<?> submit = createRobotThreadPool.submit(scheduleTask);
+		return submit;
 	}
 
 	public void shutDownMisc(){
