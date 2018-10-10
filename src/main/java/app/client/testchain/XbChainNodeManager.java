@@ -69,7 +69,7 @@ public class XbChainNodeManager {
 //        doXbOrDockerLogin(userSession, token2308);
 
         // TEST LOGIN
-//        String testMac = "ac:83:f3:29:c9:60";
+//        String testMac = "94:a1:a2:f4:5d:d5";
 //        String testToken = TokenUtil.getRobotToken(testMac);
 //        doXbOrDockerLogin(userSession, testToken);
 

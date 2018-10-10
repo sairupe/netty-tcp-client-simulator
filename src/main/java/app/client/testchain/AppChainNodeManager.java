@@ -13,7 +13,6 @@ import app.client.testchain.smarthome.AppQueryRobotCollaCommandNode;
 import app.client.user.session.UserSession;
 import app.client.utils.CommonUtil;
 import app.client.utils.TokenUtil;
-import com.sun.xml.internal.bind.v2.model.annotation.Quick;
 
 import java.util.concurrent.TimeUnit;
 
@@ -48,9 +47,9 @@ public class AppChainNodeManager {
 //        String token70 = TokenUtil.getAppToken(account70);
 //        doAppLogin(userSession, token70);
 
-//        String account9 = "15814786286";
-//        String token9 = TokenUtil.getAppToken(account9);
-//        doAppLogin(userSession, token9);
+        String account9 = "15814786286";
+        String token9 = TokenUtil.getAppToken(account9);
+        doAppLogin(userSession, token9);
 
 
         //正常压测登录
