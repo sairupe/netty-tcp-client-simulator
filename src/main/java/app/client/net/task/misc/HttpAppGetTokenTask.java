@@ -30,6 +30,5 @@ public class HttpAppGetTokenTask implements Runnable {
         StatisticHolder.incAppGetTokenCount();
         logger.info("====>>>>>获取APP userName:【{}】的token：【{}】", userName, userToken);
         TokenDataHolder.updateToken(userName, userToken);
-        AppDataHolder.getAppLatch().countDown();
     }
 }

@@ -180,9 +180,6 @@ public class QuickStarter {
         // 初始化数据机器、用户数据装载
         Class.forName("app.client.data.AppDataHolder");
         Class.forName("app.client.data.RobotDataHolder");
-        // 设置robot和app的模拟端数量
-        RobotDataHolder.setRobotClientCountAndUpdateLatch(robotCount);
-        AppDataHolder.setAppClientCountAndUpdateLatch(appCount);
         // 初始化分发器
         DispacherManager.getInstance().init();
         // 初始化线程池

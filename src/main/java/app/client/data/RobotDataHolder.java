@@ -19,10 +19,6 @@ public class RobotDataHolder {
 
     private static final Logger logger = LoggerFactory.getLogger(RobotDataHolder.class);
 
-    public static int robotClientCount = 100;
-
-    private static CountDownLatch robotLatch = new CountDownLatch(robotClientCount);
-
     private static final Map<Integer, RobotVo> id2RotbotVoMap = new HashMap<>();
 
     static {
@@ -58,14 +54,5 @@ public class RobotDataHolder {
 
     public static Map<Integer, RobotVo> getId2RotbotVoMap(){
         return id2RotbotVoMap;
-    }
-
-    public static CountDownLatch getRobotLatch() {
-        return robotLatch;
-    }
-
-    public static void setRobotClientCountAndUpdateLatch(int robotClientCount){
-        RobotDataHolder.robotClientCount = robotClientCount;
-        RobotDataHolder.robotLatch = new CountDownLatch(robotClientCount);
     }
 }

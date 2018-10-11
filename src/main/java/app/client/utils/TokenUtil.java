@@ -140,7 +140,6 @@ public class TokenUtil {
                 HttpRobotGetTokenTask robotGetTokenTask = new HttpRobotGetTokenTask(entry.getValue());
                 TaskManager.getInstance().addMiscTask(robotGetTokenTask);
             }
-            RobotDataHolder.getRobotLatch().await();
             logger.info("=====>>>>>>初始化ROBOT TOKEN使用了: " + (System.currentTimeMillis() - tokenStart) + " ms");
         }
     }
@@ -153,7 +152,6 @@ public class TokenUtil {
                 HttpAppGetTokenTask appGetTokenTask = new HttpAppGetTokenTask(entry.getValue());
                 TaskManager.getInstance().addMiscTask(appGetTokenTask);
             }
-            AppDataHolder.getAppLatch().await();
             logger.info("=====>>>>>>初始化CLIENT TOKEN使用了: " + (System.currentTimeMillis() - tokenStart) + " ms");
         }
     }
