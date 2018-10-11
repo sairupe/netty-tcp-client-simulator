@@ -98,6 +98,7 @@ public class StatisticHolder {
         // 检测登陆超时
         List<Long> loginOutTimeList = new ArrayList();
         long totalTime = 0;
+        long incTime = 0;
         Map<Long, UserSession> channelId2SessionMap = UserSessionManager.getInstance().getUid2SessionMap();
         for(Map.Entry<Long, UserSession> entry : channelId2SessionMap.entrySet()){
             UserSession userSession = entry.getValue();
@@ -105,6 +106,7 @@ public class StatisticHolder {
             long receivLoginTime = userSession.getReceivLoginResultTime();
             if(receivLoginTime > 0){
                 totalTime += (receivLoginTime - userSession.getLoginTime());
+                incTime++;
             }
             long fromTime = System.currentTimeMillis() - loginTime;
             long differTime = receivLoginTime - loginTime;
@@ -129,7 +131,7 @@ public class StatisticHolder {
         // 计算平均登陆时间
         float avgLoginTime = -1;
         if(totalTime > 0){
-            avgLoginTime = totalTime * 1.0f / channelId2SessionMap.size();
+            avgLoginTime = totalTime * 1.0f / incTime;
         }
         sb.append("avgLoginTime='").append(avgLoginTime).append(" ms \n\n");
 

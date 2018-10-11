@@ -17,7 +17,7 @@ public class Const {
 	        /**
     * 定时断线重连时间/ms
     */
-	public static final long RECONNECT_PERIOD = 30000;
+	public static long RECONNECT_PERIOD = 30000;
 	        /**
     * 断线重连次数
     */

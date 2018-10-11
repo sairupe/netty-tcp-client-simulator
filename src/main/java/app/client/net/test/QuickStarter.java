@@ -1,5 +1,6 @@
 package app.client.net.test;
 
+import app.client.common.Const;
 import app.client.data.AppDataHolder;
 import app.client.data.RobotDataHolder;
 import app.client.data.TokenDataHolder;
@@ -10,6 +11,7 @@ import app.client.vo.RobotVo;
 import app.client.vo.UserVo;
 import com.gowild.core.util.LogUtil;
 import com.gowild.core.util.StringUtil;
+import com.sun.org.apache.regexp.internal.RE;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,6 +88,8 @@ public class QuickStarter {
         }
 
         PRESS_TEST = Boolean.parseBoolean(prop.getProperty("pressTest"));
+        int RECONNECT_PERIOD = Integer.parseInt(prop.getProperty("reconnectPeriod"));
+        Const.RECONNECT_PERIOD = RECONNECT_PERIOD;
         START_ROBOT = Boolean.parseBoolean(prop.getProperty("startRobot"));
         INIT_ROBOT_TOKEN = Boolean.parseBoolean(prop.getProperty("initRobotToken"));
         START_APP = Boolean.parseBoolean(prop.getProperty("startApp"));
@@ -123,6 +127,7 @@ public class QuickStarter {
         configInfo.append("==============启动配置信息=====================>>> \n\n");
 
         configInfo.append("====>>> !!!!!压测总开关!!!! : " + PRESS_TEST + "\n\n");
+        configInfo.append("====>>> !!!!!断线重连间隔!!!! : " + Const.RECONNECT_PERIOD + " ms\n\n");
 
         configInfo.append("====>>> 是否启动机器端压测 : " + START_ROBOT + "\n");
         configInfo.append("====>>> 是否启动APP端压测 : " + START_APP +"\n");
