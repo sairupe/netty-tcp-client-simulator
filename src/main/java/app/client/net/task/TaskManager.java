@@ -76,7 +76,8 @@ public class TaskManager {
 	}
 
 	public void initStatiscTask(){
-		if(QuickStarter.PRESS_TEST){
+		if(QuickStarter.PRESS_TEST && (QuickStarter.START_APP || QuickStarter.START_ROBOT
+				|| QuickStarter.INIT_ROBOT_TOKEN || QuickStarter.INIT_APP_TOKEN)){
 			StatisticPrintTask task = new StatisticPrintTask();
 			tickThreadPool.scheduleAtFixedRate(task, 0, 3, TimeUnit.SECONDS);
 		}

@@ -117,10 +117,10 @@ public final class GowildXbHandler extends ChannelInboundHandlerAdapter {
      */
     @Override
     public void exceptionCaught(final ChannelHandlerContext ctx, final Throwable cause) throws Exception {
-        logger.error("{}调用NettySocketHandler的exceptionCaught方法。", cause);
-        for(StackTraceElement e : cause.getStackTrace()){
-            logger.error(e.toString());
-        }
+        logger.error("机器【{}】调用NettySocketHandler的exceptionCaught方法。", mac, cause);
+//        for(StackTraceElement e : cause.getStackTrace()){
+//            logger.error(e.toString());
+//        }
     }
 
     @Override

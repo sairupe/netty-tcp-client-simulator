@@ -36,9 +36,13 @@ public class Netty4AppClient implements Closeable{
     private int accountId;
     private Future<?> loginFuture;
 
-    public static int PORT = 6030;
-    public static final String HOST = "172.27.1.41";
-    public static String TOKEN_URL = "http://172.27.1.41/oauth/mobile/token";
+    public static int PORT;
+    public static String HOST;
+    public static String TOKEN_URL;
+
+//    public static int PORT = 6030;
+//    public static final String HOST = "172.27.1.41";
+//    public static String TOKEN_URL = "http://172.27.1.41/oauth/mobile/token";
 
 //    public static int PORT = 6030;
 //    public static final String HOST = "172.27.1.49";

@@ -12,6 +12,7 @@ import app.client.net.protocol.response.S_XB_REV_KEDA;
 import app.client.net.protocol.response.S_XB_SEMANTIC_FINISH;
 import app.client.net.test.QuickStarter;
 import app.client.service.AbstractServiceImpl;
+import app.client.user.session.UserSession;
 import com.gowild.xb.tcp.proto.ChatMsgProto;
 import com.gowild.xbtcp.metadata.pb.BaseBothMsgProto;
 import com.gowild.xbtcp.metadata.pb.ChatS2XCMsgProto;
@@ -61,8 +62,9 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
         int code = loginResult.getCode();
         String desc = loginResult.getDesc();
         StatisticHolder.incRobotRecvLoginCount();
-        response.getUserSession().setReceivLoginResultTime(System.currentTimeMillis());
-        logger.info("====== >>> XB登陆结果，code:" + code + " | desc: " + desc);
+        UserSession userSession = response.getUserSession();
+        userSession.setReceivLoginResultTime(System.currentTimeMillis());
+        logger.info("====== >>> XB【{}】登陆结果，code:{}, | desc: {}", userSession.getMac(), code, desc);
     }
 
     @Override
@@ -71,8 +73,9 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
         int code = loginResult.getCode();
         String desc = loginResult.getDesc();
         StatisticHolder.incAppRecvLoginCount();
-        response.getUserSession().setReceivLoginResultTime(System.currentTimeMillis());
-        logger.info("====== >>> APP登陆结果，code:" + code + " | desc: " + desc);
+        UserSession userSession = response.getUserSession();
+        userSession.setReceivLoginResultTime(System.currentTimeMillis());
+        logger.info("====== >>> APP【{}】登陆结果，code:{} | desc:{} ", userSession.getAccount(), code, desc);
     }
 
     @Override

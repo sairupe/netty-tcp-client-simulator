@@ -38,6 +38,10 @@ public class Netty4XbClient implements Closeable{
 
     private Future<?> loginFuture;
 
+    public static int PORT;
+    public static String HOST;
+    public static String TOKEN_URL;
+
 
 //    private final int PORT = 6100;
 //    private final String HOST = "tcp01.xb.test01.gowild.top";
@@ -53,9 +57,9 @@ public class Netty4XbClient implements Closeable{
 //    public static final String TOKEN_URL = "http://172.27.1.49:6130/web/oauth/robot/token";
 
 //    开发服
-    public static final int PORT = 6030;
-    public static final String HOST = "172.27.1.73";
-    public static final String TOKEN_URL = "http://172.27.1.73:6130/oauth/robot/token";
+//    public static final int PORT = 6030;
+//    public static final String HOST = "172.27.1.73";
+//    public static final String TOKEN_URL = "http://172.27.1.73:6130/oauth/robot/token";
 
 //    内网机子
 //    public static final int PORT = 6030;
