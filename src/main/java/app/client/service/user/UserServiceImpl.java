@@ -64,7 +64,7 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
         StatisticHolder.incRobotRecvLoginCount();
         UserSession userSession = response.getUserSession();
         userSession.setReceivLoginResultTime(System.currentTimeMillis());
-        logger.info("====== >>> XB【{}】登陆结果，code:{}, | desc: {}", userSession.getMac(), code, desc);
+        logger.info("====== >>> XB【{}】登录结果，code:{}, | desc: {}", userSession.getMac(), code, desc);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
         StatisticHolder.incAppRecvLoginCount();
         UserSession userSession = response.getUserSession();
         userSession.setReceivLoginResultTime(System.currentTimeMillis());
-        logger.info("====== >>> APP【{}】登陆结果，code:{} | desc:{} ", userSession.getAccount(), code, desc);
+        logger.info("====== >>> APP【{}】登录结果，code:{} | desc:{} ", userSession.getAccount(), code, desc);
     }
 
     @Override

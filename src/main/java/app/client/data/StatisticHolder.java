@@ -110,7 +110,7 @@ public class StatisticHolder {
             }
             long fromTime = System.currentTimeMillis() - loginTime;
             long differTime = receivLoginTime - loginTime;
-            if((fromTime > Const.RECONNECT_PERIOD && receivLoginTime == 0) || differTime > Const.RECONNECT_PERIOD){
+            if(fromTime > Const.RECONNECT_PERIOD && receivLoginTime == 0){
                 loginOutTimeList.add(userSession.getUid());
             }
         }
