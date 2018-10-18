@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="off">
+    <appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%-5p]%m%n"/>
+        </Console>
+        <RollingFile name="root" fileName="log/root.log" filePattern="log/%d{ddMMyyyy}_daily.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%-5p]%m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="debugAppender" fileName="log/debug.log" filePattern="log/%d{ddMMyyyy}_daily.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%-5p]%m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="infoAppender" fileName="log/info.log" filePattern="log/%d{ddMMyyyy}_daily.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%-5p]%m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="errorAppender" fileName="log/error.log" filePattern="log/%d{ddMMyyyy}_daily.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%-5p]%m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+            </Policies>
+        </RollingFile>
+    </appenders>
+    <Loggers>
+        <Root level="info" additivity="true">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="root"/>
+        </Root>
+        <Logger name="debugLogger" level="debug" additivity="true">
+            <AppenderRef ref="debugAppender"/>
+        </Logger>
+        <Logger name="infoLogger" level="info" additivity="true">
+            <AppenderRef ref="infoAppender"/>
+        </Logger>
+        <Logger name="errorLogger" level="error" additivity="true">
+            <AppenderRef ref="errorAppender"/>
+        </Logger>
+
+        <Logger name="io.netty" level="error"/>
+    </Loggers>
+</configuration>
