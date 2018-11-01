@@ -62,9 +62,12 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
         int code = loginResult.getCode();
         String desc = loginResult.getDesc();
         StatisticHolder.incRobotRecvLoginCount();
+        if(code == 10100100){
+            StatisticHolder.incRobotLoginSuccessCount();
+        }
         UserSession userSession = response.getUserSession();
         userSession.setReceivLoginResultTime(System.currentTimeMillis());
-        logger.info("====== >>> XB【{}】登录结果，code:{}, | desc: {}", userSession.getMac(), code, desc);
+//        logger.info("====== >>> XB【{}】登录结果，code:{}, | desc: {}", userSession.getMac(), code, desc);
     }
 
     @Override
@@ -73,9 +76,12 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
         int code = loginResult.getCode();
         String desc = loginResult.getDesc();
         StatisticHolder.incAppRecvLoginCount();
+        if(code == 10100100){
+            StatisticHolder.incAppLoginSuccessCount();
+        }
         UserSession userSession = response.getUserSession();
         userSession.setReceivLoginResultTime(System.currentTimeMillis());
-        logger.info("====== >>> APP【{}】登录结果，code:{} | desc:{} ", userSession.getAccount(), code, desc);
+//        logger.info("====== >>> APP【{}】登录结果，code:{} | desc:{} ", userSession.getAccount(), code, desc);
     }
 
     @Override

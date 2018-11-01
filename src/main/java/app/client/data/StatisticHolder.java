@@ -30,6 +30,7 @@ public class StatisticHolder {
     private static AtomicInteger robotHandShakeCount = new AtomicInteger(0);
     private static AtomicInteger robotSendLoginCount = new AtomicInteger(0);
     private static AtomicInteger robotRecvLoginCount = new AtomicInteger(0);
+    private static AtomicInteger robotLoginSuccessCount = new AtomicInteger(0);
     private static AtomicInteger robotGetTokenCount = new AtomicInteger(0);
 
     private static AtomicInteger appClientStartCount = new AtomicInteger(0);
@@ -40,6 +41,7 @@ public class StatisticHolder {
     private static AtomicInteger appHandShakeCount = new AtomicInteger(0);
     private static AtomicInteger appSendLoginCount = new AtomicInteger(0);
     private static AtomicInteger appRecvLoginCount = new AtomicInteger(0);
+    private static AtomicInteger appLoginSuccessCount = new AtomicInteger(0);
     private static AtomicInteger appGetTokenCount = new AtomicInteger(0);
 
     public static int incRobotClient(){
@@ -56,6 +58,7 @@ public class StatisticHolder {
     public static int incRobotHandShakeCount(){ return robotHandShakeCount.incrementAndGet();}
     public static int incRobotSendLoginCount(){ return  robotSendLoginCount.incrementAndGet(); }
     public static int incRobotRecvLoginCount(){ return  robotRecvLoginCount.incrementAndGet(); }
+    public static int incRobotLoginSuccessCount(){ return  robotLoginSuccessCount.incrementAndGet(); }
     public static int incRobotGetTokenCount(){return robotGetTokenCount.incrementAndGet(); }
 
 
@@ -73,6 +76,7 @@ public class StatisticHolder {
     public static int incAppHandShakeCount(){ return appHandShakeCount.incrementAndGet();}
     public static int incAppSendLoginCount(){ return appSendLoginCount.incrementAndGet(); }
     public static int incAppRecvLoginCount(){ return appRecvLoginCount.incrementAndGet(); }
+    public static int incAppLoginSuccessCount(){ return appLoginSuccessCount.incrementAndGet(); }
     public static int incAppGetTokenCount(){return appGetTokenCount.incrementAndGet(); }
 
 
@@ -111,7 +115,7 @@ public class StatisticHolder {
             long fromTime = System.currentTimeMillis() - loginTime;
             long differTime = receivLoginTime - loginTime;
             if(fromTime > Const.RECONNECT_PERIOD && receivLoginTime == 0){
-                loginOutTimeList.add(userSession.getUid());
+                //loginOutTimeList.add(userSession.getUid());
             }
         }
         for(Long uid : loginOutTimeList){
@@ -143,6 +147,7 @@ public class StatisticHolder {
         sb.append("robotHandShakeCount='").append(robotHandShakeCount.get()).append('\n');
         sb.append("robotSendLoginCount='").append(robotSendLoginCount.get()).append('\n');
         sb.append("robotRecvLoginCount='").append(robotRecvLoginCount.get()).append('\n');
+        sb.append("robotLoginSuccessCount='").append(robotLoginSuccessCount.get()).append('\n');
         sb.append("robotGetTokenCount='").append(robotGetTokenCount.get()).append("\n\n");
 
         sb.append("appClientStartCount='").append(appClientStartCount.get()).append('\n');
@@ -153,6 +158,7 @@ public class StatisticHolder {
         sb.append("appHandShakeCount='").append(appHandShakeCount.get()).append('\n');
         sb.append("appSendLoginCount='").append(appSendLoginCount.get()).append('\n');
         sb.append("appRecvLoginCount='").append(appRecvLoginCount.get()).append('\n');
+        sb.append("appLoginSuccessCount='").append(appLoginSuccessCount.get()).append('\n');
         sb.append("appGetTokenCount='").append(appGetTokenCount.get()).append("\n\n");
 
         sb.append("requestQueueCount='").append(TaskManager.getInstance().getRequestQueueSize()).append('\n');
