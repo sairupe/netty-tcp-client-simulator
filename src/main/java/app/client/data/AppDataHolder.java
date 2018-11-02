@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
@@ -20,9 +21,9 @@ public class AppDataHolder {
 
     private static final Logger logger = LoggerFactory.getLogger(AppDataHolder.class);
 
-    private static final Map<Integer, UserVo> id2UserVoMap = new HashMap<>();
+    private static final Map<Integer, UserVo> id2UserVoMap = new LinkedHashMap<>();
 
-    private static final Map<String, UserVo> account2UserVoMap = new HashMap<>();
+    private static final Map<String, UserVo> account2UserVoMap = new LinkedHashMap<>();
 
     static {
         Connection con = DbConnecter.getPassportDbConnection();
@@ -37,7 +38,7 @@ public class AppDataHolder {
 //            e.printStackTrace();
 //        }
 
-        String queryAccount = "SELECT id, username, password FROM account";
+        String queryAccount = "SELECT id, username, password FROM account ORDER BY id ASC";
         try(Statement stmt = con.createStatement();
             ResultSet rs0 = stmt.executeQuery(queryAccount)) {
             while (rs0.next()) {

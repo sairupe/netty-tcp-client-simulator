@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
@@ -19,7 +20,7 @@ public class RobotDataHolder {
 
     private static final Logger logger = LoggerFactory.getLogger(RobotDataHolder.class);
 
-    private static final Map<Integer, RobotVo> id2RotbotVoMap = new HashMap<>();
+    private static final Map<Integer, RobotVo> id2RotbotVoMap = new LinkedHashMap<>();
 
     static {
         Connection con = DbConnecter.getRobotDbConncetion();
@@ -35,7 +36,7 @@ public class RobotDataHolder {
 //        }
 
         String queryRobotInfo = "SELECT id, mac, serial_no, brand_id, robot_name, product_type, customer_type, status " +
-                "FROM usr_robot_info_xb";
+                "FROM usr_robot_info_xb ORDER BY id ASC";
         try(Statement stmt = con.createStatement();
             ResultSet rs0 = stmt.executeQuery(queryRobotInfo)) {
             while (rs0.next()) {
