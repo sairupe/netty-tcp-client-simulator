@@ -26,7 +26,7 @@ public class HttpAppGetTokenTask implements Runnable {
     @Override
     public void run() {
         String userName = userVo.getUserName();
-        String userToken = TokenUtil.getAppToken(userName);
+        String userToken = TokenUtil.getAppTokenByCaptcha(userName);
         StatisticHolder.incAppGetTokenCount();
         logger.info("====>>>>>获取APP userName:【{}】的token：【{}】", userName, userToken);
         TokenDataHolder.updateToken(userName, userToken);

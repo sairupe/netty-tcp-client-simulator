@@ -72,7 +72,7 @@ public class TokenUtil {
         return null;
     }
 
-    public static String getAppToken(String account) {
+    public static String getAppTokenByCaptcha(String account) {
         String token = "";
         try {
             String tokenUrl = Netty4AppClient.TOKEN_URL;
@@ -81,6 +81,41 @@ public class TokenUtil {
             NameValuePair macParam = new BasicNameValuePair("mobile", account);
             NameValuePair snParam = new BasicNameValuePair("captcha", "8888");
             NameValuePair clientIdParam = new BasicNameValuePair("client_id", "4403d3900fe74a3cb3df660d249ead0f");
+            list.add(macParam);
+            list.add(snParam);
+            list.add(clientIdParam);
+
+            CloseableHttpResponse response = null;
+            request.setEntity(new UrlEncodedFormEntity(list));
+//            long start = System.currentTimeMillis();
+            response = HttpClientBuilder.create().build().execute(request);
+//            logger.info("=====>>> time " + (System.currentTimeMillis() - start));
+            token = EntityUtils.toString(response.getEntity(), "utf8");
+        } catch (IOException e) {
+            e.printStackTrace();
+            LogUtil.error(e);
+        }
+        JSONObject result = new JSONObject(token);
+        int code = result.getInt("code");
+        if (10100100 == code) {
+            JSONObject data = result.getJSONObject("data");
+            token = data.getString("access_token");
+            return token;
+        }
+        return null;
+    }
+
+    public static String getAppTokenByPwd(String account) {
+        String token = "";
+        try {
+            String tokenUrl = Netty4AppClient.TOKEN_URL;
+            HttpPost request = new HttpPost(tokenUrl);
+            List<NameValuePair> list = new ArrayList<NameValuePair>();
+            NameValuePair grantTypeParam = new BasicNameValuePair("grant_type", "password");
+            NameValuePair macParam = new BasicNameValuePair("username", account);
+            NameValuePair snParam = new BasicNameValuePair("password", "1234567a");
+            NameValuePair clientIdParam = new BasicNameValuePair("client_id", "4403d3900fe74a3cb3df660d249ead0f");
+            list.add(grantTypeParam);
             list.add(macParam);
             list.add(snParam);
             list.add(clientIdParam);
