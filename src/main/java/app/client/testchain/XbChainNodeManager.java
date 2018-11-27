@@ -4,21 +4,19 @@ import app.client.data.DbConnecter;
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.request.C_DOCKER_LOGIN;
 import app.client.net.protocol.request.C_XB_HEART_BEAT;
-import app.client.net.task.sdk.SdkDeviceHeartBeatTask;
 import app.client.net.task.TaskManager;
+import app.client.net.task.sdk.SdkDeviceHeartBeatTask;
 import app.client.net.test.QuickStarter;
-import app.client.testchain.plugin.RobotNotifyPluginTimeExecuteCommandNode;
-import app.client.testchain.sdk.SdkTestConst;
 import app.client.testchain.db.BaseDbInfoInsertNode;
-import app.client.testchain.sdk.protocol.area.AddAreaBatchCommandNode;
-import app.client.testchain.sdk.protocol.device.SdkAddDeviceBatchCommandNode;
-import app.client.testchain.sdk.protocol.device.SdkSyncDeviceCommandNode;
-import app.client.testchain.sdk.protocol.floor.AddFloorBatchCommandNode;
-import app.client.testchain.sdk.protocol.home.AddHomeBatchCommandNode;
-import app.client.testchain.sdk.protocol.home.SyncHomeCommandNode;
+import app.client.testchain.sdk.SdkTestConst;
+import app.client.testchain.sdk.protocol.area.AddAreaBatchDynamicTidCommandNode;
+import app.client.testchain.sdk.protocol.device.SdkSyncDeviceDynamicTidCommandNode;
+import app.client.testchain.sdk.protocol.floor.AddFloorBatchDynamicTidCommandNode;
 import app.client.user.session.UserSession;
-import app.client.utils.CommonUtil;
 import app.client.utils.TokenUtil;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 
@@ -26,6 +24,8 @@ import java.util.concurrent.TimeUnit;
  * Created by zh on 2017/11/21.
  */
 public class XbChainNodeManager {
+
+    private static final Logger logger = LoggerFactory.getLogger(XbChainNodeManager.class);
 
     /**
      * 开始执行的任务节点
@@ -37,63 +37,68 @@ public class XbChainNodeManager {
         // 数据库任务
         startingChainNode = new BaseDbInfoInsertNode();
         startingChainNode.setVar(userSession, DbConnecter.getRobotDbConncetion());
+        String testMac = SdkTestConst.EMPTY_STRING;
 
         // 登录指令
         //    94:a1:a2:c0:47:c8
-        String mac2967 = "94:a1:a2:c0:47:c8";
-//        doXbOrDockerLogin(userSession, mac2967);
+//        testMac = "94:a1:a2:c0:47:c8";
 
         // 2968  94:a1:a2:bf:b7:f0
-        String mac2968 = "94:a1:a2:bf:b7:f0";
-//        doXbOrDockerLogin(userSession, mac2968);
+//        testMac = "94:a1:a2:bf:b7:f0";
 
         // 2969  94:a1:a2:c0:37:2c
-        String mac2969 = "94:a1:a2:c0:37:2c";
-//        doXbOrDockerLogin(userSession, mac2969);
+//        testMac = "94:a1:a2:c0:37:2c";
 
         // 2305  94:a1:a2:f4:2f:fd 老友炒粉 ------------  废弃
-        String mac2305 = "94:a1:a2:f4:2f:fd";
-//        doXbOrDockerLogin(userSession, mac2305);
+//        testMac = "94:a1:a2:f4:2f:fd";
 
         // 2306  94:a1:a2:f4:91:19 桂林米粉(DOCKER)
-        String mac2306 = "94:a1:a2:f4:91:19";
-//        doXbOrDockerLogin(userSession, mac2306);
+//        testMac = "94:a1:a2:f4:91:19";
 
         // 2307  94:a1:a2:bd:c5:c6 生榨米粉(DOCKER)
-        String mac2307 = "94:a1:a2:bd:c5:c6";
-//        doXbOrDockerLogin(userSession, mac2307);
+//        testMac = "94:a1:a2:bd:c5:c6";
 
         // 2308  94:a1:a2:bd:93:d2 老友粉(XB)
-//        String mac2308 = "94:a1:a2:bd:93:d2";
-//        String token2308 = TokenUtil.getRobotToken(mac2308);
-//        doXbOrDockerLogin(userSession, token2308);
+//        testMac = "94:a1:a2:bd:93:d2";
 
         // TEST LOGIN
-//        String testMac = "94:a1:a2:f4:5d:d5";
-//        String testToken = TokenUtil.getRobotToken(testMac);
-//        doXbOrDockerLogin(userSession, testToken);
+        testMac = "94:a1:a2:f4:5e:49";
 
-        //正常压测登录
-        if(QuickStarter.PRESS_TEST){
-            String token = userSession.getRobotToken();
-            doXbOrDockerLogin(userSession, token);
-        }
 
-        // 预留defaultclient 转换为xbclient的时间
-        if(!QuickStarter.PRESS_TEST){
-            CommonUtil.threadPause(2000);
+        String token = null;
+        if (QuickStarter.PRESS_TEST) {// 压测从数据库捞
+            token = userSession.getRobotToken();
+        } else {// 非压测直接HTTP请求
+            if (StringUtils.isEmpty(testMac)) {
+                logger.warn("测试的testMac为空，肯定无法登陆");
+                System.exit(0);
+            }
+            token = TokenUtil.getRobotToken(testMac);
         }
+        doXbOrDockerLogin(userSession, token);
 
         // 插座定时触发测试
 //        RobotNotifyPluginTimeExecuteCommandNode notifyPluginTimeExecuteCommandNode
 //                = new RobotNotifyPluginTimeExecuteCommandNode(1, mac2308);
 //        startingChainNode.addLastNext(notifyPluginTimeExecuteCommandNode);
 
+        // 智能家居压测动态数据
+        AddFloorBatchDynamicTidCommandNode addFloorBatchDynamicTidCommandNode = new AddFloorBatchDynamicTidCommandNode();
+        addFloorBatchDynamicTidCommandNode.setRotbotMac(userSession.getMac());
+        AddAreaBatchDynamicTidCommandNode addAreaBatchDynamicTidCommandNode = new AddAreaBatchDynamicTidCommandNode();
+        addAreaBatchDynamicTidCommandNode.setRobotMac(userSession.getMac());
+        SdkSyncDeviceDynamicTidCommandNode sdkSyncDeviceDynamicTidCommandNode = new SdkSyncDeviceDynamicTidCommandNode();
+        sdkSyncDeviceDynamicTidCommandNode.setRobotMac(userSession.getMac());
+        startingChainNode.addLastNext(addFloorBatchDynamicTidCommandNode);
+        startingChainNode.addLastNext(new AddAreaBatchDynamicTidCommandNode());
+        startingChainNode.addLastNext(new SdkSyncDeviceDynamicTidCommandNode());
+
+
         //全量数据
 //        startingChainNode.addLastNext(new AddHomeBatchCommandNode());
 //        startingChainNode.addLastNext(new AddFloorBatchCommandNode());
 //        startingChainNode.addLastNext(new AddAreaBatchCommandNode());
-//        startingChainNode.addLastNext(new SdkAddDeviceBatchCommandNode());
+//        startingChainNode.addLastNext(new SdkSyncDeviceCommandNode());
 
         // 同步设备指令
 //        startingChainNode.addLastNext(new SdkSyncDeviceCommandNode());
@@ -161,16 +166,17 @@ public class XbChainNodeManager {
 
 //        startingChainNode.addLastNext(new SdkAddDeviceCommandNode());
 
-        startingChainNode.start();
+        // 设置在用户session用，等待登录结果返回后再执行发送协议
+        userSession.setChainNode(startingChainNode);
 
         // 心跳协议
         C_XB_HEART_BEAT heartBeat = ProtocolFactory.createRequestProtocol(C_XB_HEART_BEAT.class, userSession.getCtx());
         SdkDeviceHeartBeatTask task = new SdkDeviceHeartBeatTask(userSession.getCtx(), heartBeat);
-        TaskManager.getInstance().addTickTask(task, 2, 50, TimeUnit.SECONDS);
+        TaskManager.getInstance().addTickTask(task, 2, 20, TimeUnit.SECONDS);
     }
 
     // 小白或者DOCKER登陆
-    private void doXbOrDockerLogin(UserSession userSession, String token){
+    private void doXbOrDockerLogin(UserSession userSession, String token) {
         C_DOCKER_LOGIN loginCmd = ProtocolFactory.createRequestProtocol(C_DOCKER_LOGIN.class,
                 userSession.getCtx());
         loginCmd.setToken(token);

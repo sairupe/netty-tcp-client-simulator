@@ -10,6 +10,7 @@ import app.client.net.protocol.response.S_XB_HEART_BEAT;
 import app.client.net.protocol.response.S_XB_LOGIN;
 import app.client.net.protocol.response.S_XB_REV_KEDA;
 import app.client.net.protocol.response.S_XB_SEMANTIC_FINISH;
+import app.client.net.task.TaskManager;
 import app.client.net.test.QuickStarter;
 import app.client.service.AbstractServiceImpl;
 import app.client.user.session.UserSession;
@@ -62,12 +63,13 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
         int code = loginResult.getCode();
         String desc = loginResult.getDesc();
         StatisticHolder.incRobotRecvLoginCount();
-        if(code == 10100100){
-            StatisticHolder.incRobotLoginSuccessCount();
-        }
         UserSession userSession = response.getUserSession();
         userSession.setReceivLoginResultTime(System.currentTimeMillis());
 //        logger.info("====== >>> XB【{}】登录结果，code:{}, | desc: {}", userSession.getMac(), code, desc);
+        if(code == 10100100){
+            StatisticHolder.incRobotLoginSuccessCount();
+            TaskManager.getInstance().addChainNodeTask(userSession.getChainNode());
+        }
     }
 
     @Override
@@ -76,12 +78,13 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
         int code = loginResult.getCode();
         String desc = loginResult.getDesc();
         StatisticHolder.incAppRecvLoginCount();
-        if(code == 10100100){
-            StatisticHolder.incAppLoginSuccessCount();
-        }
         UserSession userSession = response.getUserSession();
         userSession.setReceivLoginResultTime(System.currentTimeMillis());
 //        logger.info("====== >>> APP【{}】登录结果，code:{} | desc:{} ", userSession.getAccount(), code, desc);
+        if(code == 10100100){
+            StatisticHolder.incAppLoginSuccessCount();
+            TaskManager.getInstance().addChainNodeTask(userSession.getChainNode());
+        }
     }
 
     @Override

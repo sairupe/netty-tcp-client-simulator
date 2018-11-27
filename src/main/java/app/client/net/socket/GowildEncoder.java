@@ -9,6 +9,7 @@ import app.client.data.StatisticHolder;
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.RequestProtocol;
 import app.client.net.task.RequestTaskImpl;
+import app.client.testchain.sdk.SdkTestConst;
 import com.gowild.sdk.protocol.SdkMsgType;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -64,6 +65,6 @@ public class GowildEncoder extends MessageToByteEncoder<RequestProtocol> {
      * @return
      */
     private static int[] getKey(final ChannelHandlerContext ctx) {
-        return ctx.channel().attr(GowildHandler.ENCRYPTION_KEY).get();
+        return ctx.channel().attr(SdkTestConst.ENCRYPTION_KEY).get();
     }
 }

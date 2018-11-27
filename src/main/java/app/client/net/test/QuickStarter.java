@@ -216,12 +216,6 @@ public class QuickStarter {
             xbStarter.start();
         }
 
-        if (false) {
-            LogUtil.debug("暂停...");
-            LogUtil.debug("启动 SDK ...");
-            Thread sdkStarter = new Thread(new SdkStartTask());
-            sdkStarter.start();
-        }
         logger.info("==========>>>>>>>>>>>> MAIN 函数结束,如果未打印任何信息请结束进程并检查配置 ===========");
     }
 
@@ -315,21 +309,6 @@ public class QuickStarter {
                 xbClient.start();
             } catch (Exception e) {
                 e.printStackTrace();
-            }
-        }
-    }
-
-    static class SdkStartTask implements Runnable {
-
-        @Override
-        public void run() {
-            Netty4SdkClient sdkClient = new Netty4SdkClient();
-            try {
-                sdkClient.init();
-                sdkClient.start();
-            } catch (Exception e) {
-                e.printStackTrace();
-                sdkClient.close();
             }
         }
     }

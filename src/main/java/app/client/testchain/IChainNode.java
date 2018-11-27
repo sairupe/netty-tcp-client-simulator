@@ -9,7 +9,7 @@ import java.sql.Connection;
 /**
  * Created by zh on 2017/11/21.
  */
-public interface IChainNode {
+public interface IChainNode extends Runnable{
 
     public void start();
 

@@ -5,6 +5,7 @@
  */
 package app.client.net.socket;
 
+import app.client.testchain.sdk.SdkTestConst;
 import com.gowild.core.util.LogUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -89,6 +90,6 @@ public class GowildDecoder extends ByteToMessageDecoder {
      * @return
      */
     private static int[] getKey(final ChannelHandlerContext ctx) {
-        return ctx.channel().attr(GowildHandler.DECRYPTION_KEY).get();
+        return ctx.channel().attr(SdkTestConst.DECRYPTION_KEY).get();
     }
 }

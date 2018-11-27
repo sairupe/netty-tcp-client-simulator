@@ -10,7 +10,9 @@ import app.client.net.dispacher.DispacherManager;
 import app.client.net.dispacher.ServiceManager;
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.ResponseProtocol;
+import app.client.net.task.TaskManager;
 import app.client.net.task.xb.XbChainNodeTask;
+import app.client.testchain.sdk.SdkTestConst;
 import app.client.user.session.ConnectStatus;
 import app.client.user.session.UserSession;
 import app.client.user.session.UserSessionManager;
@@ -65,9 +67,8 @@ public final class GowildXbHandler extends ChannelInboundHandlerAdapter {
         userSession.setLoginFuture(loginFuture);
         userSession.setClientType(SdkMsgType.XB_CLIENT_TYPE);
         NioSocketChannel nioSocketChannel = (NioSocketChannel) ctx.channel();
-        nioSocketChannel.attr(GowildHandler.USER_SESSION).set(userSession);
+        nioSocketChannel.attr(SdkTestConst.USER_SESSION).set(userSession);
         UserSessionManager.getInstance().addUserSession(uid, userSession);
-//        userServiceImpl.xbLogin(userSession);
 
         XbChainNodeTask xbChainNodeTask = new XbChainNodeTask();
         xbChainNodeTask.setUserSession(userSession);
@@ -78,8 +79,8 @@ public final class GowildXbHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRegistered(final ChannelHandlerContext ctx) throws Exception {
         NioSocketChannel nioSocketChannel = (NioSocketChannel) ctx.channel();
-        nioSocketChannel.attr(GowildHandler.DECRYPTION_KEY).set(SocketUtil.copyDefaultKey());
-        nioSocketChannel.attr(GowildHandler.ENCRYPTION_KEY).set(SocketUtil.copyDefaultKey());
+        nioSocketChannel.attr(SdkTestConst.DECRYPTION_KEY).set(SocketUtil.copyDefaultKey());
+        nioSocketChannel.attr(SdkTestConst.ENCRYPTION_KEY).set(SocketUtil.copyDefaultKey());
         super.channelRegistered(ctx);
     }
 
@@ -103,12 +104,13 @@ public final class GowildXbHandler extends ChannelInboundHandlerAdapter {
             ChannelBuffer buffer = ChannelBuffers.dynamicBuffer(msg.getBody().length);
             buffer.writeBytes(msg.getBody());
             NioSocketChannel nioSocketChannel = (NioSocketChannel) ctx.channel();
-            UserSession userSession = nioSocketChannel.attr(GowildHandler.USER_SESSION).get();
+            UserSession userSession = nioSocketChannel.attr(SdkTestConst.USER_SESSION).get();
             ResponseProtocol response = ProtocolFactory
                     .getResponseProtocol(moduleId, sequenceId,
                             buffer, userSession.getUid());
-            DispacherManager.getInstance().dispatch(moduleId, sequenceId,
-                    response);
+            if(response != null){
+                TaskManager.getInstance().addResponse2Queue(response);
+            }
         }
     }
 

@@ -173,7 +173,7 @@ public class TokenUtil {
             Map<Integer, RobotVo> id2RotbotVoMap = RobotDataHolder.getId2RotbotVoMap();
             for (Map.Entry<Integer, RobotVo> entry : id2RotbotVoMap.entrySet()) {
                 HttpRobotGetTokenTask robotGetTokenTask = new HttpRobotGetTokenTask(entry.getValue());
-                TaskManager.getInstance().addMiscTask(robotGetTokenTask);
+                TaskManager.getInstance().addTokenTask(robotGetTokenTask);
             }
             logger.info("=====>>>>>>初始化ROBOT TOKEN使用了: " + (System.currentTimeMillis() - tokenStart) + " ms");
         }
@@ -185,7 +185,7 @@ public class TokenUtil {
             Map<Integer, UserVo> id2UserVoMap = AppDataHolder.getId2UserVoMap();
             for (Map.Entry<Integer, UserVo> entry : id2UserVoMap.entrySet()) {
                 HttpAppGetTokenTask appGetTokenTask = new HttpAppGetTokenTask(entry.getValue());
-                TaskManager.getInstance().addMiscTask(appGetTokenTask);
+                TaskManager.getInstance().addTokenTask(appGetTokenTask);
             }
             logger.info("=====>>>>>>初始化CLIENT TOKEN使用了: " + (System.currentTimeMillis() - tokenStart) + " ms");
         }

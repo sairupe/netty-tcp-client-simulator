@@ -1,20 +1,14 @@
 package app.client.net.test;
 
 import app.client.data.StatisticHolder;
-import app.client.net.dispacher.DispacherManager;
 import app.client.net.socket.EventLoopHolder;
 import app.client.net.socket.GowildDecoder;
 import app.client.net.socket.GowildEncoder;
-import app.client.net.socket.GowildHandler;
 import app.client.net.socket.GowildXbHandler;
-import app.client.net.task.TaskManager;
-import com.google.common.annotations.VisibleForTesting;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
-import io.netty.channel.EventLoopGroup;
-import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import org.slf4j.Logger;
@@ -27,20 +21,17 @@ import java.util.concurrent.Future;
 /**
  * @author syriana.zh
  */
-public class Netty4XbClient implements Closeable{
+public class Netty4XbClient implements Closeable {
 
     private static final Logger logger = LoggerFactory
             .getLogger(Netty4XbClient.class);
-
-    private String mac;
-    private String token;
-    private int robotId;
-
-    private Future<?> loginFuture;
-
     public static int PORT;
     public static String HOST;
     public static String TOKEN_URL;
+    private String mac;
+    private String token;
+    private int robotId;
+    private Future<?> loginFuture;
 
 
 //    private final int PORT = 6100;
@@ -79,9 +70,7 @@ public class Netty4XbClient implements Closeable{
 //    public static final String HOST = "jarvis-tcp.gowild.info";
 //    public static final String TOKEN_URL = "http://jarvis-tcp.gowild.info/oauth/robot/token";
 
-
-
-    public void start() throws Exception{
+    public void start() throws Exception {
         try {
             Bootstrap b = new Bootstrap();
             b.group(EventLoopHolder.getGroup());
@@ -109,20 +98,19 @@ public class Netty4XbClient implements Closeable{
             StatisticHolder.incRobotClient();
 //            logger.info("===================>>>>啓動XB BOOTSTRAP，目前CLIENT數量為：" + StatisticHolder.getRobotCount());
 //            f.channel().closeFuture().sync();
-        } catch (Exception e){
+        } catch (Exception e) {
             logger.error("启动error", e);
-        }
-        finally {
+        } finally {
 //            EventLoopHolder.getGroup().shutdownGracefully().sync();
         }
         StatisticHolder.decRobot();
     }
 
     @Override
-    public void close(){
+    public void close() {
     }
 
-    public void init() throws Exception{
+    public void init() throws Exception {
     }
 
     public void setMac(String mac) {

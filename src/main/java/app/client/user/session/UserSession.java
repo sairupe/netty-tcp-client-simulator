@@ -6,6 +6,7 @@ import java.util.concurrent.Future;
 
 import app.client.net.protocol.RequestProtocol;
 import app.client.net.task.TaskManager;
+import app.client.testchain.IChainNode;
 import com.gowild.sdk.protocol.SdkMsgType;
 import io.netty.channel.ChannelHandlerContext;
 
@@ -53,6 +54,9 @@ public class UserSession {
 
 	// 收到登陆相应时间
 	private long receivLoginResultTime;
+
+	// 协议链，收到登录协议返回后再发送
+	private IChainNode chainNode;
 
     public void sendMsg(RequestProtocol request){
 		TaskManager.getInstance().addRequest2Queue(request);
@@ -148,5 +152,13 @@ public class UserSession {
 
 	public int getAccountId(){
 		return (int) (uid >> 2);
+	}
+
+	public IChainNode getChainNode() {
+		return chainNode;
+	}
+
+	public void setChainNode(IChainNode chainNode) {
+		this.chainNode = chainNode;
 	}
 }

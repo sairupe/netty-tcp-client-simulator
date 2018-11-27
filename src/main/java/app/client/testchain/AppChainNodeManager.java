@@ -9,10 +9,14 @@ import app.client.net.task.app.AppHeartBeatTask;
 import app.client.net.test.QuickStarter;
 import app.client.testchain.db.BaseDbInfoInsertNode;
 import app.client.testchain.plugin.AppDeviceTimingAddCommandNode;
+import app.client.testchain.sdk.SdkTestConst;
 import app.client.testchain.smarthome.AppQueryRobotCollaCommandNode;
 import app.client.user.session.UserSession;
 import app.client.utils.CommonUtil;
 import app.client.utils.TokenUtil;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 
@@ -20,6 +24,8 @@ import java.util.concurrent.TimeUnit;
  * Created by zh on 2017/11/21.
  */
 public class AppChainNodeManager {
+
+    private static final Logger logger = LoggerFactory.getLogger(AppChainNodeManager.class);
 
     private static AppChainNodeManager chainNodeManager = new AppChainNodeManager();
 
@@ -42,25 +48,23 @@ public class AppChainNodeManager {
         startingChainNode = new BaseDbInfoInsertNode();
         startingChainNode.setVar(userSession, DbConnecter.getRobotDbConncetion());
 
+        String account = SdkTestConst.EMPTY_STRING;
+
         // 登录指令
-//        String account70 = "18617166985";
-//        String token70 = TokenUtil.getAppToken(account70);
-//        doAppLogin(userSession, token70);
-
-        String account9 = "18681432371";
-        String token9 = TokenUtil.getAppTokenByPwd(account9);
-        doAppLogin(userSession, token9);
-
+//        account = "18676374512";
 
         //正常压测登录
+        String token;
         if(QuickStarter.PRESS_TEST){
-            String token = userSession.getAppToken();
-            doAppLogin(userSession, token);
+            token = userSession.getAppToken();
+        } else{
+            if (StringUtils.isEmpty(account)) {
+                logger.warn("测试的testMac为空，肯定无法登陆");
+                System.exit(0);
+            }
+            token = TokenUtil.getAppTokenByCaptcha(account);
         }
-        // 预留defaultclient 转换为xbclient的时间
-        if(!QuickStarter.PRESS_TEST){
-            CommonUtil.threadPause(2000);
-        }
+        doAppLogin(userSession, token);
 
         // 查询智能家居-机器是否和第三方厂家授权绑定
 //        startingChainNode.addLastNext(new AppQueryRobotCollaCommandNode(17773));
@@ -72,12 +76,13 @@ public class AppChainNodeManager {
 //        AppDeviceTimingAddCommandNode appDeviceTimingAddCommandNode = new AppDeviceTimingAddCommandNode(pluginMac, executeTime, isOpen);
 //        startingChainNode.addLastNext(appDeviceTimingAddCommandNode);
 
+        // 设置在用户session用，等待登录结果返回后再执行发送协议
+        userSession.setChainNode(startingChainNode);
+
         // 心跳协议
         C_APP_HEART_BEAT heartBeat = ProtocolFactory.createRequestProtocol(C_APP_HEART_BEAT.class, userSession.getCtx());
         AppHeartBeatTask task = new AppHeartBeatTask(userSession.getCtx(), heartBeat);
         TaskManager.getInstance().addTickTask(task, 2, 50, TimeUnit.SECONDS);
-
-        startingChainNode.start();
     }
 
     // APP登陆

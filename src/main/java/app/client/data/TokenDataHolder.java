@@ -44,7 +44,7 @@ public class TokenDataHolder {
         String updateToken = "INSERT INTO token (identify, token) VALUES ('"
                 + identify + "', '"
                 + token + "') ON DUPLICATE KEY UPDATE token='" + token + "'";
-        logger.info(updateToken);
+//        logger.info(updateToken);
         try (Statement stmt = con.createStatement();) {
             stmt.executeUpdate(updateToken);
         } catch (SQLException e) {

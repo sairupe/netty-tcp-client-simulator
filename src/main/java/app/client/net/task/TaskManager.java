@@ -87,16 +87,20 @@ public class TaskManager {
 	private LinkedBlockingQueue<RequestProtocol> requestQueue = new LinkedBlockingQueue<RequestProtocol>();
 
 	private LinkedBlockingQueue<ResponseProtocol> responseQueue = new LinkedBlockingQueue<ResponseProtocol>();
-	
+
+	// 发送协议池
 	private ScheduledExecutorService requestThreadPool = Executors.newScheduledThreadPool(2);
-	
+	// 协议收发池
 	private ScheduledExecutorService responseThreadPool = Executors.newScheduledThreadPool(2);
 
+	// 心跳任务池
 	private ScheduledExecutorService tickThreadPool = Executors.newScheduledThreadPool(5);
-	
-	private ExecutorService miscThreadPool = Executors.newFixedThreadPool(10);
-
+	// Token获取池
+	private ExecutorService getTokenThreadPool = Executors.newFixedThreadPool(10);
+	// 模拟端创建池
 	private ExecutorService createRobotThreadPool = Executors.newFixedThreadPool(10);
+	// 返回登录结果后的，chainNode执行池
+	private ExecutorService executeChainNodePool = Executors.newFixedThreadPool(10);
 
     /**
     * 把请求协议放入队列
@@ -124,16 +128,12 @@ public class TaskManager {
 		return tickThreadPool.scheduleAtFixedRate(scheduleTask, delay, period, timeUnit);
 	}
 
-	/**
-	 * 加入延迟任务
-	 */
-	public Future<?> addDelayTask(Runnable scheduleTask, long delay, TimeUnit timeUnit){
-		return tickThreadPool.schedule(scheduleTask, delay, timeUnit);
+	public void addChainNodeTask(Runnable chainNodeTask){
+		this.executeChainNodePool.execute(chainNodeTask);
 	}
 
-
-	public void addMiscTask(Runnable scheduleTask){
-		miscThreadPool.execute(scheduleTask);
+	public void addTokenTask(Runnable scheduleTask){
+		getTokenThreadPool.execute(scheduleTask);
 	}
 
 	public Future<?> addCreateRobotTask(Runnable scheduleTask){
@@ -141,15 +141,12 @@ public class TaskManager {
 		return submit;
 	}
 
-	public void shutDownMisc(){
-		miscThreadPool.shutdown();
-	}
-
 	public void shutDown(){
 		status = TaskManagerStatus.SHUTDOWN;
 		requestThreadPool.shutdown();
 		responseThreadPool.shutdown();
 		tickThreadPool.shutdown();
+		getTokenThreadPool.shutdown();
 	}
 
 	public int getRequestQueueSize(){

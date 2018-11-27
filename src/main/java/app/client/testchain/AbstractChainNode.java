@@ -14,7 +14,7 @@ import java.util.Collections;
 /**
  * Created by zh on 2017/11/21.
  */
-public abstract class AbstractChainNode implements IChainNode {
+public abstract class AbstractChainNode implements IChainNode{
 
     public AbstractChainNode(){
         this.ifSniff = false;
@@ -54,6 +54,7 @@ public abstract class AbstractChainNode implements IChainNode {
     public void end() {
     }
 
+    // 非线程池执行
     @Override
     public void execute(){
         if(nextNode == null){
@@ -113,4 +114,9 @@ public abstract class AbstractChainNode implements IChainNode {
         this.connection = connection;
     }
 
+    // 调度线程池执行
+    @Override
+    public void run() {
+        this.start();
+    }
 }
