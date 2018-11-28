@@ -9,6 +9,8 @@ public class RobotVo {
 
     private String mac;
 
+    private String accountId;
+
     public String getMac() {
         return mac;
     }
@@ -23,5 +25,13 @@ public class RobotVo {
 
     public void setRobotId(int robotId) {
         this.robotId = robotId;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
     }
 }

@@ -62,7 +62,7 @@ public class XbChainNodeManager {
 //        testMac = "94:a1:a2:bd:93:d2";
 
         // TEST LOGIN
-        testMac = "94:a1:a2:f4:5e:49";
+//        testMac = "94:a1:a2:f4:5e:49";
 
 
         String token = null;
@@ -83,15 +83,16 @@ public class XbChainNodeManager {
 //        startingChainNode.addLastNext(notifyPluginTimeExecuteCommandNode);
 
         // 智能家居压测动态数据
-        AddFloorBatchDynamicTidCommandNode addFloorBatchDynamicTidCommandNode = new AddFloorBatchDynamicTidCommandNode();
-        addFloorBatchDynamicTidCommandNode.setRotbotMac(userSession.getMac());
-        AddAreaBatchDynamicTidCommandNode addAreaBatchDynamicTidCommandNode = new AddAreaBatchDynamicTidCommandNode();
-        addAreaBatchDynamicTidCommandNode.setRobotMac(userSession.getMac());
-        SdkSyncDeviceDynamicTidCommandNode sdkSyncDeviceDynamicTidCommandNode = new SdkSyncDeviceDynamicTidCommandNode();
-        sdkSyncDeviceDynamicTidCommandNode.setRobotMac(userSession.getMac());
-        startingChainNode.addLastNext(addFloorBatchDynamicTidCommandNode);
-        startingChainNode.addLastNext(new AddAreaBatchDynamicTidCommandNode());
-        startingChainNode.addLastNext(new SdkSyncDeviceDynamicTidCommandNode());
+        AddFloorBatchDynamicTidCommandNode addFloor = new AddFloorBatchDynamicTidCommandNode();
+        addFloor.setRotbotMac(userSession.getMac());
+        AddAreaBatchDynamicTidCommandNode addArea = new AddAreaBatchDynamicTidCommandNode();
+        addArea.setRobotMac(userSession.getMac());
+        SdkSyncDeviceDynamicTidCommandNode syncDevice = new SdkSyncDeviceDynamicTidCommandNode();
+        syncDevice.setRobotMac(userSession.getMac());
+
+        startingChainNode.addLastNext(addFloor);
+        startingChainNode.addLastNext(addArea);
+        startingChainNode.addLastNext(syncDevice);
 
 
         //全量数据

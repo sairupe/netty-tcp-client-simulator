@@ -21,10 +21,10 @@ public class SdkSyncDeviceDynamicTidCommandNode extends ProtocolListenNode {
     @Override
     public void doExecute() {
 
-        String device1 = SdkTestConst.FIRST_DEVICE_UID;
+        String device1 = SdkTestConst.FIRST_DEVICE_UID + robotMac;
         String device1Name = SdkTestConst.FIRST_DEVICE_NAME;
         String device1SN = SdkTestConst.FIRST_DEVICE_SN;
-        String device1AreaId = SdkTestConst.FIRST_AREA_TID;
+        String device1AreaId = SdkTestConst.EMPTY_STRING;
         String device1SceneId = "";
         AddDeviceInfoVo addDeviceInfoVo1 = new AddDeviceInfoVo();
         addDeviceInfoVo1.setDeviceId(device1);
@@ -36,10 +36,10 @@ public class SdkSyncDeviceDynamicTidCommandNode extends ProtocolListenNode {
 //        addDeviceInfoVo1.setSceneId(device1SceneId);
         addDeviceInfoVo1.setDeviceType(DeviceTypeEnum.LIGHT.getDeviceType());
 
-        String device2Id = SdkTestConst.SECOND_DEVICE_UID;
+        String device2Id = SdkTestConst.SECOND_DEVICE_UID + robotMac;
         String device2Name = SdkTestConst.SECOND_DEVICE_NAME;
         String device2SN = SdkTestConst.SECOND_DEVICE_SN;
-        String device2AreaId = SdkTestConst.SECOND_AREA_TID;
+        String device2AreaId = SdkTestConst.EMPTY_STRING;
         String device2SceneId = "";
         AddDeviceInfoVo addDeviceInfoVo2 = new AddDeviceInfoVo();
         addDeviceInfoVo2.setDeviceId(device2Id);
@@ -52,10 +52,10 @@ public class SdkSyncDeviceDynamicTidCommandNode extends ProtocolListenNode {
         addDeviceInfoVo2.setDeviceType(DeviceTypeEnum.LIGHT.getDeviceType());
 
 
-        String device3Id = SdkTestConst.THIRD_DEVICE_UID;
+        String device3Id = SdkTestConst.THIRD_DEVICE_UID + robotMac;
         String device3Name = SdkTestConst.THIRD_DEVICE_NAME;
         String device3SN = SdkTestConst.THIRD_DEVICE_SN;
-        String device3AreaId = SdkTestConst.SECOND_AREA_TID;
+        String device3AreaId = SdkTestConst.EMPTY_STRING;
         String device3SceneId = "";
         AddDeviceInfoVo addDeviceInfoVo3 = new AddDeviceInfoVo();
         addDeviceInfoVo3.setDeviceId(device3Id);

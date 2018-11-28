@@ -282,6 +282,10 @@ public class QuickStarter {
                 }
 
                 RobotVo robotVo = entry.getValue();
+                // 未绑定账号的机器不参与
+                if(StringUtils.isEmpty(robotVo.getAccountId())){
+                    continue;
+                }
                 quickStartRobot(robotVo.getMac(), robotVo.getRobotId());
             }
         }

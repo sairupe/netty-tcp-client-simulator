@@ -20,17 +20,17 @@ public class AddAreaBatchDynamicTidCommandNode extends ProtocolListenNode {
     public void doExecute() {
         List<AddAreaInfoVo> addAreaInfoVoList = new ArrayList<>();
 
-        String areaTid1 = SdkTestConst.FIRST_AREA_TID;
+        String areaTid1 = SdkTestConst.FIRST_AREA_TID + robotMac;
         String areaName1 = SdkTestConst.FIRST_AREA_NAME;
-        String bindFloorId1 = SdkTestConst.FIRST_FLOOR_TID;
+        String bindFloorId1 = SdkTestConst.EMPTY_STRING;
         AddAreaInfoVo addAreaInfoVo1 = new AddAreaInfoVo();
         addAreaInfoVo1.setAreaId(areaTid1);
         addAreaInfoVo1.setAreaName(areaName1);
         addAreaInfoVo1.setBindFloorId(bindFloorId1);
 
-        String areaTid2 = SdkTestConst.SECOND_AREA_TID;
+        String areaTid2 = SdkTestConst.SECOND_AREA_TID + robotMac;
         String areaName2 = SdkTestConst.SECOND_AREA_NAME;
-        String bindFloorId2 = SdkTestConst.SECOND_FLOOR_TID;
+        String bindFloorId2 = SdkTestConst.EMPTY_STRING;
         AddAreaInfoVo addAreaInfoVo2 = new AddAreaInfoVo();
         addAreaInfoVo2.setAreaId(areaTid2);
         addAreaInfoVo2.setAreaName(areaName2);

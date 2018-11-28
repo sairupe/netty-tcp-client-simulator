@@ -35,16 +35,29 @@ public class RobotDataHolder {
 //            e.printStackTrace();
 //        }
 
-        String queryRobotInfo = "SELECT id, mac, serial_no, brand_id, robot_name, product_type, customer_type, status " +
-                "FROM usr_robot_info_xb ORDER BY id ASC";
+        String queryRobotInfo = "SELECT t1.id, " +
+                "t1.mac, " +
+                "t1.serial_no, " +
+                "t1.brand_id, " +
+                "t1.robot_name, " +
+                "t1.product_type, " +
+                "t1.customer_type, " +
+                "t1.status, " +
+                "t3.id AS accountId " +
+                "FROM jarvis_device_db.usr_robot_info_xb t1 " +
+                "LEFT JOIN jarvis_device_db.usr_robot_bind_xb t2 ON t1.id = t2.robot_info_id " +
+                "LEFT JOIN gowild_passport_db.account t3 ON t2.account_id = t3.id " +
+                "ORDER BY t1.id ASC";
         try(Statement stmt = con.createStatement();
             ResultSet rs0 = stmt.executeQuery(queryRobotInfo)) {
             while (rs0.next()) {
-                Integer id = rs0.getInt(1);
-                String mac = rs0.getString(2);
+                Integer id = rs0.getInt("id");
+                String mac = rs0.getString("mac");
+                String accountId = rs0.getString("accountId");
                 RobotVo robotVo = new RobotVo();
                 robotVo.setMac(mac);
                 robotVo.setRobotId(id);
+                robotVo.setAccountId(accountId);
                 id2RotbotVoMap.put(id, robotVo);
             }
         } catch (SQLException e) {

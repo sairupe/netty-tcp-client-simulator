@@ -35,8 +35,7 @@ public class ResponseTaskImpl implements IResponseTask{
             int seqenceId = response.getSequenceId();
             DispacherManager.getInstance().dispatch(moduleId, seqenceId,
                     response);
-            logger.info("收到#####>>>>moduleId:【{}】, sequenceId:【{}】", moduleId,
-                    seqenceId);
+            //logger.info("收到#####>>>>moduleId:【{}】, sequenceId:【{}】", moduleId, seqenceId);
 			response = null;
 		} catch (Exception e) {
 			e.printStackTrace();
