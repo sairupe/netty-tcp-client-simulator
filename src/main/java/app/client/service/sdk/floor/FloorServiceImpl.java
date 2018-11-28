@@ -1,5 +1,6 @@
 package app.client.service.sdk.floor;
 
+import app.client.common.TimeRecordKey;
 import app.client.net.annotation.Receiver;
 import app.client.net.protocol.response.sdk.batch.floor.S_ADD_FLOOR_BATCH;
 import app.client.net.protocol.response.sdk.batch.floor.S_DELETE_FLOOR;
@@ -57,6 +58,7 @@ public class FloorServiceImpl extends AbstractServiceImpl implements IFloorServi
     public void addFloorBatchResult(S_ADD_FLOOR_BATCH response) {
         SdkBothMsgProto.SdkCommonResponseMsg msg = response.getCommonResponseMsg();
         logger.info("====== >>> SDK【批量添加】楼层返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
+        response.getUserSession().markTimeEnd(TimeRecordKey.SDK_ADD_FLOOR_TIME);
 
     }
 

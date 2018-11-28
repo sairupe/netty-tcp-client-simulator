@@ -1,5 +1,6 @@
 package app.client.service.sdk.area;
 
+import app.client.common.TimeRecordKey;
 import app.client.net.annotation.Receiver;
 import app.client.net.protocol.response.sdk.batch.area.S_ADD_AREA_BATCH;
 import app.client.net.protocol.response.sdk.batch.area.S_DELETE_AREA;
@@ -56,6 +57,7 @@ public class AreaServiceImpl extends AbstractServiceImpl implements IAreaService
     public void addAreaBatchResult(S_ADD_AREA_BATCH response) {
         SdkBothMsgProto.SdkCommonResponseMsg msg = response.getCommonResponseMsg();
         logger.info("====== >>> SDK【批量添加】区域返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
+        response.getUserSession().markTimeEnd(TimeRecordKey.SDK_ADD_AREA_TIME);
     }
 
     @Override

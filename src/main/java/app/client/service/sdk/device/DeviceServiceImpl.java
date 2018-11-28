@@ -1,5 +1,6 @@
 package app.client.service.sdk.device;
 
+import app.client.common.TimeRecordKey;
 import app.client.data.RobotDataHolder;
 import app.client.net.annotation.Handler;
 import app.client.net.annotation.Receiver;
@@ -364,6 +365,7 @@ public class DeviceServiceImpl extends AbstractServiceImpl implements IDeviceSer
     public void receiveSyncDeviceResult(S_SYNC_DEVICE response) {
         SdkBothMsgProto.SdkCommonResponseMsg msg = response.getCommonResponseMsg();
         logger.info("====== >>> SDK【同步】主机绑定设备返回码是 : " + msg.getCode() + " | 描述：" + msg.getDesc());
+        response.getUserSession().markTimeEnd(TimeRecordKey.SDK_SYNC_DEVICE_TIME);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package app.client.testchain.sdk.protocol.area;
 
+import app.client.common.TimeRecordKey;
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.request.sdk.batch.area.C_ADD_AREA_BATCH;
 import app.client.testchain.ProtocolListenNode;
@@ -43,6 +44,7 @@ public class AddAreaBatchDynamicTidCommandNode extends ProtocolListenNode {
                 userSession.getCtx());
         protocol.setAddAreaInfoVoList(addAreaInfoVoList);
         userSession.sendMsg(protocol);
+        userSession.markTimeStart(TimeRecordKey.SDK_ADD_AREA_TIME);
     }
 
     public String getRobotMac() {

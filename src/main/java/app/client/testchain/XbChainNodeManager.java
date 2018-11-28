@@ -1,5 +1,6 @@
 package app.client.testchain;
 
+import app.client.common.TimeRecordKey;
 import app.client.data.DbConnecter;
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.request.C_DOCKER_LOGIN;
@@ -182,6 +183,6 @@ public class XbChainNodeManager {
                 userSession.getCtx());
         loginCmd.setToken(token);
         userSession.sendMsg(loginCmd);
-        userSession.setLoginTime(System.currentTimeMillis());
+        userSession.markTimeStart(TimeRecordKey.XB_LOGIN_TIME);
     }
 }

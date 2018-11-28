@@ -1,5 +1,6 @@
 package app.client.service.user;
 
+import app.client.common.TimeRecordKey;
 import app.client.data.StatisticHolder;
 import app.client.net.annotation.Receiver;
 import app.client.net.protocol.response.S_APP_HEART_BEAT;
@@ -64,7 +65,7 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
         String desc = loginResult.getDesc();
         StatisticHolder.incRobotRecvLoginCount();
         UserSession userSession = response.getUserSession();
-        userSession.setReceivLoginResultTime(System.currentTimeMillis());
+        userSession.markTimeEnd(TimeRecordKey.XB_LOGIN_TIME);
 //        logger.info("====== >>> XB【{}】登录结果，code:{}, | desc: {}", userSession.getMac(), code, desc);
         if(code == 10100100){
             StatisticHolder.incRobotLoginSuccessCount();
@@ -79,7 +80,7 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
         String desc = loginResult.getDesc();
         StatisticHolder.incAppRecvLoginCount();
         UserSession userSession = response.getUserSession();
-        userSession.setReceivLoginResultTime(System.currentTimeMillis());
+        userSession.markTimeStart(TimeRecordKey.APP_LOGIN_TIME);
 //        logger.info("====== >>> APP【{}】登录结果，code:{} | desc:{} ", userSession.getAccount(), code, desc);
         if(code == 10100100){
             StatisticHolder.incAppLoginSuccessCount();

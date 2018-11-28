@@ -1,6 +1,8 @@
 package app.client.data;
 
 import app.client.common.Const;
+import app.client.common.TimeRecord;
+import app.client.common.TimeRecordKey;
 import app.client.net.task.TaskManager;
 import app.client.net.test.QuickStarter;
 import app.client.service.sdk.area.AreaServiceImpl;
@@ -11,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -99,25 +102,53 @@ public class StatisticHolder {
 
     public static void print() {
 
+        // 时间标记结果MAP, key - 时间标记种类， value - avg 平均值
+        Map<TimeRecordKey, Double> avgTimeStatisticMap = new HashMap<>();
+        Map<TimeRecordKey, Long> totalTimeStatisticMap = new HashMap<>();
+        Map<TimeRecordKey, Long> timeKeyCountStatisticMap = new HashMap<>();
+
         // 检测登陆超时
         List<Long> loginOutTimeList = new ArrayList();
-        long totalTime = 0;
-        long incTime = 0;
         Map<Long, UserSession> channelId2SessionMap = UserSessionManager.getInstance().getUid2SessionMap();
         for(Map.Entry<Long, UserSession> entry : channelId2SessionMap.entrySet()){
             UserSession userSession = entry.getValue();
-            long loginTime = userSession.getLoginTime();
-            long receivLoginTime = userSession.getReceivLoginResultTime();
-            if(receivLoginTime > 0){
-                totalTime += (receivLoginTime - userSession.getLoginTime());
-                incTime++;
+            TimeRecordKey loginKey = null;
+            if(userSession.getClientType() == SdkMsgType.XB_CLIENT_TYPE){
+                loginKey = TimeRecordKey.XB_LOGIN_TIME;
+            } else{
+                loginKey = TimeRecordKey.APP_LOGIN_TIME;
             }
+            long loginTime = userSession.getTimeStart(loginKey);
+            long receivLoginTime = userSession.getTimeEnd(loginKey);
             long fromTime = System.currentTimeMillis() - loginTime;
             long differTime = receivLoginTime - loginTime;
             if(fromTime > Const.RECONNECT_PERIOD && receivLoginTime == 0){
                 //loginOutTimeList.add(userSession.getUid());
             }
+            // 检查TimeRecord统计
+            for(TimeRecordKey timeRecordKey : TimeRecordKey.values()){
+                long timeStart = userSession.getTimeStart(timeRecordKey);
+                long timeEnd = userSession.getTimeEnd(timeRecordKey);
+                if(timeStart > 0 && timeEnd > 0){
+                    // 增加总时间
+                    long markDifferTime = timeEnd - timeStart;
+                    Long totalTime = totalTimeStatisticMap.get(timeRecordKey);
+                    if(totalTime == null){
+                        totalTime = 0L;
+                    }
+                    totalTime += markDifferTime;
+                    totalTimeStatisticMap.put(timeRecordKey, totalTime);
+                    // 增加总次数
+                    Long counts = timeKeyCountStatisticMap.get(timeRecordKey);
+                    if(counts == null){
+                        counts = 0L;
+                    }
+                    counts += 1;
+                    timeKeyCountStatisticMap.put(timeRecordKey, counts);
+                }
+            }
         }
+        // 超时队列重连
         for(Long uid : loginOutTimeList){
             UserSession userSession = UserSessionManager.getInstance().getUserSessionByUid(uid);
             UserSessionManager.getInstance().removeUserSessionByUid(uid);
@@ -128,16 +159,24 @@ public class StatisticHolder {
                 QuickStarter.quickStartApp(userSession.getAccount(), userSession.getAccountId());
             }
         }
-
+        // 统计AVG时间
+        for(TimeRecordKey timeRecordKey : TimeRecordKey.values()){
+            Long counts = timeKeyCountStatisticMap.get(timeRecordKey);
+            if(counts != null){
+                Long totalTime = totalTimeStatisticMap.get(timeRecordKey);
+                Double avgTime = totalTime * 1.0 / counts;
+                avgTimeStatisticMap.put(timeRecordKey, avgTime);
+            }
+        }
 
         final StringBuilder sb = new StringBuilder("======================>>>>>StatisticHolder{\n\n");
 
         // 计算平均登陆时间
-        float avgLoginTime = -1;
-        if(totalTime > 0){
-            avgLoginTime = totalTime * 1.0f / incTime;
-        }
-        sb.append("avgLoginTime='").append(avgLoginTime).append(" ms \n\n");
+        Double avgXBLoginTime = avgTimeStatisticMap.get(TimeRecordKey.XB_LOGIN_TIME);
+        sb.append("avgXbLoginTime='").append(avgXBLoginTime).append(" ms \n\n");
+
+        Double avgAppLoginTime = avgTimeStatisticMap.get(TimeRecordKey.APP_LOGIN_TIME);
+        sb.append("avgAppLoginTime='").append(avgAppLoginTime).append(" ms \n\n");
 
         sb.append("robotClientStartCount='").append(robotClientStartCount.get()).append('\n');
         sb.append("robotClientMaxCount='").append(robotClientMaxCount.get()).append('\n');
@@ -162,7 +201,12 @@ public class StatisticHolder {
         sb.append("appGetTokenCount='").append(appGetTokenCount.get()).append("\n\n");
 
         sb.append("requestQueueCount='").append(TaskManager.getInstance().getRequestQueueSize()).append('\n');
-        sb.append("responseQueueCount='").append(TaskManager.getInstance().getResponseQueueSize()).append('\n');
+        sb.append("responseQueueCount='").append(TaskManager.getInstance().getResponseQueueSize()).append("\n\n");
+
+        for(TimeRecordKey timeRecordKey : TimeRecordKey.values()){
+            Double avgTime = avgTimeStatisticMap.get(timeRecordKey);
+            sb.append(timeRecordKey.name() + "| avgTime='").append(avgTime).append('\n');
+        }
 
         sb.append('}');
         logger.info(sb.toString());

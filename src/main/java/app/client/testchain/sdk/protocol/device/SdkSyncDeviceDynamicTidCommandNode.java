@@ -1,5 +1,6 @@
 package app.client.testchain.sdk.protocol.device;
 
+import app.client.common.TimeRecordKey;
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.request.sdk.batch.device.C_SYNC_DEVICE;
 import app.client.testchain.ProtocolListenNode;
@@ -77,6 +78,7 @@ public class SdkSyncDeviceDynamicTidCommandNode extends ProtocolListenNode {
                 userSession.getCtx());
         addDevices.setAddDeviceInfoVoList(addDeviceInfoVoList);
         userSession.sendMsg(addDevices);
+        userSession.markTimeStart(TimeRecordKey.SDK_SYNC_DEVICE_TIME);
     }
 
     public String getRobotMac() {

@@ -1,5 +1,6 @@
 package app.client.testchain.sdk.protocol.floor;
 
+import app.client.common.TimeRecordKey;
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.request.sdk.batch.floor.C_ADD_FLOOR_BATCH;
 import app.client.testchain.ProtocolListenNode;
@@ -45,6 +46,7 @@ public class AddFloorBatchDynamicTidCommandNode extends ProtocolListenNode {
                 userSession.getCtx());
         protocol.setAddFloorInfoVoList(addFloorInfoVoList);
         userSession.sendMsg(protocol);
+        userSession.markTimeStart(TimeRecordKey.SDK_ADD_FLOOR_TIME);
     }
 
     public String getRotbotMac() {
