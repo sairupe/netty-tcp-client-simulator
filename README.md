@@ -1,1 +1,1 @@
-SDK设备 CLIENT通信模拟器
+TCP模拟工具，需要集成Protobuf
