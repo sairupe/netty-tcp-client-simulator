@@ -5,6 +5,7 @@ import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.request.sdk.batch.device.C_SYNC_DEVICE;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
+import app.client.utils.CommonUtil;
 import app.client.vo.AddDeviceInfoVo;
 import com.gowild.sdk.basic.constant.SdkConstant;
 import com.gowild.sdk.basic.enums.DeviceTypeEnum;
@@ -91,6 +92,6 @@ public class SdkSyncDeviceDynamicTidCommandNode extends ProtocolListenNode {
 
     @Override
     public boolean canExecuteImmediately(){
-        return true;
+        return false;
     }
 }

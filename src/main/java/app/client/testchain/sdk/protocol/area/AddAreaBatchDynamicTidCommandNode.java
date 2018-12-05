@@ -5,6 +5,7 @@ import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.request.sdk.batch.area.C_ADD_AREA_BATCH;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
+import app.client.utils.CommonUtil;
 import app.client.vo.AddAreaInfoVo;
 
 import java.util.ArrayList;
@@ -57,6 +58,6 @@ public class AddAreaBatchDynamicTidCommandNode extends ProtocolListenNode {
 
     @Override
     public boolean canExecuteImmediately(){
-        return true;
+        return false;
     }
 }

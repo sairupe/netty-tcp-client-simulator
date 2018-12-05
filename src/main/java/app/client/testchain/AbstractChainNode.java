@@ -3,6 +3,8 @@ package app.client.testchain;
 import app.client.net.annotation.Protocol;
 import app.client.net.dispacher.DispacherManager;
 import app.client.net.protocol.ResponseProtocol;
+import app.client.net.protocol.response.S_APP_LOGIN;
+import app.client.net.protocol.response.S_XB_LOGIN;
 import app.client.user.session.UserSession;
 import app.client.utils.ClientUtil;
 import app.client.utils.CommonUtil;
@@ -17,7 +19,6 @@ import java.util.Collections;
 public abstract class AbstractChainNode implements IChainNode{
 
     public AbstractChainNode(){
-        this.ifSniff = false;
     }
 
     /**
@@ -32,10 +33,6 @@ public abstract class AbstractChainNode implements IChainNode{
      * 数据库链接对象
      */
     protected Connection connection;
-    /**
-     * 是否是监听协议的节点
-     */
-    protected boolean ifSniff;
     /**
      * 监听模块ID
      */
@@ -95,12 +92,12 @@ public abstract class AbstractChainNode implements IChainNode{
 
     @Override
     public AbstractChainNode registListenProtocol(Class<? extends ResponseProtocol> listenningPotocol) {
+        // 登陆协议不监听，登陆协议返回后直接执行第一个
        if(listenningPotocol != null){
            Protocol protocol = listenningPotocol.getAnnotation(Protocol.class);
            if(protocol != null){
                this.moduleId = protocol.moduleId();
                this.sequenceId = protocol.sequenceId();
-               this.ifSniff = true;
                int key = ClientUtil.buildProtocolKey(moduleId,sequenceId);
                DispacherManager.getInstance().addRegistryNode(key, this);
            }

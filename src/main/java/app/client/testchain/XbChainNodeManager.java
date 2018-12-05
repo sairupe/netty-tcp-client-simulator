@@ -5,6 +5,10 @@ import app.client.data.DbConnecter;
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.request.C_DOCKER_LOGIN;
 import app.client.net.protocol.request.C_XB_HEART_BEAT;
+import app.client.net.protocol.request.sdk.batch.floor.C_ADD_FLOOR_BATCH;
+import app.client.net.protocol.response.S_XB_LOGIN;
+import app.client.net.protocol.response.sdk.batch.area.S_ADD_AREA_BATCH;
+import app.client.net.protocol.response.sdk.batch.floor.S_ADD_FLOOR_BATCH;
 import app.client.net.task.TaskManager;
 import app.client.net.task.sdk.SdkDeviceHeartBeatTask;
 import app.client.net.test.QuickStarter;
@@ -63,7 +67,7 @@ public class XbChainNodeManager {
 //        testMac = "94:a1:a2:bd:93:d2";
 
         // TEST LOGIN
-//        testMac = "94:a1:a2:f4:5e:49";
+        testMac = "94:a1:a2:f4:5e:49";
 
 
         String token = null;
@@ -91,9 +95,9 @@ public class XbChainNodeManager {
         SdkSyncDeviceDynamicTidCommandNode syncDevice = new SdkSyncDeviceDynamicTidCommandNode();
         syncDevice.setRobotMac(userSession.getMac());
 
-        startingChainNode.addLastNext(addFloor);
-        startingChainNode.addLastNext(addArea);
-        startingChainNode.addLastNext(syncDevice);
+        startingChainNode.addLastNext(addFloor.registListenProtocol(S_XB_LOGIN.class));
+        startingChainNode.addLastNext(addArea.registListenProtocol(S_ADD_FLOOR_BATCH.class));
+        startingChainNode.addLastNext(syncDevice.registListenProtocol(S_ADD_AREA_BATCH.class));
 
 
         //全量数据

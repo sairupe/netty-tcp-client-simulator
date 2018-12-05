@@ -99,10 +99,15 @@ public class DispacherManager {
 				Method method = holder.getMethod();
 				method.invoke(holder.getServiceImpl(), response);
 			}
+			// 清空监听队列，这里又监听又发送的，可能有并发问题
 			Queue<IChainNode> snipperNodeQueue = snipperMap.get(key);
 			if(snipperNodeQueue != null && !snipperNodeQueue.isEmpty()){
-				IChainNode node = snipperNodeQueue.poll();
-				node.execute();
+				while(!snipperNodeQueue.isEmpty()){
+					IChainNode node = snipperNodeQueue.poll();
+					if(node != null){
+						node.execute();
+					}
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

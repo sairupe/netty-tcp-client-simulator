@@ -5,6 +5,7 @@ import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.request.sdk.batch.floor.C_ADD_FLOOR_BATCH;
 import app.client.testchain.ProtocolListenNode;
 import app.client.testchain.sdk.SdkTestConst;
+import app.client.utils.CommonUtil;
 import app.client.vo.AddFloorInfoVo;
 
 import java.util.ArrayList;
@@ -59,6 +60,6 @@ public class AddFloorBatchDynamicTidCommandNode extends ProtocolListenNode {
 
     @Override
     public boolean canExecuteImmediately(){
-        return true;
+        return false;
     }
 }
