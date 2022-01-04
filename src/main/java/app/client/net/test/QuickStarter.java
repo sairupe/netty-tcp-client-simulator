@@ -152,10 +152,10 @@ public class QuickStarter {
         // 初始化协议加载
         Class.forName("app.client.net.dispacher.DispacherManager");
         // 初始化DB连接
-        Class.forName("app.client.data.DbConnecter");
+//        Class.forName("app.client.data.DbConnecter");
         // 初始化数据机器、用户数据装载
-        Class.forName("app.client.data.AppDataHolder");
-        Class.forName("app.client.data.RobotDataHolder");
+//        Class.forName("app.client.data.AppDataHolder");
+//        Class.forName("app.client.data.RobotDataHolder");
         // 初始化分发器
         DispacherManager.getInstance().init();
         // 初始化线程池
