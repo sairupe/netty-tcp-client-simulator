@@ -4,7 +4,6 @@ import app.client.common.CommonConsts;
 import app.client.net.annotation.Protocol;
 import app.client.net.test.QuickStarter;
 import app.client.user.session.UserSession;
-import app.client.user.session.UserSessionManager;
 import app.client.utils.ClassUtil;
 import app.client.utils.ClientUtil;
 import io.netty.buffer.ByteBuf;
@@ -43,7 +42,7 @@ public class ProtocolFactory {
 
     static {
         try {
-            Set<Class<?>> set = ClassUtil.getClasses(IProtocol.class
+            Set<Class<?>> set = ClassUtil.getClasses(ProtocolFactory.class
                     .getPackage().getName());
             for (Class<?> clz : set) {
                 Protocol cmd = clz.getAnnotation(Protocol.class);
@@ -64,27 +63,6 @@ public class ProtocolFactory {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @SuppressWarnings("unchecked")
-    @Deprecated
-    public static <T extends RequestProtocol> T createRequestProtocol(
-            int moduleId, int sequenceId) {
-//		RequestProtocol protype = null;
-//        try{
-//            int key = ClientUtil.buildProtocolKey(moduleId, sequenceId);
-//            protype = requestPrototypeMap.get(key).getClass()
-//                    .newInstance();
-//            ChannelBuffer buffer = ClientUtil.getDynamicBuffer();
-//            protype.setBuffer(buffer);
-//            protype.setModuleIdAndSequenceId(moduleId, sequenceId,
-//                    ProtocolType.REQUSET);
-//            return (T) protype;
-//        } catch (Exception e){
-//            e.printStackTrace();
-//        }
-//		return (T) protype;
-        return null;
     }
 
     public static <T extends RequestProtocol> T createRequestProtocol(

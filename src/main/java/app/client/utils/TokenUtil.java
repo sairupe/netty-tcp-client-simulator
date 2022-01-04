@@ -4,7 +4,6 @@ import app.client.data.AppDataHolder;
 import app.client.data.RobotDataHolder;
 import app.client.net.task.TaskManager;
 import app.client.net.task.misc.HttpAppGetTokenTask;
-import app.client.net.task.misc.HttpRobotGetTokenTask;
 import app.client.net.test.Netty4AppClient;
 import app.client.net.test.QuickStarter;
 import app.client.vo.RobotVo;
@@ -163,19 +162,6 @@ public class TokenUtil {
             log.error("error: {}", e);
         }
         return null;
-    }
-
-
-    public static void initialAllRobotToken(boolean initToken) throws InterruptedException {
-        if(QuickStarter.PRESS_TEST && initToken){
-            long tokenStart = System.currentTimeMillis();
-            Map<Integer, RobotVo> id2RotbotVoMap = RobotDataHolder.getId2RotbotVoMap();
-            for (Map.Entry<Integer, RobotVo> entry : id2RotbotVoMap.entrySet()) {
-                HttpRobotGetTokenTask robotGetTokenTask = new HttpRobotGetTokenTask(entry.getValue());
-                TaskManager.getInstance().addTokenTask(robotGetTokenTask);
-            }
-            logger.info("=====>>>>>>初始化ROBOT TOKEN使用了: " + (System.currentTimeMillis() - tokenStart) + " ms");
-        }
     }
 
     public static void initialAllAppToken(boolean initAppToken) throws InterruptedException {

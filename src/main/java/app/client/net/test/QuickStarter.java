@@ -163,8 +163,6 @@ public class QuickStarter {
 
         // 初始化统计任务打印
         TaskManager.getInstance().initStatiscTask();
-        // 初始化 机器 TOKEN
-        TokenUtil.initialAllRobotToken(INIT_ROBOT_TOKEN);
         // 初始化 APP TOKEN
         TokenUtil.initialAllAppToken(INIT_APP_TOKEN);
         // 加载所有机器的Token

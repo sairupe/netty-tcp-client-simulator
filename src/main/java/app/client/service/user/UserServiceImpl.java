@@ -1,6 +1,5 @@
 package app.client.service.user;
 
-import app.client.data.StatisticHolder;
 import app.client.net.annotation.Receiver;
 import app.client.net.protocol.response.S_APP_LOGIN;
 import app.client.service.AbstractServiceImpl;
@@ -19,6 +18,6 @@ public class UserServiceImpl extends AbstractServiceImpl implements IUserService
     public void receivedAppLoginRes(S_APP_LOGIN response) {
         Short code = response.getCode();
         Long userId = response.getUserId();
-        log.info("====== >>> APP【{}】登录结果，code:{} | userId:{} ", code, code, userId);
+        log.info("====== >>> APP 登录结果，code:{} | userId:{} ", code, userId);
     }
 }
