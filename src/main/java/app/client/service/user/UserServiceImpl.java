@@ -2,7 +2,6 @@ package app.client.service.user;
 
 import app.client.data.StatisticHolder;
 import app.client.net.annotation.Receiver;
-import app.client.net.protocol.response.S_APP_HEART_BEAT;
 import app.client.net.protocol.response.S_APP_LOGIN;
 import app.client.service.AbstractServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -15,14 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Receiver
 public class UserServiceImpl extends AbstractServiceImpl implements IUserService {
-
-
-    @Override
-    public void receivedAppHeartBeatResponse(S_APP_HEART_BEAT response) {
-        StatisticHolder.incAppHeartBeatCount();
-        log.info("====== >>> APP设备收到返回时间====");
-    }
-
 
     @Override
     public void receivedAppLoginRes(S_APP_LOGIN response) {

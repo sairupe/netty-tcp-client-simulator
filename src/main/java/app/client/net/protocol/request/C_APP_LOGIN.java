@@ -9,7 +9,7 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 @Data
-@Protocol(moduleId = CommonConsts.CLIENT_TYPE_APP, sequenceId = 151, type = ProtocolType.REQUSET)
+@Protocol(moduleId = CommonConsts.CLIENT_TYPE_APP, sequenceId = 11000, type = ProtocolType.REQUSET)
 public class C_APP_LOGIN extends RequestProtocol {
 
     private Integer time;

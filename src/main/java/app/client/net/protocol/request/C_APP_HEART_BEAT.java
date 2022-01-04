@@ -8,7 +8,7 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 
-@Protocol(moduleId = CommonConsts.CLIENT_TYPE_APP, sequenceId = 151, type = ProtocolType.REQUSET)
+@Protocol(moduleId = CommonConsts.CLIENT_TYPE_APP, sequenceId = 10000, type = ProtocolType.REQUSET)
 public class C_APP_HEART_BEAT extends RequestProtocol {
 
     private String token;

@@ -23,8 +23,6 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import lombok.extern.slf4j.Slf4j;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -36,7 +34,7 @@ import java.util.concurrent.Future;
  * @author Dream.xie
  */
 @Slf4j
-public final class GowildAppHandler extends ChannelInboundHandlerAdapter {
+public final class AppHandler extends ChannelInboundHandlerAdapter {
 
     private String account;
 
@@ -46,7 +44,7 @@ public final class GowildAppHandler extends ChannelInboundHandlerAdapter {
 
     private Future<?> loginFuture;
 
-    public GowildAppHandler() {
+    public AppHandler() {
         ServiceManager.injectionReceiver(this);
     }
 
@@ -71,14 +69,6 @@ public final class GowildAppHandler extends ChannelInboundHandlerAdapter {
         appChainNodeTask.setUserSession(userSession);
         chainNodeExecuteSinglePool.execute(appChainNodeTask);
         super.channelActive(ctx);
-    }
-
-    @Override
-    public void channelRegistered(final ChannelHandlerContext ctx) throws Exception {
-        NioSocketChannel nioSocketChannel = (NioSocketChannel) ctx.channel();
-        nioSocketChannel.attr(ConfigConst.DECRYPTION_KEY).set(SocketUtil.copyDefaultKey());
-        nioSocketChannel.attr(ConfigConst.ENCRYPTION_KEY).set(SocketUtil.copyDefaultKey());
-        super.channelRegistered(ctx);
     }
 
     /**

@@ -99,21 +99,19 @@ public class ProtocolFactory {
                 protype.setBuffer(buffer);
                 /**
                  * 协议包结构
-                 * +----------------+--------------+-----------+----------+-------------------------+
-                 * | HEADER         | Total_Length | Code      | Type     | ProtoBuffer Bytes Array |
-                 * | 0x7FFE(2 byte) | (2 byte)     | (2 byte)  | (1 byte) | ...                     |
-                 * +----------------+--------------+-----------+----------+-------------------------+
+                 * +----------------+--------------+-------------+-----------------+
+                 * | PROTO ID       | MSG_Length   | Tick Count | Bytes Array      |
+                 * | 0x7FFE(4 byte) | (2 byte)     | (1 byte)   | (? byte)         |
+                 * +----------------+--------------+------------+------------------+
                  *
-                 * Total Length = sizeof(HEADER) + sizeof(Total_Length) + sizeof(Code) + sizeOf(Type) + sizeOf(ProtoBuffer Bytes Array)
+                 * MSG_Length = sizeof(Bytes Array)
                  */
-                // 保留前面4个字节填写长度和OFFSET
-                buffer.writeShort(HEADER);
-                // 写入长度,暂时写入0,真正写入数据后再发送
+                // PROTO ID 暂时填0
+                buffer.writeInt(0);
+                // MSG_Length 暂时填0
                 buffer.writeShort(0);
                 // 写入code
-                buffer.writeShort((short) sequenceId);
-                // 写入type
-                buffer.writeByte((byte) moduleId);
+                buffer.writeByte(0);
                 protype.setModuleIdAndSequenceId(moduleId, sequenceId,
                         ProtocolType.REQUSET);
                 protype.setCtx(ctx);
@@ -134,7 +132,7 @@ public class ProtocolFactory {
             if (reponsePrototypeMap.get(key) == null) {
                 String clientType = CommonConsts.EMPTY_STRING;
                 if (moduleId == CommonConsts.CLIENT_TYPE_PC) {
-                    clientType = " 小白、DCOKER ";
+                    clientType = " PC ";
                 } else {
                     clientType = " APP ";
                 }

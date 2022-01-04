@@ -20,13 +20,28 @@ import java.util.List;
  * @author dream.xie
  */
 @Slf4j
-public class GowildDecoder extends ByteToMessageDecoder {
+public class AppDecoder extends ByteToMessageDecoder {
 
     /**
      * 解密
      */
     @Override
     protected void decode(final ChannelHandlerContext ctx, final ByteBuf in, final List<Object> out) throws Exception {
+        /**
+         * 协议包结构
+         -   * +----------------+--------------+-----------+----------+-------------------------+
+         -   * | HEADER         | Total_Length | Code      | Type     | ProtoBuffer Bytes Array |
+         -   * | 0x7FFE(2 byte) | (2 byte)     | (2 byte)  | (1 byte) | ...                     |
+         -   * +----------------+--------------+-----------+----------+-------------------------+
+         -   * Total Length = sizeof(HEADER) + sizeof(Total_Length) + sizeof(Code) + sizeOf(Type) + sizeOf(ProtoBuffer Bytes Array)
+         -
+         +   * +----------------+--------------+-------------+-----------------+
+         +   * | PROTO ID       | MSG_Length   | Tick Count | Bytes Array      |
+         +   * | 0x7FFE(4 byte) | (2 byte)     | (1 byte)   | (? byte)         |
+         +   * +----------------+--------------+------------+------------------+
+         +   * MSG_Length = sizeof(Bytes Array)
+         */
+
         if (in.readableBytes() < 4) {
             return;
         }
@@ -76,7 +91,6 @@ public class GowildDecoder extends ByteToMessageDecoder {
         // 读取数据并解密数据
         byte[] data = new byte[packetLength];
         in.getBytes(in.readerIndex(), data, 0, packetLength);
-        data = SocketUtil.decode(data, decryptKey);
         in.readerIndex(in.readerIndex() + packetLength);
         Message packet = Message.parse(data);
         if (packet != null) {

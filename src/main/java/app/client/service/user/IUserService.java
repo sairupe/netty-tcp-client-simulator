@@ -1,6 +1,5 @@
 package app.client.service.user;
 
-import app.client.net.protocol.response.S_APP_HEART_BEAT;
 import app.client.net.protocol.response.S_APP_LOGIN;
 
 /**
@@ -11,8 +10,6 @@ import app.client.net.protocol.response.S_APP_LOGIN;
  */
 public interface IUserService{
 	
-    void receivedAppHeartBeatResponse(S_APP_HEART_BEAT response);
-
     void receivedAppLoginRes(S_APP_LOGIN response);
 
 }

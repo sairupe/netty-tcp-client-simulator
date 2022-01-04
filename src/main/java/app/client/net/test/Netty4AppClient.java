@@ -2,9 +2,9 @@ package app.client.net.test;
 
 import app.client.data.StatisticHolder;
 import app.client.net.socket.EventLoopHolder;
-import app.client.net.socket.GowildAppHandler;
-import app.client.net.socket.GowildDecoder;
-import app.client.net.socket.GowildEncoder;
+import app.client.net.socket.AppHandler;
+import app.client.net.socket.AppDecoder;
+import app.client.net.socket.AppEncoder;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -59,14 +59,14 @@ public class Netty4AppClient implements Closeable {
             b.handler(new ChannelInitializer<SocketChannel>() {
 
                 public void initChannel(SocketChannel ch) throws Exception {
-                    ch.pipeline().addLast(new GowildDecoder());
-                    ch.pipeline().addLast(new GowildEncoder());
-                    GowildAppHandler gowildAppHandler = new GowildAppHandler();
-                    gowildAppHandler.setAccount(account);
-                    gowildAppHandler.setToken(token);
-                    gowildAppHandler.setAccountId(accountId);
-                    gowildAppHandler.setLoginFuture(loginFuture);
-                    ch.pipeline().addLast(gowildAppHandler);
+                    ch.pipeline().addLast(new AppDecoder());
+                    ch.pipeline().addLast(new AppEncoder());
+                    AppHandler appHandler = new AppHandler();
+                    appHandler.setAccount(account);
+                    appHandler.setToken(token);
+                    appHandler.setAccountId(accountId);
+                    appHandler.setLoginFuture(loginFuture);
+                    ch.pipeline().addLast(appHandler);
 
                 }
             });

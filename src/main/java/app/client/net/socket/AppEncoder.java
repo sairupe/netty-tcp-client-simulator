@@ -23,10 +23,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author dream.xie
  */
-public class GowildEncoder extends MessageToByteEncoder<RequestProtocol> {
+public class AppEncoder extends MessageToByteEncoder<RequestProtocol> {
 
     private static final Logger logger = LoggerFactory
-            .getLogger(GowildEncoder.class);
+            .getLogger(AppEncoder.class);
 
     @Override
     protected void encode(final ChannelHandlerContext ctx, final RequestProtocol requestProtocol, final ByteBuf out) throws Exception {
@@ -37,25 +37,10 @@ public class GowildEncoder extends MessageToByteEncoder<RequestProtocol> {
         buffer.writeShort(ProtocolFactory.HEADER);
         buffer.writeShort(size);
         buffer.writerIndex(size);
-        // 若存在不同线程给同一玩家发送数据的情况，因此加密过程需要同步处理
-        byte[] plainText = new byte[size];
-        buffer.readBytes(plainText);
-//        logger.info("plainText | " + Arrays.toString(plainText));
-        //获取key
-        int[] encryptKey = getKey(ctx);
-        //加密过程
-        byte[] cipherText = SocketUtil.encode(plainText, encryptKey);
-//        logger.info("cipherText | " + Arrays.toString(cipherText));
-        out.writeBytes(cipherText);
-        // 记录登录
-        if (requestProtocol.getSequenceId() == 151) {
-            int moduleId = requestProtocol.getModuleId();
-            if (moduleId == CommonConsts.CLIENT_TYPE_APP) {
-                StatisticHolder.incAppSendLoginCount();
-            } else if (moduleId == CommonConsts.CLIENT_TYPE_PC) {
-                StatisticHolder.incRobotSendLoginCount();
-            }
-        }
+        // 分配并写入到输出流
+        byte[] outBytes = new byte[size];
+        buffer.readBytes(outBytes);
+        out.writeBytes(outBytes);
     }
 
     /**
