@@ -3,9 +3,11 @@ package app.client.net.protocol;
 import app.client.common.CommonConsts;
 import app.client.net.annotation.Protocol;
 import app.client.net.test.QuickStarter;
+import app.client.user.session.UserSession;
 import app.client.user.session.UserSessionManager;
 import app.client.utils.ClassUtil;
 import app.client.utils.ClientUtil;
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.slf4j.Logger;
@@ -96,7 +98,7 @@ public class ProtocolFactory {
                 int key = ClientUtil.buildProtocolKey(moduleId, sequenceId);
                 protype = requestPrototypeMap.get(key).getClass().newInstance();
                 ChannelBuffer buffer = ClientUtil.getDynamicBuffer();
-                protype.setBuffer(buffer);
+                protype.setWriteBuf(buffer);
                 /**
                  * 协议包结构
                  * +----------------+--------------+-------------+-----------------+
@@ -125,7 +127,7 @@ public class ProtocolFactory {
 
     @SuppressWarnings("unchecked")
     public static <T extends ResponseProtocol> T getResponseProtocol(
-            int moduleId, int sequenceId, ChannelBuffer buffer, long uid) {
+            int moduleId, int sequenceId, ByteBuf bodyBuf, UserSession userSession) {
         ResponseProtocol protype = null;
         try {
             int key = ClientUtil.buildProtocolKey(moduleId, sequenceId);
@@ -148,9 +150,8 @@ public class ProtocolFactory {
                     .newInstance();
             protype.setModuleIdAndSequenceId(moduleId, sequenceId,
                     ProtocolType.RESPONSE);
-            protype.setUserSession(UserSessionManager.getInstance()
-                    .getUserSessionByUid(uid));
-            protype.setBuffer(buffer);
+            protype.setUserSession(userSession);
+            protype.setBodyBuf(bodyBuf);
             protype.readBinaryData();
             return (T) protype;
         } catch (Exception e) {

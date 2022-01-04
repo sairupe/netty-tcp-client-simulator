@@ -7,10 +7,8 @@ public class ConfigConst {
 
 	// 用户会话信息KEY
 	public static final AttributeKey<UserSession> USER_SESSION = AttributeKey.valueOf("USER_SESSION");
-	// 解密密钥netty上下文属性
-	public static final AttributeKey<int[]> DECRYPTION_KEY = AttributeKey.valueOf("DECRYPTION_KEY");
-	// 加密密钥netty上下文属性
-	public static final AttributeKey<int[]> ENCRYPTION_KEY = AttributeKey.valueOf("ENCRYPTION_KEY");
+
+	public static final String MD5_SIGN_SALT = "jxwaLsGWL9A";
 	
 	public static final String CONSUMER_REQUEST_THREAD_NAME = "requestQueueConsumer";
 	

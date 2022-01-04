@@ -7,6 +7,7 @@ import app.client.net.protocol.RequestProtocol;
 import app.client.net.task.TaskManager;
 import app.client.testchain.IChainNode;
 import io.netty.channel.ChannelHandlerContext;
+import lombok.Data;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +18,7 @@ import java.util.concurrent.Future;
  *         <p>
  *         2016年4月18日 上午9:57:04
  */
+@Data
 public class UserSession {
 
     private byte clientType;
@@ -26,6 +28,8 @@ public class UserSession {
     private long uid;
 
     private ConnectStatus connectStatus;
+
+    private Long tick = 0L;
 
     // 登陆的future
     private Future<?> loginFuture;

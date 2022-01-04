@@ -1,4 +1,5 @@
 package app.client.net.socket;
+
 import java.nio.ByteBuffer;
 
 public final class Message {
@@ -19,7 +20,7 @@ public final class Message {
     }
 
     public static Message parse(byte[] dataBytes) {
-        if(dataBytes.length < 7) {
+        if (dataBytes.length < 7) {
             return null;
         } else {
             Message message = new Message();
@@ -28,7 +29,7 @@ public final class Message {
             message.code = byteBuffer.getShort();
             message.type = byteBuffer.get();
             int bodyLen = dataBytes.length - 7;
-            if(dataBytes.length > 7) {
+            if (dataBytes.length > 7) {
                 message.bodyData = new byte[bodyLen];
                 byteBuffer.get(message.bodyData, 0, bodyLen);
             }
@@ -39,19 +40,19 @@ public final class Message {
 
     public ByteBuffer toByteBuffer() {
         short len = 7;
-        if(this.bodyData != null) {
-            len += (short)this.bodyData.length;
+        if (this.bodyData != null) {
+            len += (short) this.bodyData.length;
         }
 
-        if(len <= 0) {
-            throw new IllegalArgumentException(String.format("发送协议号为[%d]的包,长度小于等于0[%d]，长度=包头长度[10]+body长度[%d]", new Object[]{Short.valueOf(this.code), Short.valueOf(len), Short.valueOf((short)this.bodyData.length)}));
+        if (len <= 0) {
+            throw new IllegalArgumentException(String.format("发送协议号为[%d]的包,长度小于等于0[%d]，长度=包头长度[10]+body长度[%d]", new Object[]{Short.valueOf(this.code), Short.valueOf(len), Short.valueOf((short) this.bodyData.length)}));
         } else {
             ByteBuffer buff = ByteBuffer.allocate(len);
-            buff.putShort((short)32766);
+            buff.putShort((short) 32766);
             buff.putShort(len);
             buff.putShort(this.code);
             buff.put(this.type);
-            if(this.bodyData != null) {
+            if (this.bodyData != null) {
                 buff.put(this.bodyData);
             }
 
@@ -77,7 +78,7 @@ public final class Message {
     }
 
     public int getBodyLength() {
-        return this.bodyData != null?this.bodyData.length:0;
+        return this.bodyData != null ? this.bodyData.length : 0;
     }
 
     public String toString() {

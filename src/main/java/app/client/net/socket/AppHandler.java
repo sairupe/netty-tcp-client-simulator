@@ -83,21 +83,10 @@ public final class AppHandler extends ChannelInboundHandlerAdapter {
      *
      */
     @Override
-    public void channelRead(final ChannelHandlerContext ctx, final Object message) throws Exception {
-        if(message instanceof Message){
-            Message msg = (Message) message;
-            int moduleId = msg.getType();
-            int sequenceId = msg.getCode();
-            ChannelBuffer buffer = ChannelBuffers.dynamicBuffer(msg.getBody().length);
-            buffer.writeBytes(msg.getBody());
-            NioSocketChannel nioSocketChannel = (NioSocketChannel) ctx.channel();
-            UserSession userSession = nioSocketChannel.attr(ConfigConst.USER_SESSION).get();
-            ResponseProtocol response = ProtocolFactory
-                    .getResponseProtocol(moduleId, sequenceId,
-                            buffer, userSession.getUid());
-            if(response != null){
-                TaskManager.getInstance().addResponse2Queue(response);
-            }
+    public void channelRead(final ChannelHandlerContext ctx, final Object responseProtocol) throws Exception {
+        if (responseProtocol != null && responseProtocol instanceof ResponseProtocol) {
+            ResponseProtocol res = (ResponseProtocol) responseProtocol;
+            TaskManager.getInstance().addResponse2Queue(res);
         }
     }
 

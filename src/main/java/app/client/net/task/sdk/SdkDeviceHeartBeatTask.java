@@ -44,7 +44,7 @@ public class SdkDeviceHeartBeatTask extends RequestTaskImpl {
 							request.getModuleId(), request.getSequenceId());
 				}
 				ctx.channel().writeAndFlush(request);
-				request.getBuffer().readerIndex(0);
+				request.getWriteBuf().readerIndex(0);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
