@@ -1,6 +1,7 @@
 package app.client.data;
 
-import app.client.testchain.sdk.SdkTestConst;
+
+import app.client.common.DbConfig;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,9 +27,9 @@ public class DbConnecter {
             System.err.print(e.getMessage());
         }
         try {
-            robotDbConncetion = DriverManager.getConnection(SdkTestConst.ROBOT_DB_URL, "root", "123456");
-            passportDbConnection = DriverManager.getConnection(SdkTestConst.PASSPORT_DB_URL, "root", "123456");
-            tokenDbConnection = DriverManager.getConnection(SdkTestConst.TOKEN_DB_URL, "root", "123456");
+            robotDbConncetion = DriverManager.getConnection(DbConfig.ROBOT_DB_URL, "root", "123456");
+            passportDbConnection = DriverManager.getConnection(DbConfig.PASSPORT_DB_URL, "root", "123456");
+            tokenDbConnection = DriverManager.getConnection(DbConfig.TOKEN_DB_URL, "root", "123456");
         } catch (SQLException ex) {
             ex.printStackTrace();
             System.err.println("sqlexception :" + ex.getMessage());

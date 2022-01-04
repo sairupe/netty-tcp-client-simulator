@@ -1,18 +1,14 @@
 package app.client.net.test;
 
-import app.client.common.Const;
+import app.client.common.ConfigConst;
 import app.client.data.AppDataHolder;
-import app.client.data.RobotDataHolder;
 import app.client.data.TokenDataHolder;
 import app.client.net.dispacher.DispacherManager;
 import app.client.net.task.TaskManager;
+import app.client.utils.StringUtils;
 import app.client.utils.TokenUtil;
-import app.client.vo.RobotVo;
 import app.client.vo.UserVo;
-import com.gowild.core.util.LogUtil;
-import com.gowild.core.util.StringUtil;
-import com.sun.org.apache.regexp.internal.RE;
-import org.apache.commons.lang.StringUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +23,8 @@ import java.util.concurrent.Future;
 /**
  * Created by zh on 2017/10/27.
  */
+
+@Slf4j
 public class QuickStarter {
 
     public static boolean PRESS_TEST = false;
@@ -89,7 +87,7 @@ public class QuickStarter {
 
         PRESS_TEST = Boolean.parseBoolean(prop.getProperty("pressTest"));
         int RECONNECT_PERIOD = Integer.parseInt(prop.getProperty("reconnectPeriod"));
-        Const.RECONNECT_PERIOD = RECONNECT_PERIOD;
+        ConfigConst.RECONNECT_PERIOD = RECONNECT_PERIOD;
         START_ROBOT = Boolean.parseBoolean(prop.getProperty("startRobot"));
         INIT_ROBOT_TOKEN = Boolean.parseBoolean(prop.getProperty("initRobotToken"));
         START_APP = Boolean.parseBoolean(prop.getProperty("startApp"));
@@ -99,19 +97,6 @@ public class QuickStarter {
         ROBOT_END = Integer.parseInt(prop.getProperty("robotEnd"));
         APP_START = Integer.parseInt(prop.getProperty("appStart"));
         APP_END = Integer.parseInt(prop.getProperty("appEnd"));
-
-        String ROBOT_TCP_IP = prop.getProperty("robotTcpIp");
-        int ROBOT_PORT = Integer.parseInt(prop.getProperty("robotTcpPort"));
-        String ROBOT_TOKEN_URL = prop.getProperty("robotTokenUrl");
-        Netty4XbClient.HOST = ROBOT_TCP_IP;
-        Netty4XbClient.PORT = ROBOT_PORT;
-        Netty4XbClient.TOKEN_URL = ROBOT_TOKEN_URL;
-        if(START_ROBOT && StringUtils.isEmpty(Netty4XbClient.HOST)
-                || StringUtils.isEmpty(Netty4XbClient.TOKEN_URL)
-                || Netty4XbClient.PORT == 0){
-            logger.info("====>>>>请检查机器的TCP连接和TOKEN配置，配置为空");
-            return;
-        }
 
         String APP_TCP_IP = prop.getProperty("appTcpIp");
         int APP_PORT = Integer.parseInt(prop.getProperty("appTcpPort"));
@@ -127,20 +112,16 @@ public class QuickStarter {
         configInfo.append("==============启动配置信息=====================>>> \n\n");
 
         configInfo.append("====>>> !!!!!压测总开关!!!! : " + PRESS_TEST + "\n\n");
-        configInfo.append("====>>> !!!!!断线重连间隔!!!! : " + Const.RECONNECT_PERIOD + " ms\n\n");
+        configInfo.append("====>>> !!!!!断线重连间隔!!!! : " + ConfigConst.RECONNECT_PERIOD + " ms\n\n");
 
         configInfo.append("====>>> 是否启动机器端压测 : " + START_ROBOT + "\n");
-        configInfo.append("====>>> 是否启动APP端压测 : " + START_APP +"\n");
+        configInfo.append("====>>> 是否启动APP端压测 : " + START_APP + "\n");
         configInfo.append("====>>> 是否初始化机器 TOKEN : " + INIT_ROBOT_TOKEN + "\n");
         configInfo.append("====>>> 是否初始化APP TOKEN : " + INIT_APP_TOKEN + "\n");
         configInfo.append("====>>> 压测机器ID范围 : " + ROBOT_START + " - " + ROBOT_END + "\n");
         configInfo.append("====>>> 压测机器数量 :  " + robotCount + "\n");
         configInfo.append("====>>> 压测APP ID范围 : " + APP_START + " - " + APP_END + "\n");
         configInfo.append("====>>> 压测APP数量 :  " + appCount + "\n\n");
-
-        configInfo.append("====>>> 机器TCP链接IP :  " + Netty4XbClient.HOST + "\n");
-        configInfo.append("====>>> 机器TCP链接端口 :  " + Netty4XbClient.PORT + "\n");
-        configInfo.append("====>>> 机器TOKEN URL地址 :  " + Netty4XbClient.TOKEN_URL + "\n\n");
 
         configInfo.append("====>>> APP TCP链接IP :  " + Netty4AppClient.HOST + "\n");
         configInfo.append("====>>> APP TCP链接端口 :  " + Netty4AppClient.PORT + "\n");
@@ -158,14 +139,9 @@ public class QuickStarter {
             logger.info(APP_ERROR);
             return;
         }
-        if(START_ROBOT && StringUtils.isEmpty(Netty4XbClient.HOST)
-                || StringUtils.isEmpty(Netty4XbClient.TOKEN_URL)
-                || Netty4XbClient.PORT == 0){
-            logger.info("====>>>>请检查机器的TCP连接和TOKEN配置，配置为空");
-        }
-        if(START_APP && StringUtils.isEmpty(Netty4AppClient.HOST)
+        if (START_APP && StringUtils.isEmpty(Netty4AppClient.HOST)
                 || StringUtils.isEmpty(Netty4AppClient.TOKEN_URL)
-                || Netty4AppClient.PORT == 0){
+                || Netty4AppClient.PORT == 0) {
             logger.info("====>>>>请检查APP的TCP连接和TOKEN配置，配置为空");
         }
 
@@ -195,7 +171,7 @@ public class QuickStarter {
         TokenDataHolder.loadAllRobotToken();
 
         if (START_APP) {
-            LogUtil.debug("启动APP 压测");
+            log.debug("启动APP 压测");
             Thread appStarter;
             if (PRESS_TEST) {
                 appStarter = new Thread(new AppPressTestStartTask());
@@ -204,37 +180,7 @@ public class QuickStarter {
             }
             appStarter.start();
         }
-
-        if (START_ROBOT) {
-            LogUtil.debug("启动ROBOT 压测");
-            Thread xbStarter;
-            if (PRESS_TEST) {
-                xbStarter = new Thread(new XbPressTestStartTask());
-            } else {
-                xbStarter = new Thread(new XbNormalStartTask());
-            }
-            xbStarter.start();
-        }
-
         logger.info("==========>>>>>>>>>>>> MAIN 函数结束,如果未打印任何信息请结束进程并检查配置 ===========");
-    }
-
-    public static void quickStartRobot(String mac, int robotId) {
-        Netty4XbClient xbClient = new Netty4XbClient();
-        Future<?> future = TaskManager.getInstance().addCreateRobotTask(() -> {
-            try {
-                xbClient.setMac(mac);
-                String token = TokenDataHolder.getIdentifyToken(mac);
-                xbClient.setToken(token);
-                xbClient.setRobotId(robotId);
-                xbClient.init();
-                xbClient.start();
-            } catch (Exception e) {
-                e.printStackTrace();
-                xbClient.close();
-            }
-        });
-        xbClient.setLoginFuture(future);
     }
 
     public static void quickStartApp(String userName, int accountId) {
@@ -271,25 +217,6 @@ public class QuickStarter {
         }
     }
 
-    static class XbPressTestStartTask implements Runnable {
-        @Override
-        public void run() {
-            Map<Integer, RobotVo> id2RotbotVoMap = RobotDataHolder.getId2RotbotVoMap();
-            for (Map.Entry<Integer, RobotVo> entry : id2RotbotVoMap.entrySet()) {
-
-                if (entry.getKey() < ROBOT_START || entry.getKey() > ROBOT_END) {
-                    continue;
-                }
-
-                RobotVo robotVo = entry.getValue();
-                // 未绑定账号的机器不参与
-                if(StringUtils.isEmpty(robotVo.getAccountId())){
-                    continue;
-                }
-                quickStartRobot(robotVo.getMac(), robotVo.getRobotId());
-            }
-        }
-    }
 
     static class AppNormalStartTask implements Runnable {
         @Override
@@ -298,19 +225,6 @@ public class QuickStarter {
             try {
                 appClient.init();
                 appClient.start();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    static class XbNormalStartTask implements Runnable {
-        @Override
-        public void run() {
-            Netty4XbClient xbClient = new Netty4XbClient();
-            try {
-                xbClient.init();
-                xbClient.start();
             } catch (Exception e) {
                 e.printStackTrace();
             }

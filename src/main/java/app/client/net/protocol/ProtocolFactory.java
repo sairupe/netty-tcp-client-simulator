@@ -1,76 +1,73 @@
 package app.client.net.protocol;
 
+import app.client.common.CommonConsts;
+import app.client.net.annotation.Protocol;
+import app.client.net.test.QuickStarter;
+import app.client.user.session.UserSessionManager;
+import app.client.utils.ClassUtil;
+import app.client.utils.ClientUtil;
+import io.netty.channel.ChannelHandlerContext;
+import org.jboss.netty.buffer.ChannelBuffer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import app.client.net.test.ChannelHandlerContextStatusStask;
-import app.client.net.test.QuickStarter;
-import com.gowild.sdk.basic.constant.SdkConstant;
-import com.gowild.sdk.protocol.SdkMsgType;
-import io.netty.channel.ChannelHandlerContext;
-import org.jboss.netty.buffer.ChannelBuffer;
-
-import app.client.net.annotation.Protocol;
-import app.client.user.session.UserSessionManager;
-import app.client.utils.ClassUtil;
-import app.client.utils.ClientUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * @author syriana.zh
- * 
- *         协议原型提供工厂
- * 
- *         2016年4月15日 下午2:40:06
+ * <p>
+ * 协议原型提供工厂
+ * <p>
+ * 2016年4月15日 下午2:40:06
  */
 public class ProtocolFactory {
 
     private static final Logger logger = LoggerFactory.getLogger(ProtocolFactory.class);
 
-	private static Map<Integer, RequestProtocol> requestPrototypeMap = new ConcurrentHashMap<Integer, RequestProtocol>();
+    private static Map<Integer, RequestProtocol> requestPrototypeMap = new ConcurrentHashMap<Integer, RequestProtocol>();
 
-	private static Map<Integer, ResponseProtocol> reponsePrototypeMap = new ConcurrentHashMap<Integer, ResponseProtocol>();
+    private static Map<Integer, ResponseProtocol> reponsePrototypeMap = new ConcurrentHashMap<Integer, ResponseProtocol>();
 
     /**
      * 包的标识 32766
      */
     public static final short HEADER = 0x7ffe;
 
-	private ProtocolFactory() {
+    private ProtocolFactory() {
 
-	}
+    }
 
-	static {
-		try {
+    static {
+        try {
             Set<Class<?>> set = ClassUtil.getClasses(IProtocol.class
                     .getPackage().getName());
-			for (Class<?> clz : set) {
-				Protocol cmd = clz.getAnnotation(Protocol.class);
-				if (cmd != null) {
+            for (Class<?> clz : set) {
+                Protocol cmd = clz.getAnnotation(Protocol.class);
+                if (cmd != null) {
                     int moduleId = cmd.moduleId();
                     int sequenceId = cmd.sequenceId();
                     int key = ClientUtil.buildProtocolKey(moduleId, sequenceId);
-					ProtocolType type = cmd.type();
-					if (type == ProtocolType.REQUSET) {
-						RequestProtocol request = (RequestProtocol) clz.newInstance();
+                    ProtocolType type = cmd.type();
+                    if (type == ProtocolType.REQUSET) {
+                        RequestProtocol request = (RequestProtocol) clz.newInstance();
                         requestPrototypeMap.put(key, request);
-					} else {
-						ResponseProtocol response = (ResponseProtocol) clz.newInstance();
+                    } else {
+                        ResponseProtocol response = (ResponseProtocol) clz.newInstance();
                         reponsePrototypeMap.put(key, response);
-					}
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @SuppressWarnings("unchecked")
     @Deprecated
     public static <T extends RequestProtocol> T createRequestProtocol(
-            int moduleId, int sequenceId){
+            int moduleId, int sequenceId) {
 //		RequestProtocol protype = null;
 //        try{
 //            int key = ClientUtil.buildProtocolKey(moduleId, sequenceId);
@@ -86,14 +83,14 @@ public class ProtocolFactory {
 //        }
 //		return (T) protype;
         return null;
-	}
+    }
 
     public static <T extends RequestProtocol> T createRequestProtocol(
-            Class<? extends RequestProtocol> clazz, ChannelHandlerContext ctx){
+            Class<? extends RequestProtocol> clazz, ChannelHandlerContext ctx) {
         RequestProtocol protype = null;
-        try{
+        try {
             Protocol protocolAnnotation = clazz.getAnnotation(Protocol.class);
-            if (protocolAnnotation != null){
+            if (protocolAnnotation != null) {
                 int moduleId = protocolAnnotation.moduleId();
                 int sequenceId = protocolAnnotation.sequenceId();
                 int key = ClientUtil.buildProtocolKey(moduleId, sequenceId);
@@ -122,30 +119,30 @@ public class ProtocolFactory {
                 protype.setCtx(ctx);
             }
             return (T) protype;
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return (T) protype;
     }
 
-	@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     public static <T extends ResponseProtocol> T getResponseProtocol(
-            int moduleId, int sequenceId, ChannelBuffer buffer, long uid){
-		ResponseProtocol protype = null;
-        try{
+            int moduleId, int sequenceId, ChannelBuffer buffer, long uid) {
+        ResponseProtocol protype = null;
+        try {
             int key = ClientUtil.buildProtocolKey(moduleId, sequenceId);
-            if (reponsePrototypeMap.get(key) == null){
-                String clientType = SdkConstant.EMPTY_STRING;
-                if(moduleId == SdkMsgType.XB_CLIENT_TYPE){
+            if (reponsePrototypeMap.get(key) == null) {
+                String clientType = CommonConsts.EMPTY_STRING;
+                if (moduleId == CommonConsts.CLIENT_TYPE_PC) {
                     clientType = " 小白、DCOKER ";
-                } else{
+                } else {
                     clientType = " APP ";
                 }
-                if(!QuickStarter.PRESS_TEST){
-                logger.info(
-                        "======================================" +
-                        "========================================【" +
-                        clientType + "】收到protoclId 空: moduleId:{" + moduleId + "}, sequenceId:{" + sequenceId + "}");
+                if (!QuickStarter.PRESS_TEST) {
+                    logger.info(
+                            "======================================" +
+                                    "========================================【" +
+                                    clientType + "】收到protoclId 空: moduleId:{" + moduleId + "}, sequenceId:{" + sequenceId + "}");
                 }
                 return null;
             }
@@ -158,11 +155,11 @@ public class ProtocolFactory {
             protype.setBuffer(buffer);
             protype.readBinaryData();
             return (T) protype;
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        } finally{
+        } finally {
             // 暂时不知道这个是de(buffer);
         }
-		return (T) protype;
-	}
+        return (T) protype;
+    }
 }

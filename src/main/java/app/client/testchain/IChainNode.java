@@ -2,7 +2,6 @@ package app.client.testchain;
 
 import app.client.net.protocol.ResponseProtocol;
 import app.client.user.session.UserSession;
-import com.gowild.basic.exception.ResponseCode;
 
 import java.sql.Connection;
 
@@ -11,24 +10,24 @@ import java.sql.Connection;
  */
 public interface IChainNode extends Runnable{
 
-    public void start();
+    void start();
 
-    public void execute();
+    void execute();
 
-    public void doExecute();
+    void doExecute();
 
-    public void end();
+    void end();
 
-    public AbstractChainNode registListenProtocol(Class<? extends ResponseProtocol> listenningPotocol);
+    AbstractChainNode registListenProtocol(Class<? extends ResponseProtocol> listenningPotocol);
 
-    public void addLastNext(AbstractChainNode chainNode);
+    void addLastNext(AbstractChainNode chainNode);
 
-    public IChainNode next();
+    IChainNode next();
 
-    public void next(IChainNode nextNode);
+    void next(IChainNode nextNode);
 
-    public boolean canExecuteImmediately();
+    boolean canExecuteImmediately();
 
-    public void setVar(UserSession userSession, Connection connection);
+    void setVar(UserSession userSession, Connection connection);
 
 }

@@ -1,28 +1,22 @@
 package app.client.net.protocol.response;
 
+import app.client.common.CommonConsts;
 import app.client.net.annotation.Protocol;
 import app.client.net.protocol.ProtocolType;
 import app.client.net.protocol.ResponseProtocol;
-import com.google.protobuf.InvalidProtocolBufferException;
-import com.gowild.sdk.protocol.SdkMsgType;
-import com.gowild.xbtcp.metadata.pb.BaseBothMsgProto;
+import lombok.Data;
 
-@Protocol(moduleId = SdkMsgType.APP_CLIENT_TYPE, sequenceId = 152, type = ProtocolType.RESPONSE)
+@Data
+@Protocol(moduleId = CommonConsts.CLIENT_TYPE_APP, sequenceId = 152, type = ProtocolType.RESPONSE)
 public class S_APP_LOGIN extends ResponseProtocol{
 
-    private BaseBothMsgProto.BaseResponse loginResult;
+    private Long userId;
+
+    private Short code;
 
     @Override
     public boolean readBinaryData(){
-        try {
-            loginResult = BaseBothMsgProto.BaseResponse.parseFrom(buffer.array());
-        } catch (InvalidProtocolBufferException e) {
-            e.printStackTrace();
-        }
         return true;
     }
 
-    public BaseBothMsgProto.BaseResponse getLoginResult() {
-        return loginResult;
-    }
 }

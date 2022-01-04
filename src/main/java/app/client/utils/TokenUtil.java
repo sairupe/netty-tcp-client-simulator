@@ -2,16 +2,15 @@ package app.client.utils;
 
 import app.client.data.AppDataHolder;
 import app.client.data.RobotDataHolder;
-import app.client.data.StatisticHolder;
 import app.client.net.task.TaskManager;
 import app.client.net.task.misc.HttpAppGetTokenTask;
 import app.client.net.task.misc.HttpRobotGetTokenTask;
 import app.client.net.test.Netty4AppClient;
-import app.client.net.test.Netty4XbClient;
 import app.client.net.test.QuickStarter;
 import app.client.vo.RobotVo;
 import app.client.vo.UserVo;
-import com.gowild.core.util.LogUtil;
+import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -20,7 +19,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,6 +30,7 @@ import java.util.Map;
 /**
  * Created by zh on 2018/9/6.
  */
+@Slf4j
 public class TokenUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(TokenUtil.class);
@@ -41,7 +40,7 @@ public class TokenUtil {
     public static String getRobotToken(String mac) {
         String token = "";
         try {
-            String tokenUrl = Netty4XbClient.TOKEN_URL;
+            String tokenUrl = "";
             HttpPost request = new HttpPost(tokenUrl);
 
             List<NameValuePair> list = new ArrayList<NameValuePair>();
@@ -60,10 +59,10 @@ public class TokenUtil {
             token = EntityUtils.toString(response.getEntity(), "utf8");
         } catch (IOException e) {
             e.printStackTrace();
-            LogUtil.error(e);
+            log.error("error: {}", e);
         }
-        JSONObject result = new JSONObject(token);
-        int code = result.getInt("code");
+        JSONObject result = JSONObject.parseObject(token);
+        int code = result.getInteger("code");
         if (10100100 == code) {
             JSONObject data = result.getJSONObject("data");
             token = data.getString("access_token");
@@ -93,10 +92,10 @@ public class TokenUtil {
             token = EntityUtils.toString(response.getEntity(), "utf8");
         } catch (IOException e) {
             e.printStackTrace();
-            LogUtil.error(e);
+            log.error("error: {}", e);
         }
-        JSONObject result = new JSONObject(token);
-        int code = result.getInt("code");
+        JSONObject result = JSONObject.parseObject(token);
+        int code = result.getInteger("code");
         if (10100100 == code) {
             JSONObject data = result.getJSONObject("data");
             token = data.getString("access_token");
@@ -128,10 +127,10 @@ public class TokenUtil {
             token = EntityUtils.toString(response.getEntity(), "utf8");
         } catch (IOException e) {
             e.printStackTrace();
-            LogUtil.error(e);
+            log.error("error: {}", e);
         }
-        JSONObject result = new JSONObject(token);
-        int code = result.getInt("code");
+        JSONObject result = JSONObject.parseObject(token);
+        int code = result.getInteger("code");
         if (10100100 == code) {
             JSONObject data = result.getJSONObject("data");
             token = data.getString("access_token");
@@ -142,7 +141,7 @@ public class TokenUtil {
 
     public static String otherHttpTest() {
         try {
-            String tokenUrl = Netty4XbClient.TOKEN_URL;
+            String tokenUrl = "";
             HttpPost request = new HttpPost(tokenUrl);
 
             List<NameValuePair> list = new ArrayList<NameValuePair>();
@@ -161,7 +160,7 @@ public class TokenUtil {
             String result = EntityUtils.toString(response.getEntity(), "utf8");
         } catch (IOException e) {
             e.printStackTrace();
-            LogUtil.error(e);
+            log.error("error: {}", e);
         }
         return null;
     }

@@ -7,7 +7,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import app.client.common.Const;
+import app.client.common.ConfigConst;
 import app.client.net.protocol.RequestProtocol;
 import app.client.net.protocol.ResponseProtocol;
 import app.client.net.task.misc.StatisticPrintTask;
@@ -67,8 +67,8 @@ public class TaskManager {
 				}
 			}
 		};
-		Thread requestThread = new Thread(requestRun, Const.CONSUMER_REQUEST_THREAD_NAME);
-		Thread responseThread = new Thread(responseRun, Const.CONSUMER_RESPONSE_THREAD_NAME);
+		Thread requestThread = new Thread(requestRun, ConfigConst.CONSUMER_REQUEST_THREAD_NAME);
+		Thread responseThread = new Thread(responseRun, ConfigConst.CONSUMER_RESPONSE_THREAD_NAME);
 		
 		requestThread.start();
 		responseThread.start();

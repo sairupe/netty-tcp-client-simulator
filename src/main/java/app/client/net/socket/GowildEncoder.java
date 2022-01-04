@@ -5,12 +5,11 @@
  */
 package app.client.net.socket;
 
+import app.client.common.CommonConsts;
+import app.client.common.ConfigConst;
 import app.client.data.StatisticHolder;
 import app.client.net.protocol.ProtocolFactory;
 import app.client.net.protocol.RequestProtocol;
-import app.client.net.task.RequestTaskImpl;
-import app.client.testchain.sdk.SdkTestConst;
-import com.gowild.sdk.protocol.SdkMsgType;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
@@ -51,9 +50,9 @@ public class GowildEncoder extends MessageToByteEncoder<RequestProtocol> {
         // 记录登录
         if (requestProtocol.getSequenceId() == 151) {
             int moduleId = requestProtocol.getModuleId();
-            if (moduleId == SdkMsgType.APP_CLIENT_TYPE) {
+            if (moduleId == CommonConsts.CLIENT_TYPE_APP) {
                 StatisticHolder.incAppSendLoginCount();
-            } else if (moduleId == SdkMsgType.XB_CLIENT_TYPE) {
+            } else if (moduleId == CommonConsts.CLIENT_TYPE_PC) {
                 StatisticHolder.incRobotSendLoginCount();
             }
         }
@@ -65,6 +64,6 @@ public class GowildEncoder extends MessageToByteEncoder<RequestProtocol> {
      * @return
      */
     private static int[] getKey(final ChannelHandlerContext ctx) {
-        return ctx.channel().attr(SdkTestConst.ENCRYPTION_KEY).get();
+        return ctx.channel().attr(ConfigConst.ENCRYPTION_KEY).get();
     }
 }

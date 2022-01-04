@@ -1,14 +1,8 @@
 package app.client.utils;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.zip.Inflater;
-
-import com.gowild.sdk.protocol.SdkMsgType;
+import app.client.common.CommonConsts;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
-import org.jboss.netty.util.internal.jzlib.JZlib;
-import org.jboss.netty.util.internal.jzlib.ZStream;
 
 public class ClientUtil{
 
@@ -22,10 +16,10 @@ public class ClientUtil{
     }
 
     public static long buildRobotClientSessionKey(int robotId){
-        return robotId << 2 | SdkMsgType.XB_CLIENT_TYPE;
+        return robotId << 2 | CommonConsts.CLIENT_TYPE_PC;
     }
 
     public static long buildAppClientSessionKey(int accountId){
-        return accountId << 2 | SdkMsgType.APP_CLIENT_TYPE;
+        return accountId << 2 | CommonConsts.CLIENT_TYPE_APP;
     }
 }

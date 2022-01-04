@@ -3,15 +3,10 @@ package app.client.testchain;
 import app.client.net.annotation.Protocol;
 import app.client.net.dispacher.DispacherManager;
 import app.client.net.protocol.ResponseProtocol;
-import app.client.net.protocol.response.S_APP_LOGIN;
-import app.client.net.protocol.response.S_XB_LOGIN;
 import app.client.user.session.UserSession;
 import app.client.utils.ClientUtil;
-import app.client.utils.CommonUtil;
-import com.gowild.core.util.LogUtil;
 
 import java.sql.Connection;
-import java.util.Collections;
 
 /**
  * Created by zh on 2017/11/21.

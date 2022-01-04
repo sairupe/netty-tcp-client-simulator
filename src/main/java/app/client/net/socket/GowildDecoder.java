@@ -5,11 +5,11 @@
  */
 package app.client.net.socket;
 
-import app.client.testchain.sdk.SdkTestConst;
-import com.gowild.core.util.LogUtil;
+import app.client.common.ConfigConst;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
+import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetSocketAddress;
 import java.util.List;
@@ -19,6 +19,7 @@ import java.util.List;
  *
  * @author dream.xie
  */
+@Slf4j
 public class GowildDecoder extends ByteToMessageDecoder {
 
     /**
@@ -61,7 +62,7 @@ public class GowildDecoder extends ByteToMessageDecoder {
             InetSocketAddress socketAddr = (InetSocketAddress) ctx.channel().remoteAddress();
             String ip = socketAddr.getAddress().getHostAddress();
             int port = socketAddr.getPort();
-            LogUtil.error("密文：IP:{}，PORT:{}，接收Header:{}，固定Header:{}." +
+            log.error("密文：IP:{}，PORT:{}，接收Header:{}，固定Header:{}." +
                     "发送的消息头不对，断开连接.", ip, port, header, Message.HEAD_SIZE);
             ctx.close();
             return;
@@ -90,6 +91,6 @@ public class GowildDecoder extends ByteToMessageDecoder {
      * @return
      */
     private static int[] getKey(final ChannelHandlerContext ctx) {
-        return ctx.channel().attr(SdkTestConst.DECRYPTION_KEY).get();
+        return ctx.channel().attr(ConfigConst.DECRYPTION_KEY).get();
     }
 }
