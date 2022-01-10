@@ -8,6 +8,7 @@ package app.client.net.socket;
 import app.client.common.ConfigConst;
 import app.client.net.protocol.RequestProtocol;
 import app.client.user.session.UserSession;
+import app.client.utils.StringUtils;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
@@ -55,6 +56,8 @@ public class AppEncoder extends MessageToByteEncoder<RequestProtocol> {
         // 分配并写入到输出流
         byte[] outBytes = new byte[totalSize];
         buffer.readBytes(outBytes);
+        String hexStr = StringUtils.byteToHex(outBytes);
+        logger.info("=====>>> hexStr : {}", hexStr);
         out.writeBytes(outBytes);
     }
 }

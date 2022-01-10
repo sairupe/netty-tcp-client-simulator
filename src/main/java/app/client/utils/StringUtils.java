@@ -27,13 +27,15 @@ public class StringUtils {
 
     /**
      * 取整
+     *
      * @param data
      * @return
      */
-    public static String formatBigDecimalRoundUp(BigDecimal data){
+    public static String formatBigDecimalRoundUp(BigDecimal data) {
         DecimalFormat df = new DecimalFormat("###.##");
         return df.format(data);
     }
+
     /**
      * 功能：将一个以2的整数次方为和加在一起的一个整数进行分拆，分拆成一个个2的整数次方形式
      *
@@ -235,4 +237,44 @@ public class StringUtils {
     public static void join() {
     }
 
+    /**
+     * byte数组转hex
+     *
+     * @param bytes
+     * @return
+     */
+    public static String byteToHex(byte[] bytes) {
+        String strHex = "";
+        StringBuilder sb = new StringBuilder("");
+        for (int n = 0; n < bytes.length; n++) {
+            strHex = Integer.toHexString(bytes[n] & 0xFF);
+            sb.append(strHex.toUpperCase()); // 每个字节由两个字符表示，位数不够，高位补0
+        }
+        return sb.toString().trim();
+    }
+
+    /**
+     * hex转byte数组
+     *
+     * @param hex
+     * @return
+     */
+    public static byte[] hexToByte(String hex) {
+        int m = 0, n = 0;
+        int byteLen = hex.length(); // 每两个字符描述一个字节
+        byte[] ret = new byte[byteLen];
+        for (int i = 0; i < byteLen; i++) {
+            int intVal = Integer.decode("0x" + hex.charAt(i));
+            ret[i] = Byte.valueOf((byte) intVal);
+        }
+        return ret;
+    }
+
+    public static void main(String[] args) {
+        byte[] bytes = new byte[]{(byte) 9, (byte) 10, (byte) 11, (byte) 12, (byte) 13, (byte) 14, (byte) 15};
+        String s = byteToHex(bytes);
+        System.out.println(s);
+        byte[] bytes1 = hexToByte(s);
+        System.out.println((Arrays.toString(bytes1)));
+    }
 }
