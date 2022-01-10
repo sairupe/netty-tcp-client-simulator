@@ -18,7 +18,7 @@ public class C_APP_LOGIN extends RequestProtocol {
     private Integer server_id;
     private String user_name;
     private String platform_id;
-    private String channel_id;
+//    private String channel_id;
     private String sub_channel_id;
     private Integer infant;
     private String device_imei;
@@ -34,14 +34,13 @@ public class C_APP_LOGIN extends RequestProtocol {
         buf.writeInt(server_id);
         ProtocolUtils.writeString(buf, user_name);
         ProtocolUtils.writeString(buf, platform_id);
-        ProtocolUtils.writeString(buf, channel_id);
         ProtocolUtils.writeString(buf, sub_channel_id);
         buf.writeInt(infant);
         ProtocolUtils.writeString(buf, device_imei);
         ProtocolUtils.writeString(buf, device_id);
         ProtocolUtils.writeString(buf, device_type);
         buf.writeByte(system_type);
-        String sign = MD5Utils.MD5(platform_id + user_name + "2" + time + ConfigConst.MD5_SIGN_SALT);
+        String sign = MD5Utils.getSHA256(platform_id + user_name + "2" + time + ConfigConst.MD5_SIGN_SALT);
         ProtocolUtils.writeString(buf, sign);
     }
 }

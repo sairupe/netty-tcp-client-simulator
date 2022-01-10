@@ -6,6 +6,7 @@ import app.client.net.protocol.request.C_APP_LOGIN;
 import app.client.net.task.TaskManager;
 import app.client.net.task.app.AppHeartBeatTask;
 import app.client.user.session.UserSession;
+import app.client.utils.MD5Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,10 +40,23 @@ public class AppChainNodeManager {
         userSession.sendMsg(loginCmd);
         userSession.setChainNode(startingChainNode);
 
+        loginCmd.setTime((int) System.currentTimeMillis());
+        loginCmd.setServer_id(100110001);
+        loginCmd.setUser_name("test007");
+        loginCmd.setPlatform_id("1");
+        loginCmd.setSub_channel_id("1");
+        loginCmd.setInfant(2);
+        loginCmd.setDevice_imei("");
+        loginCmd.setDevice_id("");
+        loginCmd.setDevice_type("ios10.3");
+        loginCmd.setSystem_type((byte) 1);
+        loginCmd.setSign(MD5Utils.getMd5(loginCmd.getPlatform_id() + loginCmd.getUser_name() + "2" + loginCmd.getTime().toString() + "T!SiV4RSE&&OOUHK"));
+
+
         // 心跳协议
         C_APP_HEART_BEAT heartBeat = ProtocolFactory.createRequestProtocol(C_APP_HEART_BEAT.class, userSession.getCtx());
         AppHeartBeatTask task = new AppHeartBeatTask(userSession.getCtx(), heartBeat);
-        TaskManager.getInstance().addTickTask(task, 2, 50, TimeUnit.SECONDS);
+        TaskManager.getInstance().addTickTask(task, 1, 4, TimeUnit.SECONDS);
     }
 
 }
